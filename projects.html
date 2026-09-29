@@ -16,19 +16,19 @@
   <div class="progress" id="progress"></div>
 
   <!-- NAV -->
-  <nav>
+  <nav class="site-nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">Justin Joe Mathew</a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="projects.html" class="active">Projects</a></li>
         <li><a href="ideas-lab.html">Ideas Lab</a></li>
         <li><a href="submit.html">Collaborate</a></li>
         <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
       </ul>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <a href="https://github.com/jvstin47" target="_blank" class="btn btn-ghost" style="padding:8px 16px;font-size:10px;">GitHub ↗</a>
+      <div style="display:flex;align-items:center;gap:10px;">
         <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+        <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation">☰</button>
       </div>
     </div>
   </nav>
@@ -43,15 +43,13 @@
         Five production systems. One underlying philosophy: turning mathematical models, physical hardware, and human urgency into deterministic, elegant software.
       </p>
 
-      <nav class="intro-index" aria-label="Project index">
-        <a href="#p1" class="index-item">01 / AroggyaGram-3</a>
-        <a href="#p2" class="index-item">02 / F1 Monte Carlo Simulator</a>
-        <a href="#p3" class="index-item">03 / AutoMeter IoT</a>
-        <a href="#p4" class="index-item">04 / Opportunity Android</a>
-        <a href="#p5" class="index-item">05 / CRT Lock &amp; 3D Web</a>
-      </nav>
-
-      <span class="intro-count">05 FLAGSHIP PROJECTS ↓</span>
+      <div class="intro-jump-bar" aria-label="Project index">
+        <a href="#p1" class="jump-pill"><span class="pill-num">01</span> AroggyaGram-3</a>
+        <a href="#p2" class="jump-pill"><span class="pill-num">02</span> F1 Strategy Sim</a>
+        <a href="#p3" class="jump-pill"><span class="pill-num">03</span> AutoMeter IoT</a>
+        <a href="#p4" class="jump-pill"><span class="pill-num">04</span> Opportunity Android</a>
+        <a href="#p5" class="jump-pill"><span class="pill-num">05</span> CRT Lock</a>
+      </div>
     </section>
 
     <!-- PROJECT 01: AROGGYAGRAM-3 -->
@@ -441,6 +439,10 @@
       const light = document.body.classList.toggle('light');
       document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
       localStorage.setItem('theme', light ? 'light' : 'dark');
+    }
+    function toggleMobileNav() {
+      const links = document.getElementById('nav-links');
+      if (links) links.classList.toggle('open');
     }
     (function () {
       if (localStorage.getItem('theme') === 'light') {

@@ -12,17 +12,20 @@
 </head>
 <body>
 
-<nav>
+<nav class="site-nav">
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">Justin Joe Mathew</a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="ideas-lab.html">Ideas Lab</a></li>
       <li><a href="submit.html" class="active">Collaborate</a></li>
       <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
     </ul>
-    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation">☰</button>
+    </div>
   </div>
 </nav>
 
@@ -38,12 +41,12 @@
 
 <footer>
   <span>© 2026 — Justin Joe Mathew</span>
-  <nav class="footer-nav">
+  <div class="footer-nav">
     <a href="index.html">Home</a>
     <a href="projects.html">Projects</a>
     <a href="ideas-lab.html">Ideas Lab</a>
     <a href="Justin_Mathew_Resume.pdf" target="_blank">Resume (PDF)</a>
-  </nav>
+  </div>
 </footer>
 
 <script>
@@ -52,6 +55,10 @@
     const light = document.body.classList.toggle('light');
     document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
     localStorage.setItem('theme', light ? 'light' : 'dark');
+  }
+  function toggleMobileNav() {
+    const links = document.getElementById('nav-links');
+    if (links) links.classList.toggle('open');
   }
   (function () {
     if (localStorage.getItem('theme') === 'light') {

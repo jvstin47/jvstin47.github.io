@@ -16,16 +16,20 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Justin Joe Mathew</a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="#about" class="active">About</a></li>
-      <li><a href="projects.html">Projects</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#achievements">Achievements</a></li>
       <li><a href="#toolkit">Toolkit</a></li>
-      <li><a href="#experience">Milestones</a></li>
+      <li><a href="#experience">Journey</a></li>
       <li><a href="ideas-lab.html">Ideas Lab</a></li>
       <li><a href="submit.html">Collaborate</a></li>
       <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
     </ul>
-    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation">☰</button>
+    </div>
   </div>
 </nav>
 
@@ -35,7 +39,7 @@
   <div class="wrap" style="position:relative;z-index:1;">
     <div class="hero-eyebrow anim anim-1">
       <span class="hero-dot"></span>
-      <span class="hero-eyebrow-text">Software Engineer · Available for 0→1 &amp; Engineering Roles</span>
+      <span class="hero-eyebrow-text">Software Engineer · Open to Full-Stack, Systems &amp; 0→1 Engineering Roles</span>
     </div>
 
     <h1 class="hero-name anim anim-2">
@@ -249,6 +253,212 @@
   </div>
 </section>
 
+<!-- ACHIEVEMENTS & RECOGNITION -->
+<section id="achievements">
+  <div class="wrap">
+    <div class="achievements-header">
+      <div>
+        <div class="section-label reveal">Recognition &amp; Honors</div>
+        <h2 class="section-title reveal reveal-d1">Podiums &amp; <em>Achievements</em></h2>
+      </div>
+      <p class="section-subtitle reveal reveal-d2" style="max-width:380px;font-size:13px;">
+        Hackathon championships, national shortlists, and competitive engineering accolades backed by verified certificates.
+      </p>
+    </div>
+
+    <!-- Quick Stats Highlight -->
+    <div class="achieve-banner reveal reveal-d2">
+      <div class="achieve-stat-block">
+        <span class="achieve-num">1st</span>
+        <span class="achieve-stat-sub">Place Champion · ACM Vibefest</span>
+      </div>
+      <div class="achieve-stat-block">
+        <span class="achieve-num">1st</span>
+        <span class="achieve-stat-sub">Winner · Idea From Industry S2</span>
+      </div>
+      <div class="achieve-stat-block">
+        <span class="achieve-num">SIH</span>
+        <span class="achieve-stat-sub">Smart India Hackathon 2026 Shortlist</span>
+      </div>
+      <div class="achieve-stat-block">
+        <span class="achieve-num">NASA</span>
+        <span class="achieve-stat-sub">Space Apps Challenge 2025</span>
+      </div>
+    </div>
+
+    <!-- Achievements Grid -->
+    <div class="achieve-grid">
+      <!-- 1. ACM Vibefest 2026 -->
+      <div class="achieve-card reveal reveal-d2">
+        <div class="achieve-card-top">
+          <span class="achieve-badge gold">🥇 1st Place Champion</span>
+          <span class="achieve-date">March 2026</span>
+        </div>
+        <h3 class="achieve-title">Vibefest Hackathon 2026</h3>
+        <p class="achieve-org">ACM-W Chapter · Association for Computing Machinery</p>
+        <p class="achieve-desc">
+          Awarded First Place in the 24-hour engineering hackathon organized by ACM-W in recognition of exceptional technical performance, innovative architecture, and outstanding rapid system execution.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">Hackathon Winner</span>
+          <span class="achieve-tag">ACM-W</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/vibefest-2026.jpg', 'ACM Vibefest 2026 — 1st Place Certificate of Achievement')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Idea From Industry Challenge Season 2 -->
+      <div class="achieve-card reveal reveal-d3">
+        <div class="achieve-card-top">
+          <span class="achieve-badge gold">🏆 Winner (Stage 1 &amp; 2)</span>
+          <span class="achieve-date">Jan – Feb 2026</span>
+        </div>
+        <h3 class="achieve-title">Idea From Industry Challenge Season 2</h3>
+        <p class="achieve-org">MakerHub IEDC · BIRAC · Ministry of Education</p>
+        <p class="achieve-desc">
+          Honored as Winner in the state-level innovation challenge for architecting a real-time transit telemetry tracking and smart dynamic fare calculation system for public transit fleets, successfully advancing to Stage 2.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">Industry Challenge</span>
+          <span class="achieve-tag">Transit IoT</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/idea-industry-2026.jpg', 'Idea From Industry Season 2 — Winner Certificate of Achievement')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. AI Club Ideathon 2026 -->
+      <div class="achieve-card reveal reveal-d3">
+        <div class="achieve-card-top">
+          <span class="achieve-badge green">⚡ Victory / 1st Place</span>
+          <span class="achieve-date">February 2026</span>
+        </div>
+        <h3 class="achieve-title">AI Club Ideathon 2026</h3>
+        <p class="achieve-org">Artificial Intelligence Club · AJCE Autonomous</p>
+        <p class="achieve-desc">
+          Secured victory in the competitive AI Ideathon for conceptualizing algorithmic multi-agent crisis response dispatch (the precursor to AroggyaGram-3), evaluating autonomous triage and emergency proximity routing.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">AI Systems</span>
+          <span class="achieve-tag">Autonomous Agents</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/ai-club-2026.jpg', 'AI Club Ideathon 2026 — Victory Certificate of Appreciation')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Smart India Hackathon 2026 -->
+      <div class="achieve-card reveal reveal-d4">
+        <div class="achieve-card-top">
+          <span class="achieve-badge blue">🇮🇳 National Shortlist</span>
+          <span class="achieve-date">2026</span>
+        </div>
+        <h3 class="achieve-title">Smart India Hackathon (SIH 2026)</h3>
+        <p class="achieve-org">MoE Innovation Cell · Government of India &amp; AICTE</p>
+        <p class="achieve-desc">
+          Recognized with Certificate of Appreciation for outstanding achievement in being shortlisted for the Smart India Hackathon 2026 after excelling at the Institution Level Competition organized by MakerHub IEDC &amp; IIC.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">Govt of India</span>
+          <span class="achieve-tag">MoE Innovation Cell</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/sih-2026.jpg', 'Smart India Hackathon 2026 — National Shortlist Appreciation')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 5. K-DISC YIP 8.0 -->
+      <div class="achieve-card reveal reveal-d4">
+        <div class="achieve-card-top">
+          <span class="achieve-badge purple">🌟 State Innovation Award</span>
+          <span class="achieve-date">October 2025</span>
+        </div>
+        <h3 class="achieve-title">Young Innovators Programme (YIP 8.0)</h3>
+        <p class="achieve-org">Kerala Development &amp; Innovation Strategic Council (K-DISC)</p>
+        <p class="achieve-desc">
+          Official Certificate of Appreciation from the Government of Kerala for contributing innovative engineering solutions and high-potential technological research under the state strategic development council.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">Govt of Kerala</span>
+          <span class="achieve-tag">K-DISC YIP</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/yip-2025.jpg', 'K-DISC YIP 8.0 — State Innovation Certificate of Appreciation')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 6. NASA Space Apps Challenge 2025 -->
+      <div class="achieve-card reveal reveal-d5">
+        <div class="achieve-card-top">
+          <span class="achieve-badge cyan">🚀 Global Hackathon</span>
+          <span class="achieve-date">October 2025</span>
+        </div>
+        <h3 class="achieve-title">NASA Space Apps Challenge 2025</h3>
+        <p class="achieve-org">National Aeronautics and Space Administration (NASA)</p>
+        <p class="achieve-desc">
+          Collaborated on solving global telemetry and Earth observation challenges during the international NASA Space Apps hackathon, applying data pipelines and spatial computation to open NASA planetary datasets.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">NASA</span>
+          <span class="achieve-tag">Space Telemetry</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/nasa-space-apps-2025.jpg', 'NASA Space Apps Challenge 2025 — Certificate of Participation')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 7. Blankspace Project Sprint -->
+      <div class="achieve-card reveal reveal-d5">
+        <div class="achieve-card-top">
+          <span class="achieve-badge green">⚙️ Relentless Execution</span>
+          <span class="achieve-date">2026</span>
+        </div>
+        <h3 class="achieve-title">Blankspace Project Sprint</h3>
+        <p class="achieve-org">Blankspace Technology Community</p>
+        <p class="achieve-desc">
+          Awarded Certificate of Completion in recognition of relentless execution, rapid product deployment, and transforming conceptual engineering designs into functioning community infrastructure.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">Rapid Delivery</span>
+          <span class="achieve-tag">Full-Stack</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/blankspace-sprint.jpg', 'Blankspace Project Sprint — Certificate of Completion')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+
+      <!-- 8. Azure '26 Public Speaking & Debate -->
+      <div class="achieve-card reveal reveal-d5">
+        <div class="achieve-card-top">
+          <span class="achieve-badge gold">🎙️ 3rd Prize (Podium)</span>
+          <span class="achieve-date">February 2026</span>
+        </div>
+        <h3 class="achieve-title">Extempore &amp; JamSpace (Azure '26)</h3>
+        <p class="achieve-org">Students' Council · Silver Jubilee Annual Fest</p>
+        <p class="achieve-desc">
+          Double podium finishes: 3rd Prize in Extempore English and 3rd Prize in JamSpace (Just A Minute), demonstrating fast real-time technical articulation, debate agility, and clear structured communication.
+        </p>
+        <div class="achieve-footer">
+          <span class="achieve-tag">Extempore</span>
+          <span class="achieve-tag">Communication</span>
+          <button class="cert-btn" onclick="openCert('images/certificates/extempore-2026.jpg', 'Azure 2026 — Extempore English Certificate of Achievement')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Verify Certificate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- INTERACTIVE TOOLKIT -->
 <section id="toolkit">
   <div class="wrap">
@@ -333,50 +543,50 @@
       <div class="timeline-item highlight reveal reveal-d2">
         <div class="timeline-time">2026 — Present<br/><span style="color:var(--building);font-size:11px;">● Current Focus</span></div>
         <div>
-          <h3 class="timeline-role">Autonomous Systems &amp; Vectorized Simulation</h3>
-          <div class="timeline-org">Flagship Independent Engineering</div>
+          <h3 class="timeline-role">Autonomous Systems, Vectorized Simulation &amp; Hackathon Podiums</h3>
+          <div class="timeline-org">Flagship Engineering &amp; Competitive Systems</div>
           <p class="timeline-desc">
-            Architected and shipped the <strong>F1 Monte Carlo Strategy Engine</strong> (10,000 parallel race simulations with Bellman-equation dynamic programming) and <strong>AroggyaGram-3</strong> (decentralized crisis dispatch platform with generative LLM intent classification).
+            Architected and shipped the <strong>F1 Monte Carlo Strategy Engine</strong> (10,000 parallel race simulations with Bellman-equation dynamic programming) and <strong>AroggyaGram-3</strong>. Clinched <strong>1st Place at ACM Vibefest Hackathon</strong> (March 2026) and <strong>Victory at AI Club Ideathon</strong> (Feb 2026).
           </p>
           <div class="timeline-tags">
             <span class="timeline-tag">Python NumPy</span>
             <span class="timeline-tag">Dynamic Programming</span>
             <span class="timeline-tag">Next.js / TypeScript</span>
-            <span class="timeline-tag">AI Multi-Agent</span>
+            <span class="timeline-tag">1st Place Hackathon</span>
           </div>
         </div>
       </div>
 
       <div class="timeline-item reveal reveal-d3">
-        <div class="timeline-time">2025 — 2026</div>
+        <div class="timeline-time">2026</div>
         <div>
-          <h3 class="timeline-role">Mobile &amp; Hardware-Software Systems</h3>
-          <div class="timeline-org">AutoMeter &amp; Opportunity Android</div>
+          <h3 class="timeline-role">State Industry Challenge Winner &amp; SIH Shortlist</h3>
+          <div class="timeline-org">MakerHub IEDC · BIRAC · Ministry of Education (MoE)</div>
           <p class="timeline-desc">
-            Engineered <strong>AutoMeter</strong> (smart transit fare meter combining GPS speed deltas and tachometer pulses with instant dynamic UPI QR generation in Flutter) and <strong>Opportunity</strong> (offline-first Android life &amp; task OS using Jetpack Compose, Room DB, WorkManager, and Wear OS companion).
+            Won <strong>1st Place (Winner)</strong> in the state-level <em>Idea From Industry Challenge Season 2</em> for smart transit telemetry architecture. Additionally earned a <strong>Certificate of Appreciation for being shortlisted in Smart India Hackathon (SIH 2026)</strong>.
           </p>
           <div class="timeline-tags">
-            <span class="timeline-tag">Kotlin</span>
-            <span class="timeline-tag">Jetpack Compose</span>
+            <span class="timeline-tag">Winner Award</span>
+            <span class="timeline-tag">MoE Innovation Cell</span>
+            <span class="timeline-tag">SIH 2026 Shortlist</span>
+            <span class="timeline-tag">Transit Telemetry</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-d3">
+        <div class="timeline-time">2025</div>
+        <div>
+          <h3 class="timeline-role">Mobile Systems, NASA Space Apps &amp; Govt. Recognition</h3>
+          <div class="timeline-org">AutoMeter, Opportunity OS &amp; NASA Global Hackathon</div>
+          <p class="timeline-desc">
+            Engineered <strong>AutoMeter</strong> (smart transit fare meter fusing GPS and wheel pulses with instant dynamic UPI QR) and <strong>Opportunity</strong> (offline-first Android &amp; Wear OS task ecosystem). Competed in the global <strong>NASA Space Apps Challenge 2025</strong> and received the <strong>K-DISC Young Innovators Programme (YIP 8.0)</strong> award from the Government of Kerala.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Kotlin / Jetpack Compose</span>
             <span class="timeline-tag">Flutter / Dart</span>
-            <span class="timeline-tag">Wear OS</span>
-            <span class="timeline-tag">Sensor Fusion</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal reveal-d3">
-        <div class="timeline-time">2023 — 2024</div>
-        <div>
-          <h3 class="timeline-role">Idea From Industry — Season 2 (1st Place Winner)</h3>
-          <div class="timeline-org">Competitive Industry Innovation Evaluation</div>
-          <p class="timeline-desc">
-            Won <strong>1st Place</strong> for presenting a real-time transit telemetry tracking architecture for private bus fleets. Honored for transforming complex vehicle location streams into actionable commuter intelligence.
-          </p>
-          <div class="timeline-tags">
-            <span class="timeline-tag">1st Place Award</span>
-            <span class="timeline-tag">Systems Design</span>
-            <span class="timeline-tag">Real-Time Telemetry</span>
+            <span class="timeline-tag">NASA Space Apps</span>
+            <span class="timeline-tag">K-DISC Govt Award</span>
           </div>
         </div>
       </div>
@@ -384,10 +594,10 @@
       <div class="timeline-item reveal reveal-d4">
         <div class="timeline-time">2020 — 2022</div>
         <div>
-          <h3 class="timeline-role">Drone-Based Safety &amp; Embedded Engineering</h3>
+          <h3 class="timeline-role">Safety Systems &amp; Embedded Engineering</h3>
           <div class="timeline-org">Field Robotics &amp; Hardware Logic</div>
           <p class="timeline-desc">
-            Three years of hands-on safety systems engineering focused on human welfare. Built hardware constraints, rotor dynamics, embedded control logic, and fail-safe recovery algorithms.
+            Hands-on safety systems engineering focused on human welfare. Built hardware constraints, rotor dynamics, embedded control logic, and fail-safe recovery algorithms.
           </p>
           <div class="timeline-tags">
             <span class="timeline-tag">Robotics</span>
@@ -401,7 +611,7 @@
         <div class="timeline-time">2025 — 2029</div>
         <div>
           <h3 class="timeline-role">B.Tech in Computer Science &amp; Engineering</h3>
-          <div class="timeline-org">Amal Jyothi College of Engineering · Kerala, India</div>
+          <div class="timeline-org">Amal Jyothi College of Engineering · Kerala, India (Autonomous)</div>
           <p class="timeline-desc">
             Undergraduate degree specializing in algorithms, distributed systems, operating systems, and software engineering principles.
           </p>
@@ -616,6 +826,58 @@
       }, 2000);
     });
   }
+
+  // Mobile nav toggle
+  function toggleMobileNav() {
+    const links = document.getElementById('nav-links');
+    if (links) links.classList.toggle('open');
+  }
+
+  // Certificate Lightbox
+  function openCert(src, title) {
+    const modal = document.getElementById('cert-modal');
+    const img = document.getElementById('cert-modal-img');
+    const caption = document.getElementById('cert-modal-title');
+    if (modal && img) {
+      img.src = src;
+      img.alt = title;
+      if (caption) caption.textContent = title;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeCert() {
+    const modal = document.getElementById('cert-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeCertOnBackdrop(e) {
+    if (e.target.id === 'cert-modal') {
+      closeCert();
+    }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCert();
+  });
 </script>
+
+<!-- CERTIFICATE LIGHTBOX MODAL -->
+<div id="cert-modal" class="cert-modal" onclick="closeCertOnBackdrop(event)">
+  <div class="cert-modal-dialog">
+    <div class="cert-modal-header">
+      <span id="cert-modal-title" class="cert-modal-title">Certificate</span>
+      <button class="cert-modal-close" onclick="closeCert()" aria-label="Close modal">✕</button>
+    </div>
+    <div class="cert-modal-body">
+      <img id="cert-modal-img" class="cert-modal-img" src="" alt="Certificate Preview"/>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

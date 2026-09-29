@@ -219,26 +219,29 @@ h1 em { font-style: italic; color: var(--gold); }
 /* ── PRINCIPLE BLOCK ── */
 .principle {
   border: 1px solid var(--border);
-  padding: 48px 56px;
+  padding: 44px 52px;
   margin-bottom: 80px;
   position: relative;
   text-align: center;
   background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .principle::before,
 .principle::after {
-  content: '"';
+  content: '“';
   font-family: var(--font-display);
-  font-size: 80px;
+  font-size: 64px;
   color: var(--gold-dim);
   position: absolute;
   line-height: 1;
   pointer-events: none;
+  opacity: 0.35;
 }
 
-.principle::before { top: 12px;  left: 24px; }
-.principle::after  { bottom: -22px; right: 24px; transform: scaleY(-1); }
+.principle::before { top: 12px; left: 20px; }
+.principle::after { content: '”'; bottom: 8px; right: 20px; }
 
 .principle p {
   font-family: var(--font-display);

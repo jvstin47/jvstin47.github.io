@@ -75,7 +75,8 @@ body.light {
    RESET
 ────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html                   { scroll-behavior: smooth; }
+html                   { scroll-behavior: smooth; overflow-x: hidden; }
+img                    { max-width: 100%; height: auto; }
 
 /* ──────────────────────────────────────────────────────────────
    BASE BODY
@@ -140,7 +141,8 @@ section { padding: var(--section-gap) 0; }
 /* ──────────────────────────────────────────────────────────────
    NAVIGATION
 ────────────────────────────────────────────────────────────── */
-nav {
+nav.site-nav,
+body > nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
@@ -151,7 +153,11 @@ nav {
   transition: background 0.35s, border-color 0.35s;
 }
 
-body.light nav { background: rgba(244, 241, 234, 0.92); }
+body.light nav.site-nav,
+body.light body > nav {
+  background: rgba(244, 241, 234, 0.95);
+  border-bottom: 1px solid var(--border);
+}
 
 .nav-inner {
   max-width: var(--max-w);
@@ -534,11 +540,138 @@ select {
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 /* ──────────────────────────────────────────────────────────────
-   RESPONSIVE GLOBALS
+   RESPONSIVE GLOBALS & MOBILE NAV
 ────────────────────────────────────────────────────────────── */
-@media (max-width: 780px) {
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  line-height: 1;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.nav-hamburger:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+@media (max-width: 860px) {
   :root { --section-gap: 80px; --pad-x: 20px; }
-  .nav-links { display: none; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .nav-hamburger { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 20px 24px;
+    gap: 16px;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.5);
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
   .footer-nav   { flex-wrap: wrap; gap: 14px; }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   CERTIFICATE LIGHTBOX MODAL
+────────────────────────────────────────────────────────────── */
+.cert-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(8, 8, 7, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cert-modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.cert-modal-dialog {
+  position: relative;
+  max-width: 860px;
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+
+.cert-modal.active .cert-modal-dialog {
+  transform: scale(1);
+}
+
+.cert-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-2);
+  background: var(--surface-2);
+}
+
+.cert-modal-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text);
+}
+
+.cert-modal-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--sub);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.cert-modal-close:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.cert-modal-body {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.cert-modal-img {
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
