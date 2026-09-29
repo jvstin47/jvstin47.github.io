@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ideas Lab — Justin Mathew</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="ideas-lab.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Justin Joe Mathew</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="ideas-lab.html" class="active">Ideas Lab</a></li>
+      <li><a href="submit.html">Collaborate</a></li>
+      <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
+    </ul>
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-label anim anim-1">Ideas Lab</div>
+    <h1 class="anim anim-2">The thinking<br><em>layer</em><span class="cursor"></span></h1>
+    <p class="header-desc anim anim-3">
+      Not polished products — raw signals. These are ideas I'm turning over, problems I keep returning to, and observations that won't leave me alone.
+    </p>
+
+    <div class="counter-bar anim anim-4">
+      <div class="counter-item">
+        <span class="counter-num" id="cnt-all">6</span>
+        <span class="counter-label">Total ideas</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-dot" style="background:var(--thinking)"></span>
+        <span class="counter-num" id="cnt-thinking">2</span>
+        <span class="counter-label">Thinking</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-dot" style="background:var(--exploring)"></span>
+        <span class="counter-num" id="cnt-exploring">2</span>
+        <span class="counter-label">Exploring</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-dot" style="background:var(--building)"></span>
+        <span class="counter-num" id="cnt-building">1</span>
+        <span class="counter-label">Building</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-dot" style="background:var(--dropped)"></span>
+        <span class="counter-num" id="cnt-dropped">1</span>
+        <span class="counter-label">Dropped</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- FILTERS -->
+  <div class="filter-row anim anim-5">
+    <span class="filter-label">Filter —</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="thinking">Thinking</button>
+    <button class="filter-btn" data-filter="exploring">Exploring</button>
+    <button class="filter-btn" data-filter="building">Building</button>
+    <button class="filter-btn" data-filter="dropped">Dropped</button>
+  </div>
+
+  <!-- IDEAS GRID -->
+  <div class="ideas-grid" id="ideas-grid">
+
+    <div class="idea-card anim anim-5" data-status="building">
+      <div class="card-top">
+        <span class="idea-num">01</span>
+        <span class="status-tag status-building">Building</span>
+      </div>
+      <h2 class="idea-title">Permission Layers in AI Interfaces</h2>
+      <p class="idea-hook">What if the user always knew exactly what the AI could see?</p>
+      <p class="idea-body">
+        Most AI interfaces obscure context — what's in the prompt, what's remembered, what's inferred. I want to explore a visible "permission card" UI layer that surfaces this in real time, giving users genuine legibility over what they're interacting with.
+      </p>
+      <hr class="idea-divider" />
+      <p class="real-line"><strong>What would make this real?</strong> A browser extension prototype for any chat UI, surfacing token context and system-prompt scope as a readable sidebar.</p>
+    </div>
+
+    <div class="idea-card anim anim-6" data-status="thinking">
+      <div class="card-top">
+        <span class="idea-num">02</span>
+        <span class="status-tag status-thinking">Thinking</span>
+      </div>
+      <h2 class="idea-title">Friction by Design</h2>
+      <p class="idea-hook">Removing all friction isn't always the right move.</p>
+      <p class="idea-body">
+        Design dogma says eliminate friction. But some friction builds meaning — the delay before a letter arrives, the effort of a handwritten note. I'm collecting examples where designed friction improves the experience, not degrades it.
+      </p>
+      <hr class="idea-divider" />
+      <p class="real-line"><strong>What would make this real?</strong> A written essay + a small annotated collection of friction-forward products that feel better for being slower.</p>
+    </div>
+
+    <div class="idea-card anim anim-6" data-status="exploring">
+      <div class="card-top">
+        <span class="idea-num">03</span>
+        <span class="status-tag status-exploring">Exploring</span>
+      </div>
+      <h2 class="idea-title">Context-Aware Reading Mode</h2>
+      <p class="idea-hook">The same content shouldn't look the same at 7am and 11pm.</p>
+      <p class="idea-body">
+        Reading mode tools strip pages bare but ignore context entirely. What if reading mode was ambient-aware — typography density, contrast, and pacing adjusted to estimated cognitive state, time of day, and session length?
+      </p>
+      <hr class="idea-divider" />
+      <p class="real-line"><strong>What would make this real?</strong> A Firefox extension with time-of-day reading profiles and a small study measuring retention across conditions.</p>
+    </div>
+
+    <div class="idea-card anim anim-7" data-status="thinking">
+      <div class="card-top">
+        <span class="idea-num">04</span>
+        <span class="status-tag status-thinking">Thinking</span>
+      </div>
+      <h2 class="idea-title">Micro-Portfolios for Specialists</h2>
+      <p class="idea-hook">What if your portfolio was one perfect page, not thirty average ones?</p>
+      <p class="idea-body">
+        Generalist portfolios reward breadth. But specialists — a single-domain engineer, a focused writer, a niche researcher — need a different format. Depth over breadth. One case study that says everything, rather than a gallery that says nothing.
+      </p>
+      <hr class="idea-divider" />
+      <p class="real-line"><strong>What would make this real?</strong> A template kit and a written framework for choosing what single project best represents you.</p>
+    </div>
+
+    <div class="idea-card anim anim-7" data-status="exploring">
+      <div class="card-top">
+        <span class="idea-num">05</span>
+        <span class="status-tag status-exploring">Exploring</span>
+      </div>
+      <h2 class="idea-title">The Offline-First Mental Model</h2>
+      <p class="idea-hook">Most apps pretend the internet always works. It doesn't.</p>
+      <p class="idea-body">
+        Offline-first architecture is well understood technically. What's underexplored is the design language around it — how do you communicate sync state, conflict resolution, and uncertainty to a non-technical user without breaking their trust?
+      </p>
+      <hr class="idea-divider" />
+      <p class="real-line"><strong>What would make this real?</strong> A design pattern library specifically for sync-state UI — status indicators, conflict modals, and latency-honest copy.</p>
+    </div>
+
+    <div class="idea-card anim anim-8" data-status="dropped">
+      <div class="card-top">
+        <span class="idea-num">06</span>
+        <span class="status-tag status-dropped">Dropped</span>
+      </div>
+      <h2 class="idea-title">Sound as Navigation Feedback</h2>
+      <p class="idea-hook">Could a subtle audio layer make interfaces feel more alive?</p>
+      <p class="idea-body">
+        Explored using non-intrusive spatial audio cues — low-frequency tones, subtle clicks — to reinforce UI hierarchy and navigation depth. Dropped after testing: the overhead of audio permissions, accessibility conflict, and user habituation outweighed the benefit.
+      </p>
+      <hr class="idea-divider" />
+      <p class="real-line"><strong>Why dropped?</strong> Accessibility requirements make opt-out audio patterns risky. The signal-to-noise problem wasn't solvable at low implementation cost.</p>
+    </div>
+
+  </div>
+
+  <!-- PRINCIPLE -->
+  <div class="principle anim anim-8">
+    <p>This person doesn't wait for ideas — they generate them.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <span>© 2025 — Justin Mathew</span>
+    <nav class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="submit.html">Submit Idea</a>
+    </nav>
+  </footer>
+
+</div>
+
+<script>
+  // Filter
+  const btns  = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.idea-card');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        card.classList.toggle('hidden', filter !== 'all' && card.dataset.status !== filter);
+      });
+    });
+  });
+
+  // Scroll reveal for cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.idea-card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(18px)';
+    card.style.transition = `opacity 0.45s ease ${i * 0.07}s, transform 0.45s ease ${i * 0.07}s, border-color 0.25s`;
+    observer.observe(card);
+  });
+
+  // Theme
+  function toggleTheme() {
+    const light = document.body.classList.toggle('light');
+    document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
+    localStorage.setItem('theme', light ? 'light' : 'dark');
+  }
+  (function () {
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = '☀';
+    }
+  })();
+</script>
+</body>
+</html>

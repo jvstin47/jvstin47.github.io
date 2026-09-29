@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Projects — Justin Joe Mathew</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="projects.css">
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="progress" id="progress"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Justin Joe Mathew</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="ideas-lab.html">Ideas Lab</a></li>
+        <li><a href="submit.html">Collaborate</a></li>
+        <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://github.com/jvstin47" target="_blank" class="btn btn-ghost" style="padding:8px 16px;font-size:10px;">GitHub ↗</a>
+        <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <!-- PAGE INTRO -->
+    <section class="intro">
+      <p class="intro-label">Selected Engineering / Systems · AI · Mobile · Web</p>
+      <h1 class="intro-h1">PRO<span class="dot">.</span><br>JECTS</h1>
+      <p class="intro-sub">
+        Five production systems. One underlying philosophy: turning mathematical models, physical hardware, and human urgency into deterministic, elegant software.
+      </p>
+
+      <nav class="intro-index" aria-label="Project index">
+        <a href="#p1" class="index-item">01 / AroggyaGram-3</a>
+        <a href="#p2" class="index-item">02 / F1 Monte Carlo Simulator</a>
+        <a href="#p3" class="index-item">03 / AutoMeter IoT</a>
+        <a href="#p4" class="index-item">04 / Opportunity Android</a>
+        <a href="#p5" class="index-item">05 / CRT Lock &amp; 3D Web</a>
+      </nav>
+
+      <span class="intro-count">05 FLAGSHIP PROJECTS ↓</span>
+    </section>
+
+    <!-- PROJECT 01: AROGGYAGRAM-3 -->
+    <section class="project" id="p1">
+      <span class="bg-num">01</span>
+      <div class="proj-top">
+        <div class="proj-top-left">
+          <span class="proj-num">01 /</span>
+          <h2 class="proj-title">AroggyaGram-3<br>Intelligent Community Health Network</h2>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-year">Active Production</span>
+          <span class="proj-badge"><span class="proj-badge-dot"></span>Deployed</span>
+        </div>
+      </div>
+
+      <p class="proj-hook">
+        <span class="hook-quote">"</span>
+        When an emergency strikes in an isolated area, the bottleneck is rarely a total lack of resources — it is the total lack of an intelligent coordination layer to route human help within minutes.
+      </p>
+
+      <div class="proj-grid">
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Context</span>
+            <p class="field-body">Critical healthcare delivery in decentralized communities suffers from severe information fragmentation. Emergency calls are often frantic, unstructured, and fail to reach nearby field responders who have the right medical supplies.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">System Architecture</span>
+            <p class="field-body">Engineered an end-to-end multi-agent dispatch network. Ingests raw audio/text distress signals, processes intent via LLM agents, tags triage severity levels, and maps tasks to verified community workers using geo-fenced proximity scoring.</p>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Implementation</span>
+            <p class="field-body">Full-stack TypeScript architecture built with Next.js, reactive state pipelines, low-latency WebSocket dispatch, and Gemini API integration for adaptive multilingual emergency triage.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Engineering Decisions</span>
+            <p class="field-body">Prioritized zero-dependency fallback: offline SMS-burst capability when cell data is degraded, and deterministic failover routing so no distress signal remains unacknowledged.</p>
+            <div class="tags">
+              <span class="tag">TypeScript</span>
+              <span class="tag">Next.js</span>
+              <span class="tag">AI Agents</span>
+              <span class="tag">Geocoding</span>
+              <span class="tag">Distributed Health</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Outcome</span>
+            <div class="outcome-big">Active</div>
+            <p class="field-body">Working full-stack deployment turning human crisis into synchronized real-world field logistics. Validated through end-to-end multi-user emergency simulations.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Reflection</span>
+            <p class="field-body">Proves that generative AI belongs at the translation boundary—turning chaotic, terrified human speech into strict, structured JSON payloads that existing logistics software can act upon.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-footer">
+        <span class="repo-label">Source code &amp; documentation</span>
+        <a href="https://github.com/jvstin47/AroggyaGram-3" target="_blank" class="repo-link">View Repository <span class="arr">↗</span></a>
+      </div>
+    </section>
+
+    <!-- PROJECT 02: F1 MONTE CARLO -->
+    <section class="project" id="p2">
+      <span class="bg-num">02</span>
+      <div class="proj-top">
+        <div class="proj-top-left">
+          <span class="proj-num">02 /</span>
+          <h2 class="proj-title">F1 Monte Carlo<br>Race Strategy Simulator</h2>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-year">Live System</span>
+          <span class="proj-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><span class="proj-badge-dot" style="background:#10b981;"></span>Live Demo</span>
+        </div>
+      </div>
+
+      <p class="proj-hook">
+        <span class="hook-quote">"</span>
+        Grand Prix race strategies aren't won on fixed spreadsheets — they are won by evaluating tens of thousands of stochastic futures before the first pit window opens.
+      </p>
+
+      <div class="proj-grid">
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Context</span>
+            <p class="field-body">Formula 1 race engineering involves navigating extreme non-linearities: tyre compound thermal degradation, safety car probabilities, fuel-mass delta lap time penalties, and rival undercut dynamics under variable track conditions.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Vectorized Engine</span>
+            <p class="field-body">Engineered a vectorized Monte Carlo engine in Python leveraging NumPy arrays to execute 10,000 complete race trajectories in milliseconds. Incorporates non-linear wear profiles calibrated with FastF1 telemetry feeds.</p>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Decision Optimization</span>
+            <p class="field-body">Coupled stochastic simulation with a dynamic programming solver based on the Bellman equation to find the globally optimal pit strategy (lap count, compound choice, safety car response) under uncertain weather states.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Stack &amp; Performance</span>
+            <p class="field-body">Python backend leveraging vectorized linear algebra, FastAPI compute endpoints, and a high-framerate interactive React front-end delivering live probability curves and telemetry graphs.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">NumPy</span>
+              <span class="tag">FastF1 API</span>
+              <span class="tag">Dynamic Programming</span>
+              <span class="tag">React</span>
+              <span class="tag">Monte Carlo</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Outcome</span>
+            <div class="outcome-big">10k+</div>
+            <p class="field-body">Vectorized simulations per compute pass. Deployed and live for interactive user experimentation with real historical Grand Prix telemetry datasets.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Reflection</span>
+            <p class="field-body">Showcases how high-performance numerical computing and clean web visual interfaces transform raw mathematical uncertainty into clear tactical decisions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-footer">
+        <span class="repo-label">Interactive deployment &amp; code</span>
+        <div style="display:flex;gap:16px;">
+          <a href="https://f1-monte-carlo-race-strategy-simula.vercel.app" target="_blank" class="repo-link" style="color:var(--gold);">Launch Live Simulator <span class="arr">↗</span></a>
+          <a href="https://github.com/jvstin47/f1-monte-carlo-race-strategy-simulator" target="_blank" class="repo-link">View Repository <span class="arr">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT 03: AUTOMETER -->
+    <section class="project" id="p3">
+      <span class="bg-num">03</span>
+      <div class="proj-top">
+        <div class="proj-top-left">
+          <span class="proj-num">03 /</span>
+          <h2 class="proj-title">AutoMeter<br>Smart Fare Meter &amp; Dynamic UPI</h2>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-year">Tested &amp; Operational</span>
+          <span class="proj-badge"><span class="proj-badge-dot"></span>Hardware-Software</span>
+        </div>
+      </div>
+
+      <p class="proj-hook">
+        <span class="hook-quote">"</span>
+        For decades, informal auto-rickshaw fleets in India have struggled with rigged meters, currency friction, and payment disputes. AutoMeter replaces mistrust with automated verification.
+      </p>
+
+      <div class="proj-grid">
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Context</span>
+            <p class="field-body">Millions of urban daily commutes rely on auto-rickshaws. Analog mechanical meters are easily manipulated, lack real-time digital payment reconciliation, and force passengers and drivers into awkward disputes over change.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Sensor Fusion Logic</span>
+            <p class="field-body">Engineered a dual-input tracking system combining high-frequency GPS position deltas with physical wheel rotation pulses to calculate accurate distance even through tunnels and dense urban canyons without spoofing vulnerabilities.</p>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Dynamic UPI Integration</span>
+            <p class="field-body">Upon ride termination, the system generates a dynamic on-screen Unified Payments Interface (UPI) QR code embedded with the exact calculated amount, ride transaction hash, and merchant VPA for instant zero-fee passenger checkout.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Build Decisions</span>
+            <p class="field-body">Built with Flutter and Android Native services. Designed with a sunlight-readable, high-contrast UI tailored specifically to harsh vibration, high-glare automotive environments.</p>
+            <div class="tags">
+              <span class="tag">Flutter</span>
+              <span class="tag">Android Native</span>
+              <span class="tag">Sensor Fusion</span>
+              <span class="tag">UPI Protocol</span>
+              <span class="tag">IoT Transit</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Outcome</span>
+            <div class="outcome-big">0 Friction</div>
+            <p class="field-body">Operational smart meter prototype supporting instant dynamic QR scan-and-pay, automated fare brackets, and transparent driver analytics.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Reflection</span>
+            <p class="field-body">Built upon my earlier 1st-place award-winning research in transit tracking, demonstrating how software can modernize essential public mobility without imposing expensive corporate hardware.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-footer">
+        <span class="repo-label">Source code &amp; documentation</span>
+        <a href="https://github.com/jvstin47/AutoMeter" target="_blank" class="repo-link">View Repository <span class="arr">↗</span></a>
+      </div>
+    </section>
+
+    <!-- PROJECT 04: OPPORTUNITY ANDROID -->
+    <section class="project" id="p4">
+      <span class="bg-num">04</span>
+      <div class="proj-top">
+        <div class="proj-top-left">
+          <span class="proj-num">04 /</span>
+          <h2 class="proj-title">Opportunity<br>Offline-First Task &amp; Life OS</h2>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-year">Production Ready</span>
+          <span class="proj-badge"><span class="proj-badge-dot"></span>Android Native</span>
+        </div>
+      </div>
+
+      <p class="proj-hook">
+        <span class="hook-quote">"</span>
+        Most productivity tools fail because they assume unlimited human cognitive energy. Opportunity plans around your real daily energy budget and stays 100% functional without the cloud.
+      </p>
+
+      <div class="proj-grid">
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Context</span>
+            <p class="field-body">Cloud-dependent task managers suffer from network lag, subscription lock-in, and unrealistic planning that leads to user burnout. Opportunity was designed as an offline-first deterministic executive system.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Scoring &amp; Capacity Engine</span>
+            <p class="field-body">Features an algorithm that weights task difficulty, urgency, and calendar context against a capacity-aware daily budget—preventing over-scheduling and re-prioritizing remaining tasks dynamically when schedules slip.</p>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Modern Android Stack</span>
+            <p class="field-body">Crafted in pure Kotlin using Jetpack Compose, Material 3 theming, Room SQLite Database for offline persistence, WorkManager for reliable background alarms, and an accompanying Wear OS companion tile.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Architecture</span>
+            <p class="field-body">Strict Unidirectional Data Flow (UDF) with Coroutines and StateFlow. Fully decoupled data access layers guaranteeing zero UI thread stutters and 60 FPS transitions.</p>
+            <div class="tags">
+              <span class="tag">Kotlin</span>
+              <span class="tag">Jetpack Compose</span>
+              <span class="tag">Room DB</span>
+              <span class="tag">Wear OS</span>
+              <span class="tag">WorkManager</span>
+              <span class="tag">UDF Architecture</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Outcome</span>
+            <div class="outcome-big">100%</div>
+            <p class="field-body">Zero cloud dependency. Complete local privacy, instant sub-millisecond query responses, and resilient cross-device synchronization to Wear OS watches.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Reflection</span>
+            <p class="field-body">Highlights the beauty of Native Android engineering when unburdened by bloated external SDKs—delivering clean, battery-efficient tools built for human focus.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-footer">
+        <span class="repo-label">Source code &amp; APK releases</span>
+        <a href="https://github.com/jvstin47/opportunity-android-task-planner" target="_blank" class="repo-link">View Repository <span class="arr">↗</span></a>
+      </div>
+    </section>
+
+    <!-- PROJECT 05: CRT LOCK & 3D INTERACTIVE -->
+    <section class="project" id="p5">
+      <span class="bg-num">05</span>
+      <div class="proj-top">
+        <div class="proj-top-left">
+          <span class="proj-num">05 /</span>
+          <h2 class="proj-title">CRT Modular Lock<br>&amp; 3D Interactive Web Mechanics</h2>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-year">Interactive Live</span>
+          <span class="proj-badge" style="background:rgba(16,185,129,0.15);color:#10b981;"><span class="proj-badge-dot" style="background:#10b981;"></span>Live Demo</span>
+        </div>
+      </div>
+
+      <p class="proj-hook">
+        <span class="hook-quote">"</span>
+        The Chinese Remainder Theorem is usually taught through dry modular arithmetic equations. Building it as an interactive, tactile digital tumbler lock transforms an ancient theorem into intuition.
+      </p>
+
+      <div class="proj-grid">
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Context</span>
+            <p class="field-body">Explores the border where mathematical theorems, physical mechanical puzzles, and high-framerate front-end engineering merge. Digital recreation of a physical cardboard CRT lock mechanism.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Mechanical Interaction</span>
+            <p class="field-body">Users rotate three modular dial rings ($m_1=3, m_2=5, m_3=7$), spin the central number wheel, and pull the sliding rod to align notched gates, release the spring latch, and swing open the safe door.</p>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Creative Stack</span>
+            <p class="field-body">Engineered with React, TypeScript, Tailwind CSS, and Framer Motion spring physics. Accompanied by WebGL experiments in Three.js and Canvas frame-sequence animations (The Ford GT, 3D WebGL fruits, AR jewelry engines).</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Design Standards</span>
+            <p class="field-body">Pixel-perfect haptic feedback simulation, audio-visual feedback on alignment notches, and responsive touch gestures across desktop trackpads and mobile screens.</p>
+            <div class="tags">
+              <span class="tag">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Framer Motion</span>
+              <span class="tag">Three.js</span>
+              <span class="tag">WebGL</span>
+              <span class="tag">Number Theory</span>
+            </div>
+          </div>
+        </div>
+        <div class="proj-col">
+          <div class="field">
+            <span class="field-label">Outcome</span>
+            <div class="outcome-big">60 FPS</div>
+            <p class="field-body">Fluid spring-physics animation running live in production. Deployed interactive web demo with open-source component architecture.</p>
+          </div>
+          <div class="field">
+            <span class="field-label">Reflection</span>
+            <p class="field-body">Proves that the web can feel physical, mechanical, and delightful when animations obey real inertia and physical resistance laws.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-footer">
+        <span class="repo-label">Interactive deployment &amp; source</span>
+        <div style="display:flex;gap:16px;">
+          <a href="https://crt-chinese-reminder-theorem.vercel.app" target="_blank" class="repo-link" style="color:var(--gold);">Play CRT Lock Demo <span class="arr">↗</span></a>
+          <a href="https://the-ford-gt.vercel.app" target="_blank" class="repo-link" style="color:var(--gold);">Ford GT 3D <span class="arr">↗</span></a>
+          <a href="https://github.com/jvstin47/CRT--Chinese-Reminder-Theorem" target="_blank" class="repo-link">View Repository <span class="arr">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="projects-footer">
+      <span class="ft-name">Justin Joe Mathew</span>
+      <span class="ft-note">Software Engineer · Full-Stack &amp; Systems Builder · Amal Jyothi College of Engineering · 2025–2029</span>
+      <a href="mailto:jvstin47@gmail.com" class="ft-contact">jvstin47@gmail.com</a>
+    </footer>
+
+  </div><!-- /.wrap -->
+
+  <script>
+    // Scroll progress
+    const bar = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (scrolled / total * 100) + '%';
+    }, { passive: true });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.project').forEach(p => observer.observe(p));
+
+    // Staggered field reveals
+    const fieldObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.field').forEach((f, i) => {
+            f.style.opacity = '0';
+            f.style.transform = 'translateY(20px)';
+            f.style.transition = `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s`;
+            setTimeout(() => { f.style.opacity = '1'; f.style.transform = 'translateY(0)'; }, 50 + i * 100);
+          });
+          fieldObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.project').forEach(p => fieldObs.observe(p));
+
+    // Theme
+    function toggleTheme() {
+      const light = document.body.classList.toggle('light');
+      document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
+      localStorage.setItem('theme', light ? 'light' : 'dark');
+    }
+    (function () {
+      if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light');
+        const b = document.getElementById('theme-btn');
+        if (b) b.textContent = '☀';
+      }
+    })();
+  </script>
+</body>
+</html>

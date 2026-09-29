@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit an Idea — Justin Mathew</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="submit.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Justin Joe Mathew</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="ideas-lab.html">Ideas Lab</a></li>
+      <li><a href="submit.html" class="active">Collaborate</a></li>
+      <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
+    </ul>
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="wrap">
+    <div class="page-header">
+      <div class="page-label">Idea Submission</div>
+      <h1 class="page-title">Submit an Idea</h1>
+    </div>
+    <div id="app"></div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 — Justin Joe Mathew</span>
+  <nav class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="ideas-lab.html">Ideas Lab</a>
+    <a href="Justin_Mathew_Resume.pdf" target="_blank">Resume (PDF)</a>
+  </nav>
+</footer>
+
+<script>
+  // Theme
+  function toggleTheme() {
+    const light = document.body.classList.toggle('light');
+    document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
+    localStorage.setItem('theme', light ? 'light' : 'dark');
+  }
+  (function () {
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = '☀';
+    }
+  })();
+
+  // ── Multi-step form ──
+  const STEPS = ['intro','title','description','impact','stage','outcome','contact','review'];
+  const STAGES = [
+    { value: 'spark',     label: '✦ Spark',     desc: 'Just an intuition or raw concept' },
+    { value: 'concept',   label: '◈ Concept',   desc: 'Defined idea, not yet validated' },
+    { value: 'prototype', label: '◉ Prototype', desc: 'Some form of proof or mockup exists' },
+    { value: 'tested',    label: '◎ Tested',    desc: 'Tested with real users or data' },
+  ];
+
+  let step = 0;
+  let form = { title: '', description: '', impact: '', stage: '', outcome: '', name: '', email: '', organization: '' };
+  let submitted = false;
+
+  function render() {
+    const app = document.getElementById('app');
+    if (submitted) { app.innerHTML = renderSuccess(); return; }
+    app.innerHTML = `
+      ${step > 0 ? renderProgress() : ''}
+      <div class="step-wrap" id="step-content">${renderStep()}</div>
+      ${renderNavBtns()}
+    `;
+    bindEvents();
+    const first = app.querySelector('input, textarea');
+    if (first) setTimeout(() => first.focus(), 50);
+  }
+
+  function renderProgress() {
+    const labels = ['The Idea', 'Description', 'Impact', 'Stage', 'Outcome', 'Contact', 'Review'];
+    const labelsHtml = labels.map((l, i) => {
+      const idx = i + 1;
+      const cls = idx < step ? 'done' : idx === step ? 'active' : 'todo';
+      return `<span class="prog-label ${cls}">${l}</span>`;
+    }).join('');
+    const pct = (step / (STEPS.length - 1)) * 100;
+    return `<div class="progress-wrap">
+      <div class="progress-labels">${labelsHtml}</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }
+
+  function renderStep() {
+    if (step === 0) return `
+      <p class="intro-text" id="typed-text"></p>
+      <div class="intro-meta">
+        <span>◦ 7 fields</span>
+        <span>◦ ~5 minutes</span>
+        <span>◦ Reviewed personally</span>
+      </div>`;
+    if (step === 1) return `
+      <div class="step-num">01 / Name it</div>
+      <div class="step-q">What do you call this idea?</div>
+      <input class="field-input" id="f-title" maxlength="80" placeholder="Give it a name…" value="${esc(form.title)}"/>
+      <div class="char-count"><span id="cc-title">${form.title.length}</span>/80</div>
+      <p class="hint">A good title is crisp and evocative. It should intrigue, not explain.</p>`;
+    if (step === 2) return `
+      <div class="step-num">02 / Describe it</div>
+      <div class="step-q">What is this, exactly?</div>
+      <textarea class="field-textarea" id="f-desc" maxlength="600" rows="5" placeholder="Describe your idea clearly and concisely…">${esc(form.description)}</textarea>
+      <div class="char-count"><span id="cc-desc">${form.description.length}</span>/600</div>`;
+    if (step === 3) return `
+      <div class="step-num">03 / Why it matters</div>
+      <div class="step-q">What changes if this exists?</div>
+      <textarea class="field-textarea" id="f-impact" maxlength="400" rows="4" placeholder="Who benefits, and how? What problem does it solve?">${esc(form.impact)}</textarea>
+      <div class="char-count"><span id="cc-impact">${form.impact.length}</span>/400</div>`;
+    if (step === 4) return `
+      <div class="step-num">04 / Current stage</div>
+      <div class="step-q">Where does it stand today?</div>
+      <div class="stages">${STAGES.map(s => `<button class="stage-btn${form.stage === s.value ? ' selected' : ''}" data-stage="${s.value}"><div class="stage-label">${s.label}</div><div class="stage-desc">${s.desc}</div></button>`).join('')}</div>`;
+    if (step === 5) return `
+      <div class="step-num">05 / Expected outcome</div>
+      <div class="step-q">What does success look like?</div>
+      <textarea class="field-textarea" id="f-outcome" maxlength="400" rows="4" placeholder="Define a concrete, measurable outcome…">${esc(form.outcome)}</textarea>
+      <div class="char-count"><span id="cc-outcome">${form.outcome.length}</span>/400</div>`;
+    if (step === 6) return `
+      <div class="step-num">06 / Contact details</div>
+      <div class="step-q">Who's behind this?</div>
+      <div class="contact-fields">
+        <div><div class="cf-label">Full name *</div><input class="cf-input" id="f-name" maxlength="80" placeholder="Your name" value="${esc(form.name)}"/></div>
+        <div><div class="cf-label">Email *</div><input class="cf-input" id="f-email" type="email" maxlength="120" placeholder="your@email.com" value="${esc(form.email)}"/></div>
+        <div><div class="cf-label">Organization <span style="opacity:.4">optional</span></div><input class="cf-input" id="f-org" maxlength="80" placeholder="Where do you work or create?" value="${esc(form.organization)}"/></div>
+      </div>`;
+    if (step === 7) {
+      const sl = STAGES.find(s => s.value === form.stage);
+      return `
+        <div class="step-num" style="color:var(--gold)">Review</div>
+        <div class="step-q" style="color:var(--text);font-style:normal;">Everything looks right?</div>
+        <div class="review-rows">
+          ${rr('Idea Title', form.title)}
+          ${rr('Description', form.description)}
+          ${rr('Why it matters', form.impact)}
+          ${rr('Stage', sl ? sl.label : '—')}
+          ${rr('Expected outcome', form.outcome)}
+          ${rr('Submitted by', form.name + (form.organization ? ` · ${form.organization}` : ''))}
+          ${rr('Email', form.email)}
+        </div>
+        <p class="hint" style="margin-top:20px;">By submitting, you confirm this is your original thinking and consent to being contacted about it.</p>`;
+    }
+    return '';
+  }
+
+  function rr(key, val) {
+    return `<div class="review-row"><div class="rr-key">${key}</div><div class="rr-val">${esc(val || '—')}</div></div>`;
+  }
+
+  function renderNavBtns() {
+    const canGo = canProceed();
+    const backDis = step === 0 ? 'disabled' : '';
+    const nextDis = canGo ? '' : 'disabled';
+    if (step === 7) return `<div class="nav-btns">
+      <button class="btn-back" onclick="go(-1)" ${backDis}>← Back</button>
+      <button class="btn-submit" onclick="doSubmit()">Submit Idea ◉</button>
+    </div>`;
+    return `<div class="nav-btns">
+      <button class="btn-back" onclick="go(-1)" ${backDis}>← Back</button>
+      <button class="btn-next" onclick="go(1)" ${nextDis}>${step === 0 ? 'Begin →' : 'Continue →'}</button>
+    </div>`;
+  }
+
+  function renderSuccess() {
+    const d = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return `<div class="success">
+      <div class="success-icon">◉</div>
+      <h2 class="success-title">Received.</h2>
+      <p class="success-sub">Your idea has been logged. Justin reviews submissions personally and responds to those that resonate. You'll hear back if yours does.</p>
+      <div class="success-date">${d}</div>
+    </div>`;
+  }
+
+  function canProceed() {
+    if (step === 0) return true;
+    if (step === 1) return form.title.trim().length >= 3;
+    if (step === 2) return form.description.trim().length >= 20;
+    if (step === 3) return form.impact.trim().length >= 10;
+    if (step === 4) return form.stage !== '';
+    if (step === 5) return form.outcome.trim().length >= 10;
+    if (step === 6) return form.name.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+    return true;
+  }
+
+  function go(dir) {
+    saveCurrentStep();
+    if (dir === 1 && !canProceed()) return;
+    const content = document.getElementById('step-content');
+    if (content) { content.style.opacity = '0'; content.style.transform = 'translateY(10px)'; }
+    setTimeout(() => { step += dir; render(); }, 200);
+  }
+
+  function doSubmit() { saveCurrentStep(); submitted = true; render(); }
+
+  function saveCurrentStep() {
+    const t = document.getElementById('f-title');   if (t) form.title = t.value;
+    const d = document.getElementById('f-desc');    if (d) form.description = d.value;
+    const i = document.getElementById('f-impact');  if (i) form.impact = i.value;
+    const o = document.getElementById('f-outcome'); if (o) form.outcome = o.value;
+    const n = document.getElementById('f-name');    if (n) form.name = n.value;
+    const e = document.getElementById('f-email');   if (e) form.email = e.value;
+    const g = document.getElementById('f-org');     if (g) form.organization = g.value;
+  }
+
+  function bindEvents() {
+    ['title', 'desc', 'impact', 'outcome'].forEach(key => {
+      const inp = document.getElementById('f-' + key);
+      const cc  = document.getElementById('cc-' + key);
+      if (inp && cc) inp.addEventListener('input', () => {
+        const fk = key === 'desc' ? 'description' : key;
+        form[fk] = inp.value;
+        cc.textContent = inp.value.length;
+        rerenderNavBtn();
+      });
+    });
+    ['name', 'email', 'org'].forEach(id => {
+      const el = document.getElementById('f-' + id);
+      if (el) el.addEventListener('input', () => {
+        if (id === 'name') form.name = el.value;
+        if (id === 'email') form.email = el.value;
+        if (id === 'org') form.organization = el.value;
+        rerenderNavBtn();
+      });
+    });
+    document.querySelectorAll('.stage-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        form.stage = btn.dataset.stage;
+        document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        rerenderNavBtn();
+      });
+    });
+    document.querySelectorAll('.field-input, .cf-input').forEach(inp => {
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter' && canProceed()) go(1); });
+    });
+    if (step === 0) {
+      const el = document.getElementById('typed-text');
+      const txt = "Not every idea makes it here. This is a thinking exercise as much as a submission — take your time. Justin reads everything that arrives and responds to what moves him.";
+      let i = 0;
+      const iv = setInterval(() => { el.textContent = txt.slice(0, ++i); if (i >= txt.length) clearInterval(iv); }, 22);
+    }
+  }
+
+  function rerenderNavBtn() {
+    const old = document.querySelector('.nav-btns');
+    if (!old) return;
+    const tmp = document.createElement('div');
+    tmp.innerHTML = renderNavBtns();
+    old.replaceWith(tmp.firstChild);
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  render();
+</script>
+</body>
+</html>

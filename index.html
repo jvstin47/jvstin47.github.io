@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Justin Joe Mathew — Software Engineer &amp; Systems Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Justin Joe Mathew</a>
+    <ul class="nav-links">
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="ideas-lab.html">Ideas Lab</a></li>
+      <li><a href="submit.html">Collaborate</a></li>
+      <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
+    </ul>
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap" style="position:relative;z-index:1;">
+    <div class="hero-eyebrow anim anim-1">
+      <span class="hero-dot"></span>
+      <span class="hero-eyebrow-text">Available for Software Engineering &amp; 0→1 Roles</span>
+    </div>
+
+    <h1 class="hero-name anim anim-2">
+      Justin Joe<br><span class="line-2">Mathew<span class="cursor"></span></span>
+    </h1>
+
+    <p class="hero-role anim anim-3">Software Engineer · Full-Stack &amp; Systems Builder · AI Systems Explorer</p>
+
+    <p class="hero-desc anim anim-4">
+      I engineer software across the intersection of <strong>intelligence, systems architecture, and tactile design.</strong>
+      From vectorized Monte Carlo simulation engines and autonomous agent networks to offline-first Android platforms and interactive 3D interfaces.
+    </p>
+
+    <div class="hero-actions anim anim-5">
+      <a class="btn btn-primary" href="projects.html">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
+        Explore Projects
+      </a>
+      <a class="btn btn-ghost" href="Justin_Mathew_Resume.pdf" target="_blank">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-right:6px;"><path d="M8 2v9m0 0L4 7m4 4l4-4M2 13h12"/></svg>
+        Resume (PDF)
+      </a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch →</a>
+    </div>
+
+    <div class="scroll-indicator anim anim-5">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-label reveal">About</div>
+    <h2 class="section-title reveal reveal-d1">Who I <em>am</em></h2>
+
+    <div class="about-grid">
+      <div class="about-left reveal reveal-d2">
+        <div class="about-avatar">
+          <div class="avatar-initials"> <img src="images/profile.jpeg" class="profile-img" alt="Justin Joe Mathew"></div>
+        </div>
+        <div class="about-meta">
+          <div class="meta-row"><span class="meta-key">Based</span><span class="meta-val">Kerala, India</span></div>
+          <div class="meta-row"><span class="meta-key">Focus</span><span class="meta-val">Systems · AI · Full-Stack</span></div>
+          <div class="meta-row"><span class="meta-key">Education</span><span class="meta-val">B.Tech CSE (2025–2029)</span></div>
+          <div class="meta-row"><span class="meta-key">Status</span><span class="meta-val" style="color:var(--building)">Open to Opportunities</span></div>
+        </div>
+      </div>
+
+      <div class="about-right reveal reveal-d3">
+        <div class="about-body">
+          <p>
+            I am a <strong>Software Engineer and Computer Science Engineering student</strong> with an obsession for turning complex mathematical models, physical hardware, and high-stakes workflows into fast, resilient software.
+          </p>
+          <p>
+            My work spans from building a <strong>10,000-iteration vectorized Formula 1 race strategy engine</strong> with dynamic programming and FastF1 telemetry, to engineering <strong>AroggyaGram-3</strong>—an intelligent decentralized community health-response network that converts unstructured crisis calls into field responder action.
+          </p>
+          <p>
+            I believe software should be tactile and dependable. Whether working with <strong>Kotlin &amp; Jetpack Compose</strong> on offline-first Android/Wear OS platforms, <strong>Python &amp; NumPy</strong> for scientific simulation, or <strong>React, TypeScript &amp; WebGL</strong> for high-fidelity web experiences—I focus on robust fundamentals and end-to-end craftsmanship.
+          </p>
+        </div>
+
+        <div class="skills-list">
+          <span class="skill-tag amber">Python (NumPy · FastF1 · FastAPI)</span>
+          <span class="skill-tag amber">TypeScript · React · Next.js</span>
+          <span class="skill-tag amber">Kotlin · Jetpack Compose</span>
+          <span class="skill-tag">Flutter · Dart</span>
+          <span class="skill-tag">Autonomous AI Agents</span>
+          <span class="skill-tag">Three.js · WebGL · Canvas</span>
+          <span class="skill-tag">Room DB · PostgreSQL · SQLite</span>
+          <span class="skill-tag">Docker · Linux Systems</span>
+          <span class="skill-tag">C / C++ Programming</span>
+          <span class="skill-tag">Sensor Fusion &amp; IoT</span>
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a class="btn btn-primary" href="Justin_Mathew_Resume.pdf" target="_blank">Download Resume (PDF)</a>
+          <a class="btn btn-ghost" href="#contact">Work With Me →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="projects-header">
+      <div>
+        <div class="section-label reveal">Selected Engineering</div>
+        <h2 class="section-title reveal reveal-d1">Flagship Projects</h2>
+      </div>
+      <p class="section-subtitle reveal reveal-d2" style="max-width:340px;font-size:13px;">
+        Production systems, high-throughput simulation engines, and tactile web interfaces.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      <!-- F1 Strategy Simulator -->
+      <div class="project-card featured reveal reveal-d2">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <p class="project-type">Simulation · Python · FastF1 · Dynamic Programming</p>
+          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
+        </div>
+        <h3 class="project-title">F1 Monte Carlo Race Strategy Simulator</h3>
+        <p class="project-desc">
+          High-performance Formula 1 race strategy engine powered by a vectorized 10,000-run Monte Carlo simulation, non-linear tyre degradation modeling, and Bellman-equation dynamic programming to compute optimal pit windows against stochastic safety cars and weather shifts.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="ptag">Python</span>
+            <span class="ptag">NumPy Vectorization</span>
+            <span class="ptag">FastF1 Telemetry</span>
+            <span class="ptag">React Frontend</span>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <a href="https://f1-monte-carlo-race-strategy-simula.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live App ↗</a>
+            <a href="projects.html#p2" class="project-link">Deep dive <span>→</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AroggyaGram-3 -->
+      <div class="project-card reveal reveal-d3">
+        <p class="project-type">AI Agents · Crisis Response · Full-Stack</p>
+        <h3 class="project-title">AroggyaGram-3 Community Health Network</h3>
+        <p class="project-desc">
+          Intelligent crisis dispatch ecosystem that ingests unstructured distress requests, uses autonomous AI reasoning to classify medical urgency, and performs proximity routing to field health workers.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="ptag">TypeScript</span>
+            <span class="ptag">Next.js</span>
+            <span class="ptag">AI Triage</span>
+          </div>
+          <a href="projects.html#p1" class="project-link">Case study →</a>
+        </div>
+      </div>
+
+      <!-- AutoMeter -->
+      <div class="project-card reveal reveal-d3">
+        <p class="project-type">IoT Transit · Flutter · Sensor Fusion</p>
+        <h3 class="project-title">AutoMeter — Smart Dynamic UPI Fare System</h3>
+        <p class="project-desc">
+          Tamper-resilient transit fare meter fusing GPS speed deltas and wheel pulses with instant on-screen dynamic UPI QR generation for frictionless auto-rickshaw transit.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="ptag">Flutter</span>
+            <span class="ptag">Android Native</span>
+            <span class="ptag">UPI Protocol</span>
+          </div>
+          <a href="projects.html#p3" class="project-link">View →</a>
+        </div>
+      </div>
+
+      <!-- Opportunity Task Planner -->
+      <div class="project-card reveal reveal-d4">
+        <p class="project-type">Mobile Systems · Kotlin · Wear OS</p>
+        <h3 class="project-title">Opportunity — Offline-First Task Ecosystem</h3>
+        <p class="project-desc">
+          Deterministic task scoring, capacity-aware schedule allocation, Room DB local storage, WorkManager background jobs, and a synchronized Wear OS companion.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="ptag">Kotlin</span>
+            <span class="ptag">Jetpack Compose</span>
+            <span class="ptag">Wear OS</span>
+          </div>
+          <a href="projects.html#p4" class="project-link">View →</a>
+        </div>
+      </div>
+
+      <!-- CRT Lock & 3D Interactive Web -->
+      <div class="project-card reveal reveal-d4">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <p class="project-type">Creative Web · WebGL · Number Theory</p>
+          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
+        </div>
+        <h3 class="project-title">CRT Modular Lock &amp; 3D Web Mechanics</h3>
+        <p class="project-desc">
+          Tactile digital recreation of a physical Chinese Remainder Theorem modular lock with interactive dials, sliding latch mechanics, and high-framerate WebGL rendering.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="ptag">React</span>
+            <span class="ptag">TypeScript</span>
+            <span class="ptag">Framer Motion</span>
+            <span class="ptag">WebGL</span>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <a href="https://crt-chinese-reminder-theorem.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live App ↗</a>
+            <a href="projects.html#p5" class="project-link">View →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:40px;">
+      <a class="btn btn-ghost" href="projects.html">View All Detailed Case Studies &amp; Architecture Breakdowns →</a>
+    </div>
+  </div>
+</section>
+
+<!-- IDEAS TEASER -->
+<section id="ideas">
+  <div class="wrap">
+    <div class="ideas-header">
+      <div>
+        <div class="section-label reveal">R&amp;D Thinking</div>
+        <h2 class="section-title reveal reveal-d1">Ideas <em>Lab</em></h2>
+      </div>
+      <p class="section-subtitle reveal reveal-d2" style="max-width:320px;font-size:13px;">
+        Exploratory systems, architectural hypotheses, and experiments under active research.
+      </p>
+    </div>
+
+    <div class="ideas-teaser-grid">
+      <div class="idea-teaser reveal reveal-d2" data-status="building">
+        <div class="teaser-top">
+          <span style="font-size:11px;color:var(--faint)">01</span>
+          <span class="status-pill sp-building">Building</span>
+        </div>
+        <h3 class="idea-teaser-title">Permission Layers in AI Interfaces</h3>
+        <p class="idea-teaser-hook">What if the user always possessed verifiable cryptographic clarity over what model agents ingest?</p>
+      </div>
+
+      <div class="idea-teaser reveal reveal-d3" data-status="exploring">
+        <div class="teaser-top">
+          <span style="font-size:11px;color:var(--faint)">02</span>
+          <span class="status-pill sp-exploring">Exploring</span>
+        </div>
+        <h3 class="idea-teaser-title">Dynamic Telemetry Adaptation</h3>
+        <p class="idea-teaser-hook">Predictive vehicle wear curves updated via streaming distributed sensor heuristics.</p>
+      </div>
+
+      <div class="idea-teaser reveal reveal-d4" data-status="thinking">
+        <div class="teaser-top">
+          <span style="font-size:11px;color:var(--faint)">03</span>
+          <span class="status-pill sp-thinking">Thinking</span>
+        </div>
+        <h3 class="idea-teaser-title">Friction by Design in Safety Systems</h3>
+        <p class="idea-teaser-hook">Why removing all UI friction in critical decision paths is often an anti-pattern.</p>
+      </div>
+    </div>
+
+    <div class="ideas-cta-bar reveal reveal-d5">
+      <p class="ideas-cta-text">
+        <strong>Active systems R&amp;D</strong> — spanning distributed intelligence, sensor networks, and human-computer ergonomics.
+      </p>
+      <a class="btn btn-ghost" href="ideas-lab.html">Explore the Ideas Lab →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal reveal-d1">Let's <em>connect</em></h2>
+
+    <div class="contact-grid">
+      <div class="contact-left reveal reveal-d2">
+        <p class="contact-body">
+          Interested in discussing a software engineering role, distributed systems architecture, or ambitious 0→1 products?
+          Drop me an email or connect across my developer profiles.
+        </p>
+
+        <a href="mailto:jvstin47@gmail.com" class="contact-email">
+          jvstin47@gmail.com
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+
+        <div class="social-links">
+          <a href="https://github.com/jvstin47" target="_blank" class="social-link">
+            <div class="social-left"><span class="social-platform">GitHub</span><span>@jvstin47</span></div>
+            <span class="social-arrow">↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/jvstin47/" target="_blank" class="social-link">
+            <div class="social-left"><span class="social-platform">LinkedIn</span><span>Justin Joe Mathew</span></div>
+            <span class="social-arrow">↗</span>
+          </a>
+          <a href="Justin_Mathew_Resume.pdf" target="_blank" class="social-link">
+            <div class="social-left"><span class="social-platform">Resume</span><span>Download PDF</span></div>
+            <span class="social-arrow">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-right reveal reveal-d3">
+        <div class="availability-card">
+          <div class="avail-status">
+            <div class="avail-dot"></div>
+            <span class="avail-label">Available for Roles &amp; High-Impact Work</span>
+          </div>
+          <h3 class="avail-title">Engineering Engagement</h3>
+          <p class="avail-body">
+            Computer Science Engineering student (2025–2029) ready to contribute immediately to production environments and innovative technical teams.
+          </p>
+          <div class="avail-items">
+            <div class="avail-item">Software Engineer Internships &amp; Roles</div>
+            <div class="avail-item">Full-Stack &amp; AI Systems Engineering</div>
+            <div class="avail-item">Mobile &amp; Offline-First Systems (Android)</div>
+            <div class="avail-item">0→1 Rapid Prototyping &amp; Architecture</div>
+          </div>
+          <br />
+          <a class="btn btn-primary" href="submit.html" style="width:100%;justify-content:center;margin-top:4px;">
+            Initiate Collaboration →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-logo">Justin Joe Mathew</span>
+      <span class="footer-copy">© 2026. Built with precision and care.</span>
+    </div>
+    <nav class="footer-nav">
+      <a href="#about">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="ideas-lab.html">Ideas Lab</a>
+      <a href="Justin_Mathew_Resume.pdf" target="_blank">Resume (PDF)</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="back-top" href="#hero">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 10V2M2 6l4-4 4 4"/></svg>
+      Top
+    </a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const scrollSpy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => { l.style.color = l.getAttribute('href') === '#' + e.target.id ? 'var(--gold)' : ''; });
+      }
+    });
+  }, { threshold: 0.45 });
+  sections.forEach(s => scrollSpy.observe(s));
+
+  // Theme
+  function toggleTheme() {
+    const light = document.body.classList.toggle('light');
+    document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
+    localStorage.setItem('theme', light ? 'light' : 'dark');
+  }
+  (function () {
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+      const b = document.getElementById('theme-btn');
+      if (b) b.textContent = '☀';
+    }
+  })();
+</script>
+</body>
+</html>
