@@ -218,7 +218,7 @@
   font-weight: 300;
   line-height: 1.55;
   color: var(--text);
-  max-width: 860px;
+  max-width: 100%;
   margin-bottom: 48px;
   padding: 24px 28px;
   border-left: 3px solid var(--gold);
@@ -391,7 +391,45 @@ footer.projects-footer {
 
 .ft-contact:hover { color: var(--gold); }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE & WIDE-SCREEN / LANDSCAPE OPTIMIZATIONS ── */
+@media (min-width: 1280px) {
+  .project {
+    padding: 96px 40px 80px 48px;
+  }
+  .proj-grid {
+    gap: 48px;
+  }
+  .proj-col:not(:last-child) {
+    padding-right: 48px;
+  }
+  .field-body {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .outcome-big {
+    font-size: 64px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .project {
+    padding: 110px 54px 92px 64px;
+  }
+  .proj-grid {
+    gap: 60px;
+  }
+  .proj-col:not(:last-child) {
+    padding-right: 60px;
+  }
+  .field-body {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+  .outcome-big {
+    font-size: 72px;
+  }
+}
+
 @media (max-width: 960px) {
   .project { padding: 60px 20px 50px 24px; }
   .proj-grid { grid-template-columns: 1fr; gap: 32px; }
