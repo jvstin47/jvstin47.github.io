@@ -12,20 +12,20 @@
    DESIGN TOKENS — DARK MODE (Pure Primeval Nature & Pine)
 ────────────────────────────────────────────────────────────── */
 :root {
-  /* Backgrounds: Deep Primeval Pine & Moss Forest */
-  --bg:          #060c09;
-  --surface:     #0c1510;
-  --surface-2:   #121d16;
+  /* Backgrounds: Deep Midnight Pine Void (Richer, darker, high contrast) */
+  --bg:          #030705;
+  --surface:     #08120c;
+  --surface-2:   #0d1d13;
 
-  /* Borders: Alpine Spruce & Lichen Slate */
-  --border:      #1a2920;
-  --border-2:    #142119;
+  /* Borders: Deep Spruce & Pine Slate */
+  --border:      #14271c;
+  --border-2:    #0f2016;
 
   /* Text: Clean Mist & Mountain Pine */
-  --text:        #ecf3ee;
-  --sub:         #8ca394;
-  --faint:       #52685a;
-  --muted:       #37483d;
+  --text:        #f0f7f2;
+  --sub:         #96b09f;
+  --faint:       #5d7a67;
+  --muted:       #3f5647;
 
   /* Pure Nature Palette: Deep Pine, Emerald & Alpine Glacier */
   --nature:      #10b981;              /* Primary Accent: Emerald Forest */
@@ -61,28 +61,41 @@
 }
 
 /* ──────────────────────────────────────────────────────────────
-   DESIGN TOKENS — LIGHT MODE (Morning Alpine Birch & Dew)
+   DESIGN TOKENS — LIGHT MODE (High-Contrast Alpine Alabaster & Forest Ink)
 ────────────────────────────────────────────────────────────── */
 body.light {
-  --bg:          #f2f6f3;
-  --surface:     #e4ece6;
-  --surface-2:   #d8e4db;
-  --border:      #c0d3c5;
-  --border-2:    #b2c7b8;
-  --text:        #08170e;
-  --sub:         #233a2c;
-  --faint:       #4c6655;
-  --muted:       #7c9684;
-  --nature:      #059669;              /* Deep Vivid Forest Emerald */
-  --nature-hi:   #047857;              /* Lush Forest Evergreen */
-  --nature-dim:  #064e3b;              /* Deep Ancient Pine */
-  --nature-glow: rgba(5, 150, 105, 0.12);
-  --glacier:     #0d9488;
-  --sprout:      #16a34a;
-  --gold:        #059669;
-  --gold-hi:     #047857;
-  --gold-dim:    #064e3b;
-  --gold-glow:   rgba(5, 150, 105, 0.12);
+  /* Backgrounds: Pristine Light Canvas with Crisp White Surfaces */
+  --bg:          #f7faf8;              /* Clean, crisp, luminous background */
+  --surface:     #ffffff;              /* True crisp white cards for maximum contrast */
+  --surface-2:   #edf4ef;              /* Soft secondary surface for insets & chips */
+
+  /* Borders: Defined, crisp boundaries */
+  --border:      #cfded2;
+  --border-2:    #bed1c3;
+
+  /* Text: Deep Carbon Pine (WCAG AAA High Contrast) */
+  --text:        #06150b;              /* Deepest forest carbon black (>16:1 contrast ratio) */
+  --sub:         #183421;              /* Rich deep pine (>10:1 contrast ratio) */
+  --faint:       #34543d;              /* Clearly legible meta & labels (>6:1 contrast ratio) */
+  --muted:       #4c6c55;
+
+  /* High-Contrast Nature Palette */
+  --nature:      #047857;              /* Deep vivid emerald */
+  --nature-hi:   #065f46;              /* Deep pine evergreen on hover */
+  --nature-dim:  #022c22;              /* Deep Ancient Pine */
+  --nature-glow: rgba(4, 120, 87, 0.14);
+  --glacier:     #0f766e;
+  --sprout:      #15803d;
+  --gold:        #047857;
+  --gold-hi:     #065f46;
+  --gold-dim:    #022c22;
+  --gold-glow:   rgba(4, 120, 87, 0.14);
+
+  /* Status colours in Light Mode */
+  --thinking:    #0284c7;              /* Clear Cerulean Sky */
+  --exploring:   #15803d;              /* Rich Leaf Green */
+  --building:    #047857;              /* Deep Pine Emerald */
+  --dropped:     #4b5563;              /* Deep Steel Grey */
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -113,19 +126,19 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(circle, #272520 1.2px, transparent 1.2px);
+  background-image: radial-gradient(circle, #102416 1.1px, transparent 1.1px);
   background-size: 28px 28px;
-  opacity: 0.32;
+  opacity: 0.35;
   pointer-events: none;
   z-index: 0;
 }
 
 body.light::before {
-  background-image: radial-gradient(circle, #c8c2b5 1px, transparent 1px);
-  opacity: 0.38;
+  background-image: radial-gradient(circle, #bcd1c1 1px, transparent 1px);
+  opacity: 0.30;
 }
 
-/* ── Ambient gold glow at top ── */
+/* ── Ambient nature glow at top ── */
 body::after {
   content: '';
   position: fixed;
@@ -161,7 +174,7 @@ body > nav {
   top: 0; left: 0; right: 0;
   z-index: 200;
   border-bottom: 1px solid var(--border);
-  background: rgba(12, 12, 10, 0.88);
+  background: rgba(3, 7, 5, 0.90);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   transition: background 0.35s, border-color 0.35s;
@@ -169,7 +182,7 @@ body > nav {
 
 body.light nav.site-nav,
 body.light body > nav {
-  background: rgba(244, 241, 234, 0.95);
+  background: rgba(247, 250, 248, 0.95);
   border-bottom: 1px solid var(--border);
 }
 
@@ -227,7 +240,7 @@ body.light body > nav {
 /* Theme toggle button */
 #theme-btn {
   background: none;
-  border: 1px solid rgba(201, 168, 108, 0.35);
+  border: 1px solid var(--border);
   color: var(--text);
   font-size: 14px;
   width: 34px;
@@ -902,22 +915,39 @@ body.light .tech-terminal-trigger:hover {
 .tech-terminal-prompt-line {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  padding: 4px 0;
+  background: transparent;
 }
 
 .tech-prompt-symbol {
-  color: var(--gold);
+  color: #2dd4bf;
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.tech-terminal-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  width: 100%;
+.tech-terminal-input,
+input.tech-terminal-input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #f0f7f2 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  width: 100% !important;
+  caret-color: #2dd4bf !important;
+}
+
+.tech-terminal-input:focus,
+input.tech-terminal-input:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .system-spec-badge {
@@ -965,15 +995,15 @@ body.light .tech-terminal-trigger:hover {
   --tilt-y: 0deg;
   --chroma-offset: 3px;
   position: relative;
-  background: rgba(12, 21, 16, 0.84) !important;
+  background: rgba(6, 14, 9, 0.94) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  border: 1px solid rgba(16, 185, 129, 0.28) !important;
   box-shadow: 
-    0 18px 46px -10px rgba(0, 0, 0, 0.8),
-    0 0 28px rgba(16, 185, 129, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
+    0 22px 50px -10px rgba(0, 0, 0, 0.9),
+    0 0 28px rgba(16, 185, 129, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.8);
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) !important;
   transition: transform 0.12s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s;
@@ -982,12 +1012,12 @@ body.light .tech-terminal-trigger:hover {
 
 body.light .prism-card,
 body.light .project-card.prism-card {
-  background: rgba(244, 250, 246, 0.90) !important;
-  border: 1px solid rgba(5, 150, 105, 0.4) !important;
+  background: #ffffff !important;
+  border: 1px solid #cce0d3 !important;
   box-shadow: 
-    0 18px 40px -10px rgba(0, 0, 0, 0.08),
-    0 0 24px rgba(5, 150, 105, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+    0 14px 34px -8px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(4, 120, 87, 0.04),
+    inset 0 1px 0 #ffffff !important;
 }
 
 /* 1. Dynamic Cursor Spotlight (Nature Dew / Forest Canopy Light Cone) */
@@ -999,9 +1029,9 @@ body.light .project-card.prism-card {
   border-radius: inherit;
   background: radial-gradient(
     800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-    rgba(16, 185, 129, 0.32) 0%,
-    rgba(45, 212, 191, 0.20) 28%,
-    rgba(74, 222, 128, 0.12) 50%,
+    rgba(16, 185, 129, 0.26) 0%,
+    rgba(45, 212, 191, 0.16) 28%,
+    rgba(74, 222, 128, 0.08) 50%,
     transparent 70%
   );
   pointer-events: none;
@@ -1014,8 +1044,7 @@ body.light .prism-card::before,
 body.light .project-card.prism-card::before {
   background: radial-gradient(
     800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-    rgba(5, 150, 105, 0.18) 0%,
-    rgba(13, 148, 136, 0.12) 30%,
+    rgba(4, 120, 87, 0.06) 0%,
     transparent 65%
   );
 }
@@ -1085,6 +1114,305 @@ body.light .prism-card:hover .chroma-text,
 body.light .project-card.prism-card:hover .chroma-text {
   color: #047857;
   transform: translateX(2px);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   HIGH-CONTRAST LIGHT MODE READABILITY REINFORCEMENTS
+────────────────────────────────────────────────────────────── */
+body.light {
+  --surface:     #ffffff;
+  --surface-2:   #edf4ef;
+  --border:      #cfded2;
+  --border-2:    #bed1c3;
+  --text:        #06150b;
+  --sub:         #183421;
+  --faint:       #34543d;
+  --muted:       #4c6c55;
+}
+
+/* Status pills across all pages */
+body.light .status-thinking  { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; font-weight: 600; }
+body.light .status-exploring { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; font-weight: 600; }
+body.light .status-building  { background: #d1fae5; color: #047857; border: 1px solid #a7f3d0; font-weight: 600; }
+body.light .status-dropped   { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; font-weight: 600; }
+
+/* Achievement badges */
+body.light .achieve-badge.gold  { background: #e6f6ec; color: #047857; border: 1px solid #a7f3d0; font-weight: 600; }
+body.light .achieve-badge.green { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; font-weight: 600; }
+body.light .achieve-badge.blue  { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; font-weight: 600; }
+
+/* Tags, Badges & Chips */
+body.light .ptag,
+body.light .tag,
+body.light .timeline-tag,
+body.light .skill-tag {
+  background: #edf5f0;
+  border: 1px solid #c2dac8;
+  color: #06150b;
+  font-weight: 500;
+}
+
+body.light .skill-tag.amber {
+  background: #e6f6ec;
+  border-color: #059669;
+  color: #047857;
+  font-weight: 600;
+}
+
+body.light .proj-badge {
+  background: #eaf6ee;
+  border: 1px solid #047857;
+  color: #047857;
+  font-weight: 600;
+}
+
+body.light .jump-pill {
+  background: #ffffff;
+  border: 1px solid #c8dcd0;
+  color: #06150b;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+body.light .jump-pill:hover {
+  background: #edf5f0;
+  border-color: #047857;
+  color: #047857;
+}
+body.light .jump-pill .pill-num {
+  color: #047857;
+  font-weight: 700;
+}
+
+/* Card surfaces & text contrast in light mode */
+body.light .proof-card,
+body.light .toolkit-card,
+body.light .timeline-item,
+body.light .idea-card,
+body.light .principle {
+  background: #ffffff;
+  border: 1px solid #c8dcd0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+body.light .proof-stat { color: #047857; }
+body.light .proof-label { color: #1f3b28; font-weight: 600; }
+
+body.light .timeline-time { color: #2a4934; font-weight: 600; }
+body.light .timeline-role { color: #06150b; }
+body.light .timeline-org { color: #047857; font-weight: 600; }
+body.light .timeline-desc { color: #11281a; }
+
+body.light .toolkit-btn {
+  background: #ffffff;
+  border-color: #c8dcd0;
+  color: #183421;
+}
+body.light .toolkit-btn.active,
+body.light .toolkit-btn:hover {
+  background: #047857;
+  color: #ffffff;
+  border-color: #047857;
+}
+body.light .toolkit-card-title { color: #047857; font-weight: 600; }
+body.light .toolkit-card-list { color: #06150b; }
+body.light .toolkit-card-note { color: #24412f; }
+
+/* Body typography & deep readability */
+body.light .hero-desc,
+body.light .about-body,
+body.light .project-desc,
+body.light .field-body,
+body.light .header-desc,
+body.light .idea-body {
+  color: #0d2415;
+}
+
+body.light .field-label {
+  color: #23442e;
+  font-weight: 600;
+}
+
+body.light .proj-hook {
+  background: #edf5f0;
+  border-left: 3px solid #047857;
+  color: #06150b;
+}
+
+body.light .project-link {
+  color: #047857;
+  background: #eef7f1;
+  border: 1px solid #a3d2b7;
+  font-weight: 600;
+}
+body.light .project-link:hover {
+  background: #047857;
+  color: #ffffff;
+  border-color: #047857;
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.25);
+}
+
+body.light .repo-link {
+  background: #ffffff;
+  border: 1px solid #c2dac8;
+  color: #06150b;
+  font-weight: 600;
+}
+body.light .repo-link:hover {
+  border-color: #047857;
+  color: #047857;
+  background: #f7faf8;
+}
+
+body.light .meta-key { color: #2d4a36; font-weight: 500; }
+body.light .meta-val { color: #06150b; font-weight: 600; }
+
+body.light .hero-eyebrow-text,
+body.light .hero-role,
+body.light .intro-label,
+body.light .intro-count,
+body.light .project-type,
+body.light .repo-label,
+body.light .proj-year {
+  color: #24442e;
+  font-weight: 500;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   THE 4 INTERACTIVE DESIGN SYSTEMS
+────────────────────────────────────────────────────────────── */
+
+/* 1. Kinetic Typography & Fluid Distortion */
+.kinetic-text-wrap {
+  position: relative;
+  display: inline-block;
+  will-change: transform, filter;
+  transform-origin: center center;
+}
+
+.kinetic-fluid-active {
+  filter: url(#kinetic-fluid-filter);
+  transition: filter 0.05s ease-out;
+}
+
+/* 2. Magnetic Mouse-Jacking & Elastic Hover */
+.mag-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  display: none;
+}
+
+@media (pointer: fine) {
+  .mag-cursor { display: block; }
+}
+
+.mag-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--nature);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.15s ease, transform 0.08s ease;
+  box-shadow: 0 0 10px var(--nature);
+}
+
+.mag-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+              height 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-radius 0.22s ease,
+              border-color 0.2s ease,
+              background 0.2s ease,
+              opacity 0.2s ease;
+  will-change: transform, width, height;
+}
+
+body.light .mag-cursor-dot {
+  background: #047857;
+  box-shadow: 0 0 8px rgba(4, 120, 87, 0.6);
+}
+
+body.light .mag-cursor-ring {
+  border: 1.5px solid rgba(4, 120, 87, 0.45);
+}
+
+.mag-cursor-ring.snapped {
+  border-color: var(--nature);
+  background: rgba(16, 185, 129, 0.08);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+}
+
+body.light .mag-cursor-ring.snapped {
+  border-color: #047857;
+  background: rgba(4, 120, 87, 0.08);
+  box-shadow: 0 0 12px rgba(4, 120, 87, 0.15);
+}
+
+/* Interactive elements get elastic hover transition */
+.mag-target {
+  transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* 3. Iridescent Mesh Gradients (WebGL Canvas) */
+#iridescent-mesh-canvas,
+#prism-hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.95;
+  transition: opacity 0.4s ease;
+}
+
+body.light #iridescent-mesh-canvas,
+body.light #prism-hero-canvas {
+  opacity: 0.85;
+}
+
+/* 4. Bento Grid Parallax Depth */
+.bento-parallax-card {
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  will-change: transform;
+}
+
+.bento-layer-bg {
+  transform: translateZ(-8px);
+  transform-style: preserve-3d;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.bento-layer-mid {
+  transform: translateZ(24px);
+  transform-style: preserve-3d;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.bento-layer-fore {
+  transform: translateZ(48px);
+  transform-style: preserve-3d;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
 }
 
 

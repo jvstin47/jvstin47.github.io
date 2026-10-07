@@ -146,8 +146,8 @@
     45deg,
     transparent,
     transparent 12px,
-    rgba(201, 168, 108, 0.04) 12px,
-    rgba(201, 168, 108, 0.04) 13px
+    rgba(16, 185, 129, 0.05) 12px,
+    rgba(16, 185, 129, 0.05) 13px
   );
   z-index: 1;
   pointer-events: none;
@@ -277,7 +277,7 @@
 
 .project-card.featured:not(.prism-card) {
   background: var(--surface-2);
-  border-color: rgba(201, 168, 108, 0.35);
+  border-color: rgba(16, 185, 129, 0.35);
 }
 
 .project-type {
@@ -462,9 +462,9 @@
 }
 
 .achieve-badge.gold {
-  background: rgba(201, 168, 108, 0.12);
+  background: rgba(16, 185, 129, 0.12);
   color: var(--gold);
-  border: 1px solid rgba(201, 168, 108, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .achieve-badge.green {

@@ -146,7 +146,7 @@
   transform: translateY(-50%);
   font-family: var(--font-display);
   font-size: clamp(120px, 22vw, 220px);
-  color: rgba(201, 168, 108, 0.03);
+  color: rgba(16, 185, 129, 0.04);
   line-height: 1;
   pointer-events: none;
   user-select: none;
@@ -194,7 +194,7 @@
   font-size: 10px;
   letter-spacing: 0.1em;
   color: var(--gold);
-  border: 1px solid rgba(201, 168, 108, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.3);
   padding: 4px 10px;
   display: inline-flex;
   align-items: center;
@@ -272,14 +272,14 @@
 }
 
 .field-body {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 400;
   line-height: 1.75;
-  color: rgba(232, 229, 220, 0.75);
+  color: rgba(240, 247, 242, 0.90);
   font-family: var(--font-serif);
 }
 
-body.light .field-body { color: rgba(23, 20, 14, 0.8); }
+body.light .field-body { color: #06150b; }
 
 /* Tech tags */
 .tags {

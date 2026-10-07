@@ -1143,6 +1143,10 @@
   const termInput = document.getElementById('term-input');
   const termOutput = document.getElementById('term-output');
   const termPwd = document.getElementById('term-pwd');
+  const termBody = document.getElementById('term-body');
+  if (termBody && termInput) {
+    termBody.addEventListener('click', () => termInput.focus());
+  }
 
   // Virtual Filesystem State — Natural Project Naming
   let currentDir = '~/projects';
@@ -1778,105 +1782,9 @@
       }
     });
 
-    /* ── LIQUID SPECTRUM PRISM CANVAS (WAVE CHROMATIC REFRACTION & CAUSTIC RAYS) ── */
-    const canvas = document.getElementById('prism-hero-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let time = 0;
-    let mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
-
-
-    function resize() {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.offsetWidth;
-      height = canvas.height = canvas.parentElement.offsetHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.targetX = e.clientX / window.innerWidth;
-      mouse.targetY = e.clientY / window.innerHeight;
-    });
-
-    function drawSpectrumWaves() {
-      time += 0.016;
-      mouse.x += (mouse.targetX - mouse.x) * 0.06;
-      mouse.y += (mouse.targetY - mouse.y) * 0.06;
-
-      ctx.clearRect(0, 0, width, height);
-
-      const isLight = document.body.classList.contains('light');
-      ctx.globalCompositeOperation = isLight ? 'source-over' : 'screen';
-
-      // 1. Refraction Caustic Wave Bands (Pure Nature: Deep Pine, Emerald, Alpine Glacier, Spring Sprout)
-      const bands = isLight ? [
-        { color1: 'rgba(5, 150, 105, 0.06)', color2: 'rgba(5, 150, 105, 0.0)', phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32 },
-        { color1: 'rgba(13, 148, 136, 0.05)', color2: 'rgba(13, 148, 136, 0.0)', phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38 },
-        { color1: 'rgba(22, 163, 74, 0.04)', color2: 'rgba(22, 163, 74, 0.0)', phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44 },
-        { color1: 'rgba(45, 212, 191, 0.04)', color2: 'rgba(45, 212, 191, 0.0)', phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50 }
-      ] : [
-        { color1: 'rgba(5, 150, 105, 0.40)', color2: 'rgba(5, 150, 105, 0.0)', phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32 },
-        { color1: 'rgba(16, 185, 129, 0.42)', color2: 'rgba(16, 185, 129, 0.0)', phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38 },
-        { color1: 'rgba(45, 212, 191, 0.35)', color2: 'rgba(45, 212, 191, 0.0)', phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44 },
-        { color1: 'rgba(74, 222, 128, 0.28)', color2: 'rgba(74, 222, 128, 0.0)', phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50 }
-      ];
-
-      bands.forEach(b => {
-        const baseY = height * (b.yOffset + (mouse.y - 0.5) * 0.22);
-        const grad = ctx.createLinearGradient(0, baseY - b.amp, 0, height);
-        grad.addColorStop(0, b.color1);
-        grad.addColorStop(0.7, b.color2);
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.beginPath();
-        ctx.moveTo(0, baseY);
-
-        for (let x = 0; x <= width; x += 12) {
-          const nx = x / width;
-          const wave1 = Math.sin(nx * 4.2 + time * b.speed + b.phase) * b.amp;
-          const wave2 = Math.cos(nx * 2.0 - time * 0.75 + (mouse.x * 2.2)) * (b.amp * 0.55);
-          const y = baseY + wave1 + wave2;
-          ctx.lineTo(x, y);
-        }
-
-        ctx.lineTo(width, height);
-        ctx.lineTo(0, height);
-        ctx.closePath();
-        ctx.fillStyle = grad;
-        ctx.fill();
-      });
-
-      // 2. Cursor Prism Refraction Flare & Caustic Ray
-      const mx = mouse.x * width;
-      const my = mouse.y * height;
-      
-      const flareGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 280);
-      if (isLight) {
-        flareGrad.addColorStop(0, 'rgba(5, 150, 105, 0.08)');
-        flareGrad.addColorStop(0.4, 'rgba(13, 148, 136, 0.04)');
-        flareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      } else {
-        flareGrad.addColorStop(0, 'rgba(16, 185, 129, 0.30)');
-        flareGrad.addColorStop(0.35, 'rgba(45, 212, 191, 0.20)');
-        flareGrad.addColorStop(0.70, 'rgba(74, 222, 128, 0.10)');
-        flareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      }
-      
-      ctx.beginPath();
-      ctx.arc(mx, my, 280, 0, Math.PI * 2);
-      ctx.fillStyle = flareGrad;
-      ctx.fill();
-
-      // Restore normal blending for subsequent frames
-      ctx.globalCompositeOperation = 'source-over';
-
-      requestAnimationFrame(drawSpectrumWaves);
-    }
-    drawSpectrumWaves();
   })();
 </script>
+<script src="interactive-trends.js"></script>
 
 </body>
 </html>
