@@ -32,25 +32,6 @@
     </div>
   </nav>
 
-<!-- SVG DISPLACEMENT & CHROMATIC ABERRATION DISPERSION FILTER -->
-<svg style="display:none;" width="0" height="0">
-  <defs>
-    <filter id="prism-chromatic-filter" x="-20%" y="-20%" width="140%" height="140%">
-      <!-- Channel separation & displacement -->
-      <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red_chan"/>
-      <feOffset id="prism-red-offset" in="red_chan" dx="-2.5" dy="0" result="red_offset"/>
-      
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green_chan"/>
-      <feOffset in="green_chan" dx="0" dy="0" result="green_offset"/>
-      
-      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue_chan"/>
-      <feOffset id="prism-blue-offset" in="blue_chan" dx="2.5" dy="0" result="blue_offset"/>
-      
-      <feBlend in="red_offset" in2="green_offset" mode="screen" result="rg_blend"/>
-      <feBlend in="rg_blend" in2="blue_offset" mode="screen"/>
-    </filter>
-  </defs>
-</svg>
 
 <!-- HERO -->
 <section id="hero" style="position:relative;">
@@ -256,7 +237,7 @@
               <span class="ptag">Vite 5</span>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
-              <a href="https://captain-lakshmi-invicta.vercel.app" target="_blank" class="project-link" style="color:var(--nature);">Live Site ↗</a>
+              <a href="https://capt-lakshmi.vercel.app" target="_blank" class="project-link" style="color:var(--nature);">Live Site ↗</a>
               <a href="https://github.com/jvstin47/Captain-Lakshmi-Invicta" target="_blank" class="project-link">GitHub ↗</a>
               <a href="projects.html#p6" class="project-link">Case study <span>→</span></a>
             </div>
@@ -1211,7 +1192,8 @@
     '~/projects/f1-strategy/bellman_solver.py': '# Stochastic Backward Induction Solver for Pit Strategy\ndef solve_bellman(lap, tyre_life, track_temp):\n    # V(s) = min [ Cost(a) + E[V(s\')] ]\n    return optimal_pit_lap',
     '~/projects/f1-strategy/monte_carlo_10k.py': '# NumPy Vectorized Deg Simulator: 10k passes in <45ms',
     '~/projects/f1-strategy/live_demo.url': 'https://f1-monte-carlo-race-strategy-simula.vercel.app',
-    '~/projects/captain-lakshmi/README.md': '# Capt. Lakshmi Sahgal Invicta Monograph\nHigh-performance web narrative delivering 3,100+ Canvas-sequenced visual historical frames.\n• Live: https://capt-lakshmi-sahgal.vercel.app',
+    '~/projects/captain-lakshmi/README.md': '# Capt. Lakshmi Sahgal Invicta Monograph\nHigh-performance web narrative delivering 3,100+ Canvas-sequenced visual historical frames.\n• Live: https://capt-lakshmi.vercel.app',
+    '~/projects/captain-lakshmi/live.url': 'https://capt-lakshmi.vercel.app',
     '~/projects/captain-lakshmi/canvas_renderer.ts': '// Canvas frame cache and scroll-delta interpolation at 60 FPS',
     '~/projects/captain-lakshmi/frame_stream.json': '{"total_frames": 3120, "codec": "webp", "preload_buffer": 48}',
     '~/projects/chord-analyzer/README.md': '# Song Chord Analyzer\nAI music transcription desktop engine powered by Demucs v4 stem separation & BTC Transformer.\n• GitHub: https://github.com/jvstin47/Song-Chord-Analyzer--Mac',
@@ -1804,15 +1786,6 @@
     let time = 0;
     let mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
 
-    // Floating prismatic photons
-    const particles = Array.from({ length: 24 }, () => ({
-      x: Math.random(),
-      y: Math.random(),
-      vx: (Math.random() - 0.5) * 0.001,
-      vy: (Math.random() - 0.5) * 0.001,
-      size: Math.random() * 2.5 + 1.2,
-      color: ['rgba(16, 185, 129, 0.75)', 'rgba(45, 212, 191, 0.75)', 'rgba(74, 222, 128, 0.75)', 'rgba(52, 211, 153, 0.75)'][Math.floor(Math.random() * 4)]
-    }));
 
     function resize() {
       if (!canvas.parentElement) return;
@@ -1835,20 +1808,19 @@
       ctx.clearRect(0, 0, width, height);
 
       const isLight = document.body.classList.contains('light');
-      // Optical Additive Blending in dark mode / Soft botanical watercolor in light mode
-      ctx.globalCompositeOperation = isLight ? 'multiply' : 'screen';
+      ctx.globalCompositeOperation = isLight ? 'source-over' : 'screen';
 
       // 1. Refraction Caustic Wave Bands (Pure Nature: Deep Pine, Emerald, Alpine Glacier, Spring Sprout)
       const bands = isLight ? [
-        { color1: 'rgba(5, 150, 105, 0.16)', color2: 'rgba(5, 150, 105, 0.0)', phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32 },
-        { color1: 'rgba(13, 148, 136, 0.14)', color2: 'rgba(13, 148, 136, 0.0)', phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38 },
-        { color1: 'rgba(22, 163, 74, 0.12)', color2: 'rgba(22, 163, 74, 0.0)', phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44 },
-        { color1: 'rgba(45, 212, 191, 0.10)', color2: 'rgba(45, 212, 191, 0.0)', phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50 }
+        { color1: 'rgba(5, 150, 105, 0.06)', color2: 'rgba(5, 150, 105, 0.0)', phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32 },
+        { color1: 'rgba(13, 148, 136, 0.05)', color2: 'rgba(13, 148, 136, 0.0)', phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38 },
+        { color1: 'rgba(22, 163, 74, 0.04)', color2: 'rgba(22, 163, 74, 0.0)', phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44 },
+        { color1: 'rgba(45, 212, 191, 0.04)', color2: 'rgba(45, 212, 191, 0.0)', phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50 }
       ] : [
-        { color1: 'rgba(5, 150, 105, 0.42)', color2: 'rgba(5, 150, 105, 0.0)', phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32 },
-        { color1: 'rgba(16, 185, 129, 0.45)', color2: 'rgba(16, 185, 129, 0.0)', phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38 },
-        { color1: 'rgba(45, 212, 191, 0.38)', color2: 'rgba(45, 212, 191, 0.0)', phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44 },
-        { color1: 'rgba(74, 222, 128, 0.32)', color2: 'rgba(74, 222, 128, 0.0)', phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50 }
+        { color1: 'rgba(5, 150, 105, 0.40)', color2: 'rgba(5, 150, 105, 0.0)', phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32 },
+        { color1: 'rgba(16, 185, 129, 0.42)', color2: 'rgba(16, 185, 129, 0.0)', phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38 },
+        { color1: 'rgba(45, 212, 191, 0.35)', color2: 'rgba(45, 212, 191, 0.0)', phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44 },
+        { color1: 'rgba(74, 222, 128, 0.28)', color2: 'rgba(74, 222, 128, 0.0)', phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50 }
       ];
 
       bands.forEach(b => {
@@ -1882,13 +1854,13 @@
       
       const flareGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 280);
       if (isLight) {
-        flareGrad.addColorStop(0, 'rgba(5, 150, 105, 0.14)');
-        flareGrad.addColorStop(0.4, 'rgba(13, 148, 136, 0.08)');
+        flareGrad.addColorStop(0, 'rgba(5, 150, 105, 0.08)');
+        flareGrad.addColorStop(0.4, 'rgba(13, 148, 136, 0.04)');
         flareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       } else {
-        flareGrad.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
-        flareGrad.addColorStop(0.35, 'rgba(45, 212, 191, 0.22)');
-        flareGrad.addColorStop(0.70, 'rgba(74, 222, 128, 0.12)');
+        flareGrad.addColorStop(0, 'rgba(16, 185, 129, 0.30)');
+        flareGrad.addColorStop(0.35, 'rgba(45, 212, 191, 0.20)');
+        flareGrad.addColorStop(0.70, 'rgba(74, 222, 128, 0.10)');
         flareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
       }
       
@@ -1897,28 +1869,7 @@
       ctx.fillStyle = flareGrad;
       ctx.fill();
 
-      // 3. Floating Prismatic Photons
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = 1;
-        if (p.x > 1) p.x = 0;
-        if (p.y < 0) p.y = 1;
-        if (p.y > 1) p.y = 0;
-
-        const px = p.x * width;
-        const py = p.y * height;
-
-        ctx.beginPath();
-        ctx.arc(px, py, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 8;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      // Restore normal blending for other draws
+      // Restore normal blending for subsequent frames
       ctx.globalCompositeOperation = 'source-over';
 
       requestAnimationFrame(drawSpectrumWaves);

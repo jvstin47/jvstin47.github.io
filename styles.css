@@ -304,13 +304,15 @@ body.light .btn-primary:hover {
 }
 
 body.light .btn-ghost {
-  border-color: var(--border);
-  color: var(--sub);
+  border-color: #9bb7a3;
+  color: #122b1c;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 body.light .btn-ghost:hover {
-  border-color: var(--nature);
-  color: var(--nature);
+  border-color: #047857;
+  color: #047857;
+  background: #ffffff;
 }
 
 /* Outlined nature */
@@ -338,8 +340,9 @@ body.light .btn-outline:hover {
 
 body.light .btn-terminal {
   background: rgba(5, 150, 105, 0.08);
-  border: 1px solid rgba(5, 150, 105, 0.35);
-  color: var(--nature);
+  border: 1px solid rgba(5, 150, 105, 0.45);
+  color: #047857;
+  font-weight: 500;
 }
 
 .btn-terminal:hover {
@@ -350,8 +353,8 @@ body.light .btn-terminal {
 
 body.light .btn-terminal:hover {
   background: rgba(5, 150, 105, 0.16);
-  border-color: var(--nature-hi);
-  color: var(--nature-hi);
+  border-color: #064e3b;
+  color: #064e3b;
 }
 
 .terminal-dot {
@@ -786,6 +789,19 @@ select {
   box-shadow: 0 0 14px rgba(45, 212, 191, 0.25);
 }
 
+body.light .tech-terminal-trigger {
+  background: rgba(13, 148, 136, 0.08);
+  border: 1px solid rgba(13, 148, 136, 0.4);
+  color: #047857;
+  font-weight: 500;
+}
+
+body.light .tech-terminal-trigger:hover {
+  background: rgba(13, 148, 136, 0.16);
+  border-color: #064e3b;
+  color: #064e3b;
+}
+
 .tech-terminal-modal {
   display: none;
   position: fixed;
@@ -1052,20 +1068,23 @@ body.light .project-card.prism-card::before {
   transform-style: preserve-3d;
 }
 
-/* Chromatic Aberration Split Title Effect on hover (Alpine Mint & Forest Sprout) */
+/* Crisp, readable title hover state with pure nature emerald highlight */
 .chroma-text {
   position: relative;
   display: inline-block;
-  transition: text-shadow 0.25s ease, filter 0.25s ease;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .prism-card:hover .chroma-text,
 .project-card.prism-card:hover .chroma-text {
-  filter: url(#prism-chromatic-filter);
-  text-shadow: 
-    -2px 0 0 rgba(45, 212, 191, 0.95),
-    2px 0 0 rgba(74, 222, 128, 0.95),
-    0 0 14px rgba(16, 185, 129, 0.6);
+  color: var(--nature-hi);
+  transform: translateX(2px);
+}
+
+body.light .prism-card:hover .chroma-text,
+body.light .project-card.prism-card:hover .chroma-text {
+  color: #047857;
+  transform: translateX(2px);
 }
 
 
