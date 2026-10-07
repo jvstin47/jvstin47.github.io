@@ -9,40 +9,43 @@
 ═══════════════════════════════════════════════════════════════ */
 
 /* ──────────────────────────────────────────────────────────────
-   DESIGN TOKENS — DARK MODE (default)
+   DESIGN TOKENS — DARK MODE (Pure Primeval Nature & Pine)
 ────────────────────────────────────────────────────────────── */
 :root {
-  /* Backgrounds: Deep Pine / Carbon Monocoque */
-  --bg:          #080c0a;
-  --surface:     #0f1512;
-  --surface-2:   #151e19;
+  /* Backgrounds: Deep Primeval Pine & Moss Forest */
+  --bg:          #060c09;
+  --surface:     #0c1510;
+  --surface-2:   #121d16;
 
-  /* Borders: Anodized Spruce & Carbon Twill */
-  --border:      #1e2922;
-  --border-2:    #15201a;
+  /* Borders: Alpine Spruce & Lichen Slate */
+  --border:      #1a2920;
+  --border-2:    #142119;
 
-  /* Text: Clean Chalk Mist & Aerodynamic Slate */
-  --text:        #e9edea;
-  --sub:         #8c9b92;
-  --faint:       #54635a;
-  --muted:       #3a4740;
+  /* Text: Clean Mist & Mountain Pine */
+  --text:        #ecf3ee;
+  --sub:         #8ca394;
+  --faint:       #52685a;
+  --muted:       #37483d;
 
-  /* Nature Emerald meets F1 Apex Crimson & Amber Telemetry */
-  --gold:        #2dd4bf;              /* Primary Accent: High-Tech Emerald/Mint */
-  --gold-hi:     #5eead4;              /* Hover Accent */
-  --gold-dim:    #115e59;              /* Deep Pine Accent */
-  --gold-glow:   rgba(45, 212, 191, 0.09);
+  /* Pure Nature Palette: Deep Pine, Emerald & Alpine Glacier */
+  --nature:      #10b981;              /* Primary Accent: Emerald Forest */
+  --nature-hi:   #34d399;              /* Hover Accent: Fresh Spring Sprout */
+  --nature-dim:  #047857;              /* Deep Pine */
+  --nature-glow: rgba(16, 185, 129, 0.16);
+  --glacier:     #2dd4bf;              /* Mountain Glacier Teal */
+  --sprout:      #4ade80;              /* Morning Sprout */
 
-  /* F1 Racing Accents */
-  --f1-red:      #ff334b;              /* Apex Crimson / DRS Active */
-  --f1-amber:    #fbbf24;              /* Soft Compound Yellow */
-  --f1-blue:     #38bdf8;              /* Intermediates Cyan */
+  /* Aliases pointing to pure Nature tokens */
+  --gold:        var(--nature);
+  --gold-hi:     var(--nature-hi);
+  --gold-dim:    var(--nature-dim);
+  --gold-glow:   var(--nature-glow);
 
-  /* Status colours */
-  --thinking:    #38bdf8;
-  --exploring:   #c084fc;
-  --building:    #2dd4bf;
-  --dropped:     #f87171;
+  /* Status colours (Pure Botanical) */
+  --thinking:    #2dd4bf;
+  --exploring:   #4ade80;
+  --building:    #10b981;
+  --dropped:     #6b7280;
 
   /* Fonts */
   --font-display: 'DM Serif Display', Georgia, serif;
@@ -58,22 +61,28 @@
 }
 
 /* ──────────────────────────────────────────────────────────────
-   DESIGN TOKENS — LIGHT MODE
+   DESIGN TOKENS — LIGHT MODE (Morning Alpine Birch & Dew)
 ────────────────────────────────────────────────────────────── */
 body.light {
-  --bg:          #f4f1ea;
-  --surface:     #ece9e1;
-  --surface-2:   #e5e2da;
-  --border:      #d0cbc0;
-  --border-2:    #c8c3b8;
-  --text:        #17140e;
-  --sub:         #534e47;
-  --faint:       #8c8880;
-  --muted:       #aca89f;
-  --gold:        #8c6820;
-  --gold-hi:     #9a7428;
-  --gold-dim:    #5c4010;
-  --gold-glow:   rgba(140, 104, 32, 0.06);
+  --bg:          #f2f6f3;
+  --surface:     #e4ece6;
+  --surface-2:   #d8e4db;
+  --border:      #c0d3c5;
+  --border-2:    #b2c7b8;
+  --text:        #08170e;
+  --sub:         #233a2c;
+  --faint:       #4c6655;
+  --muted:       #7c9684;
+  --nature:      #059669;              /* Deep Vivid Forest Emerald */
+  --nature-hi:   #047857;              /* Lush Forest Evergreen */
+  --nature-dim:  #064e3b;              /* Deep Ancient Pine */
+  --nature-glow: rgba(5, 150, 105, 0.12);
+  --glacier:     #0d9488;
+  --sprout:      #16a34a;
+  --gold:        #059669;
+  --gold-hi:     #047857;
+  --gold-dim:    #064e3b;
+  --gold-glow:   rgba(5, 150, 105, 0.12);
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -258,16 +267,28 @@ body.light body > nav {
 
 .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
-/* Filled gold */
+/* Filled primary (Nature Emerald) */
 .btn-primary {
-  background: var(--gold);
-  color: var(--bg);
+  background: var(--nature);
+  color: #04140a;
+  font-weight: 600;
+}
+
+body.light .btn-primary {
+  background: var(--nature);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .btn-primary:hover {
-  background: var(--gold-hi);
+  background: var(--nature-hi);
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(201, 168, 108, 0.28);
+  box-shadow: 0 6px 22px rgba(16, 185, 129, 0.35);
+}
+
+body.light .btn-primary:hover {
+  background: var(--nature-hi);
+  box-shadow: 0 6px 22px rgba(5, 150, 105, 0.28);
 }
 
 /* Ghost with border */
@@ -278,20 +299,69 @@ body.light body > nav {
 }
 
 .btn-ghost:hover {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--nature);
+  color: var(--nature);
 }
 
-/* Outlined gold */
+body.light .btn-ghost {
+  border-color: var(--border);
+  color: var(--sub);
+}
+
+body.light .btn-ghost:hover {
+  border-color: var(--nature);
+  color: var(--nature);
+}
+
+/* Outlined nature */
 .btn-outline {
   background: transparent;
-  border: 1px solid var(--gold);
-  color: var(--gold);
+  border: 1px solid var(--nature);
+  color: var(--nature);
 }
 
 .btn-outline:hover {
-  background: var(--gold);
-  color: var(--bg);
+  background: var(--nature);
+  color: #04140a;
+}
+
+body.light .btn-outline:hover {
+  color: #ffffff;
+}
+
+/* Terminal button */
+.btn-terminal {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: var(--nature);
+}
+
+body.light .btn-terminal {
+  background: rgba(5, 150, 105, 0.08);
+  border: 1px solid rgba(5, 150, 105, 0.35);
+  color: var(--nature);
+}
+
+.btn-terminal:hover {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: var(--nature-hi);
+  color: var(--nature-hi);
+}
+
+body.light .btn-terminal:hover {
+  background: rgba(5, 150, 105, 0.16);
+  border-color: var(--nature-hi);
+  color: var(--nature-hi);
+}
+
+.terminal-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--nature);
+  margin-right: 6px;
+  animation: pulse 2s infinite;
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -879,14 +949,14 @@ select {
   --tilt-y: 0deg;
   --chroma-offset: 3px;
   position: relative;
-  background: rgba(14, 22, 18, 0.82) !important;
+  background: rgba(12, 21, 16, 0.84) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-  border: 1px solid rgba(45, 212, 191, 0.35) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
   box-shadow: 
     0 18px 46px -10px rgba(0, 0, 0, 0.8),
-    0 0 28px rgba(45, 212, 191, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 28px rgba(16, 185, 129, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
     inset 0 -1px 0 rgba(0, 0, 0, 0.6);
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) !important;
@@ -896,15 +966,15 @@ select {
 
 body.light .prism-card,
 body.light .project-card.prism-card {
-  background: rgba(255, 255, 255, 0.88) !important;
-  border: 1px solid rgba(45, 212, 191, 0.4) !important;
+  background: rgba(244, 250, 246, 0.90) !important;
+  border: 1px solid rgba(5, 150, 105, 0.4) !important;
   box-shadow: 
-    0 18px 40px -10px rgba(0, 0, 0, 0.12),
-    0 0 24px rgba(45, 212, 191, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    0 18px 40px -10px rgba(0, 0, 0, 0.08),
+    0 0 24px rgba(5, 150, 105, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
 }
 
-/* 1. Dynamic Cursor Spotlight (Light Cone / Focal Glow) - High Vibrancy */
+/* 1. Dynamic Cursor Spotlight (Nature Dew / Forest Canopy Light Cone) */
 .prism-card::before,
 .project-card.prism-card::before {
   content: '';
@@ -913,10 +983,10 @@ body.light .project-card.prism-card {
   border-radius: inherit;
   background: radial-gradient(
     800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-    rgba(45, 212, 191, 0.32) 0%,
-    rgba(56, 189, 248, 0.18) 26%,
-    rgba(255, 51, 75, 0.12) 48%,
-    transparent 68%
+    rgba(16, 185, 129, 0.32) 0%,
+    rgba(45, 212, 191, 0.20) 28%,
+    rgba(74, 222, 128, 0.12) 50%,
+    transparent 70%
   );
   pointer-events: none;
   z-index: 1;
@@ -924,12 +994,22 @@ body.light .project-card.prism-card {
   opacity: 0.9;
 }
 
+body.light .prism-card::before,
+body.light .project-card.prism-card::before {
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(5, 150, 105, 0.18) 0%,
+    rgba(13, 148, 136, 0.12) 30%,
+    transparent 65%
+  );
+}
+
 .prism-card:hover::before,
 .project-card.prism-card:hover::before {
   opacity: 1;
 }
 
-/* 2. Chromatic Aberration & Spectral Rainbow Sheen at Bevel Edges - High Definition */
+/* 2. Chromatic Aberration & Spectral Emerald Sheen at Bevel Edges - Pure Nature */
 .prism-card::after,
 .project-card.prism-card::after {
   content: '';
@@ -943,11 +1023,11 @@ body.light .project-card.prism-card {
   padding: 1.5px;
   background: linear-gradient(
     calc(115deg + var(--tilt-y) * 4),
-    rgba(255, 51, 75, 0.85) 0%,
-    rgba(251, 191, 36, 0.8) 22%,
+    rgba(4, 120, 87, 0.9) 0%,
+    rgba(16, 185, 129, 1.0) 25%,
     rgba(45, 212, 191, 0.95) 50%,
-    rgba(56, 189, 248, 0.85) 75%,
-    rgba(168, 85, 247, 0.8) 100%
+    rgba(74, 222, 128, 0.9) 75%,
+    rgba(167, 243, 208, 0.85) 100%
   ) !important;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -962,7 +1042,7 @@ body.light .project-card.prism-card {
 .prism-card:hover::after,
 .project-card.prism-card:hover::after {
   opacity: 1.0;
-  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.75)) drop-shadow(0 0 18px rgba(255, 51, 75, 0.5));
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.75)) drop-shadow(0 0 18px rgba(45, 212, 191, 0.45));
 }
 
 .prism-card-inner {
@@ -972,7 +1052,7 @@ body.light .project-card.prism-card {
   transform-style: preserve-3d;
 }
 
-/* Chromatic Aberration Split Title Effect on hover */
+/* Chromatic Aberration Split Title Effect on hover (Alpine Mint & Forest Sprout) */
 .chroma-text {
   position: relative;
   display: inline-block;
@@ -983,9 +1063,9 @@ body.light .project-card.prism-card {
 .project-card.prism-card:hover .chroma-text {
   filter: url(#prism-chromatic-filter);
   text-shadow: 
-    -2.5px 0 0 rgba(255, 51, 75, 0.95),
-    2.5px 0 0 rgba(56, 189, 248, 0.95),
-    0 0 14px rgba(45, 212, 191, 0.6);
+    -2px 0 0 rgba(45, 212, 191, 0.95),
+    2px 0 0 rgba(74, 222, 128, 0.95),
+    0 0 14px rgba(16, 185, 129, 0.6);
 }
 
 
