@@ -266,6 +266,7 @@
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
+  pointer-events: none;
 }
 
 .project-card:hover { border-color: var(--gold); transform: translateY(-3px); }
@@ -309,39 +310,60 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: auto;
+  margin-top: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 5;
 }
 
 .project-tags {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .ptag {
   background: var(--bg);
   border: 1px solid var(--border);
-  padding: 2px 8px;
+  padding: 3px 8px;
   font-size: 10px;
   letter-spacing: 0.06em;
   color: var(--faint);
   text-transform: uppercase;
   border-radius: var(--radius);
+  white-space: nowrap;
 }
 
 .project-link {
   color: var(--gold);
+  background: rgba(45, 212, 191, 0.08);
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  padding: 6px 12px;
+  border-radius: 3px;
   font-size: 11px;
+  font-family: var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  transition: gap 0.2s;
+  gap: 6px;
+  transition: all 0.2s ease;
   flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+  pointer-events: auto !important;
 }
 
-.project-link:hover { gap: 9px; }
+.project-link:hover {
+  background: rgba(45, 212, 191, 0.18);
+  border-color: var(--gold);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
+}
 
 /* ── ACHIEVEMENTS SECTION ── */
 #achievements {
