@@ -173,14 +173,30 @@
           <p class="project-desc">
             DGCA-compliant autonomous Micro-UAV engineered for disaster zones suffering total communication blackout and zero optical visibility. Fuses on-device Qualcomm Robotics RB5 compute with ThermalNet YOLOv8 human detection at &lt;20ms inference latency, 5km off-grid LoRa 915 MHz peer-to-peer mesh telemetry without cellular towers or satellite links, and an open ground control cockpit to locate trapped survivors within the critical 72-hour golden window.
           </p>
+
+          <!-- Non-Euclidean 3D Chamber Portal Window -->
+          <div class="non-euclidean-portal-container" id="drone-portal-card" title="Infinite Non-Euclidean 3D Chamber (Move mouse across card to tilt camera perspective deep into monitor)">
+            <canvas class="portal-chamber-canvas" id="drone-portal-canvas"></canvas>
+            <div class="portal-glass-overlay">
+              <div class="portal-header-tag">
+                <span class="portal-ping"></span>
+                <span>NON-EUCLIDEAN CHAMBER · 3D LIDAR TELEMETRY</span>
+              </div>
+              <div class="portal-bottom-coords">
+                <span>QUALCOMM RB5 KINEMATIC FRAME</span>
+                <span id="portal-drone-coords">X: +0.00 | Y: +0.00 | Z: ∞</span>
+              </div>
+            </div>
+          </div>
+
           <div class="project-footer">
             <div class="project-tags">
-              <span class="ptag">Qualcomm RB5 NPU</span>
-              <span class="ptag">ThermalNet YOLOv8 (&lt;20ms)</span>
-              <span class="ptag">LoRa 915 MHz Mesh (5km)</span>
-              <span class="ptag">Pixhawk FC</span>
-              <span class="ptag">Edge AI</span>
-              <span class="ptag">Zero-Cloud SAR</span>
+              <span class="ptag liquid-melt-target">Qualcomm RB5 NPU</span>
+              <span class="ptag liquid-melt-target">ThermalNet YOLOv8 (&lt;20ms)</span>
+              <span class="ptag liquid-melt-target">LoRa 915 MHz Mesh (5km)</span>
+              <span class="ptag liquid-melt-target">Pixhawk FC</span>
+              <span class="ptag liquid-melt-target">Edge AI</span>
+              <span class="ptag liquid-melt-target">Zero-Cloud SAR</span>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
               <a href="https://phoenix-sar-uav.vercel.app" target="_blank" class="project-link" style="color:var(--nature);">Live Mission Cockpit ↗</a>
@@ -626,7 +642,7 @@
 <!-- INTERACTIVE TOOLKIT -->
 <section id="toolkit">
   <div class="wrap">
-    <div class="section-label reveal">Competencies</div>
+    <div class="section-label reveal">Core Capabilities</div>
     <h2 class="section-title reveal reveal-d1">Technical <em>Toolkit</em></h2>
     <p class="section-subtitle reveal reveal-d2" style="max-width:540px;margin-top:8px;">
       Tools, frameworks, and foundational systems I build with across production deployments.
@@ -1084,14 +1100,17 @@
         <span class="tech-term-dot green" onclick="maximizeTerminal()" title="Toggle Fullscreen Expansion">⤢</span>
       </div>
       <span class="tech-terminal-title">
-        <span style="color:var(--nature);">⚡</span> justin@monocoque: <span id="term-pwd" style="color:#2dd4bf;">~/projects</span> (bash)
+        <span style="color:#34d399;">⚡</span> <span style="color:#cbd5e1;">justin@monocoque:</span> <span id="term-pwd" style="color:#2dd4bf;">~/projects</span> <span style="color:#94a3b8;">(bash)</span>
       </span>
-      <button class="cert-modal-close" onclick="toggleTechTerminal()" style="width:24px;height:24px;font-size:12px;">✕</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="term-popout-btn" onclick="openSatelliteWindow()" title="Detach HUD to Floating Desktop Window (Cross-Window Kinetic Physics)">Pop out HUD ↗</button>
+        <button class="cert-modal-close" onclick="toggleTechTerminal()" style="width:24px;height:24px;font-size:12px;">✕</button>
+      </div>
     </div>
     <div class="tech-terminal-body" id="term-body">
       <div class="tech-terminal-output" id="term-output">
-        <div style="color:var(--nature);margin-bottom:8px;font-weight:600;">⚡ Justin Joe Mathew — Systems Diagnostic Console v2.6.4</div>
-        <div style="color:var(--sub);margin-bottom:12px;">Interactive engineering terminal online. Type <span style="color:#27c93f;">help</span> for supported commands, or inspect active subsystems below.</div>
+        <div style="color:#34d399;margin-bottom:8px;font-weight:600;">⚡ Justin Joe Mathew — Systems Diagnostic Console v2.6.4</div>
+        <div style="color:#cbd5e1;margin-bottom:12px;">Interactive engineering terminal online. Type <span style="color:#34d399;font-weight:600;">help</span> for supported commands, or inspect active subsystems below.</div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
           <span class="system-spec-badge">KERNEL: Darwin / macOS arm64</span>
           <span class="system-spec-badge">STACK: Python 3.11 · TypeScript · Kotlin · C++</span>
@@ -2349,7 +2368,29 @@ R = +10.0 * (ScoreDelta) + 2.0 * (SurvivalSeconds) - 50.0 * (CollisionEvent)`
     });
 
   })();
+
+  // Satellite HUD window opener
+  window.openSatelliteWindow = function() {
+    window.open('satellite.html', 'satellite_hud', 'width=440,height=600,left=120,top=120,resizable=yes');
+  };
 </script>
+
+<!-- CROSS-WINDOW KINETIC ELASTICITY CANVAS -->
+<canvas id="cross-window-main-canvas"></canvas>
+
+<!-- VECTOR-CORROSION & LIQUID MERCURY SVG MELTING FILTER -->
+<svg style="position:absolute;width:0;height:0;pointer-events:none;" aria-hidden="true">
+  <defs>
+    <filter id="liquid-mercury-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence id="mercury-turb" type="fractalNoise" baseFrequency="0.04 0.04" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="0.6" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="liquid"/>
+      <feBlend in="SourceGraphic" in2="liquid" mode="source-over"/>
+    </filter>
+  </defs>
+</svg>
+
 <script src="interactive-trends.js"></script>
 
 </body>

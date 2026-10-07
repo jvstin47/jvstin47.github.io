@@ -7,25 +7,43 @@
 header { padding: 140px 0 64px; }
 
 .header-label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  width: fit-content;
 }
 
 .header-label::before {
   content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  flex-shrink: 0;
+}
+
+body.light .header-label {
+  color: #047857;
+  font-weight: 600;
+}
+
+body.light .header-label::before {
+  background: #047857;
+  box-shadow: 0 0 6px rgba(4, 120, 87, 0.4);
 }
 
 h1 {
+  display: block;
+  width: 100%;
   font-family: var(--font-display);
   font-size: clamp(42px, 6vw, 68px);
   font-weight: 400;

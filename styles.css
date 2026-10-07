@@ -416,25 +416,43 @@ body.light .btn-terminal:hover {
    TYPOGRAPHY UTILITIES
 ────────────────────────────────────────────────────────────── */
 .section-label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  width: fit-content;
 }
 
 .section-label::before {
   content: '';
-  display: block;
-  width: 20px;
-  height: 1px;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  flex-shrink: 0;
+}
+
+body.light .section-label {
+  color: #047857;
+  font-weight: 600;
+}
+
+body.light .section-label::before {
+  background: #047857;
+  box-shadow: 0 0 6px rgba(4, 120, 87, 0.4);
 }
 
 .section-title {
+  display: block;
+  width: 100%;
   font-family: var(--font-display);
   font-size: clamp(34px, 5vw, 58px);
   font-weight: 400;
@@ -967,8 +985,9 @@ body.light .tech-terminal-trigger:hover {
 .tech-term-dot.yellow { background: #ffbd2e; border: 1px solid #dea123; }
 .tech-term-dot.green { background: #27c93f; border: 1px solid #1aab29; }
 
-.tech-terminal-title {
-  color: var(--sub);
+.tech-terminal-title,
+body.light .tech-terminal-title {
+  color: #cbd5e1 !important;
   font-size: 11px;
   letter-spacing: 0.08em;
   display: flex;
@@ -976,11 +995,12 @@ body.light .tech-terminal-trigger:hover {
   gap: 8px;
 }
 
-.tech-terminal-body {
+.tech-terminal-body,
+body.light .tech-terminal-body {
   padding: 20px 22px;
   max-height: 520px;
   overflow-y: auto;
-  color: #c9ded6;
+  color: #e2e8f0 !important;
   font-size: 12.5px;
   line-height: 1.65;
 }
@@ -1005,19 +1025,25 @@ body.light .tech-terminal-trigger:hover {
 }
 
 .tech-terminal-input,
-input.tech-terminal-input {
+input.tech-terminal-input,
+body.light .tech-terminal-input {
   background: transparent !important;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
   padding: 0 !important;
   margin: 0 !important;
-  color: #f0f7f2 !important;
+  color: #f0fdf4 !important;
   font-family: var(--font-mono) !important;
   font-size: 13px !important;
   line-height: 1.5 !important;
   width: 100% !important;
   caret-color: #2dd4bf !important;
+}
+
+.tech-terminal-input::placeholder,
+body.light .tech-terminal-input::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
 }
 
 .tech-terminal-input:focus,
@@ -1027,17 +1053,42 @@ input.tech-terminal-input:focus {
   outline: none !important;
 }
 
-.system-spec-badge {
+.system-spec-badge,
+body.light .system-spec-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
+  background: rgba(45, 212, 191, 0.08) !important;
+  border: 1px solid rgba(45, 212, 191, 0.35) !important;
   padding: 3px 8px;
   border-radius: 3px;
   font-size: 10.5px;
-  color: var(--sub);
+  color: #a7f3d0 !important;
   font-family: var(--font-mono);
+}
+
+/* Force light mode terminal child elements to never inherit dark-on-dark body colors */
+body.light .tech-terminal-box [style*="color:var(--sub)"],
+body.light .tech-terminal-box div[style*="color:var(--sub)"],
+body.light .tech-terminal-box span[style*="color:var(--sub)"] {
+  color: #cbd5e1 !important;
+}
+
+body.light .tech-terminal-box [style*="color:var(--faint)"],
+body.light .tech-terminal-box div[style*="color:var(--faint)"],
+body.light .tech-terminal-box span[style*="color:var(--faint)"] {
+  color: #94a3b8 !important;
+}
+
+body.light .tech-terminal-box [style*="color:var(--nature)"],
+body.light .tech-terminal-box div[style*="color:var(--nature)"],
+body.light .tech-terminal-box span[style*="color:var(--nature)"],
+body.light .tech-terminal-box a[style*="color:var(--nature)"] {
+  color: #34d399 !important;
+}
+
+body.light .tech-terminal-box a {
+  color: #2dd4bf !important;
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -1047,9 +1098,9 @@ input.tech-terminal-input:focus {
   display: none;
   position: absolute;
   inset: 0;
-  background: rgba(4, 9, 7, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(4, 9, 7, 0.98) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   z-index: 10;
   flex-direction: column;
   animation: termFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1065,8 +1116,8 @@ input.tech-terminal-input:focus {
 }
 
 .term-viewport-header {
-  background: #0d1713;
-  border-bottom: 1px solid rgba(45, 212, 191, 0.25);
+  background: #0d1713 !important;
+  border-bottom: 1px solid rgba(45, 212, 191, 0.25) !important;
   padding: 10px 16px;
   display: flex;
   align-items: center;
@@ -1083,13 +1134,14 @@ input.tech-terminal-input:focus {
 }
 
 .term-viewport-filename {
-  color: var(--nature);
+  color: #34d399 !important;
   font-weight: 600;
   letter-spacing: 0.04em;
 }
 
-.term-viewport-meta {
-  color: var(--faint);
+.term-viewport-meta,
+body.light .term-viewport-meta {
+  color: #94a3b8 !important;
   font-size: 11px;
 }
 
@@ -1099,10 +1151,11 @@ input.tech-terminal-input:focus {
   gap: 8px;
 }
 
-.term-viewport-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-  color: var(--sub);
+.term-viewport-btn,
+body.light .term-viewport-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(45, 212, 191, 0.35) !important;
+  color: #e2e8f0 !important;
   font-family: var(--font-mono);
   font-size: 11px;
   padding: 4px 10px;
@@ -1114,10 +1167,11 @@ input.tech-terminal-input:focus {
   gap: 6px;
 }
 
-.term-viewport-btn:hover {
-  background: rgba(16, 185, 129, 0.2);
-  color: #fff;
-  border-color: var(--nature);
+.term-viewport-btn:hover,
+body.light .term-viewport-btn:hover {
+  background: rgba(16, 185, 129, 0.25) !important;
+  color: #ffffff !important;
+  border-color: #34d399 !important;
 }
 
 .term-viewport-btn.close {
@@ -1528,9 +1582,11 @@ body.light .proj-year {
 /* 1. Kinetic Typography & Fluid Distortion */
 .kinetic-text-wrap {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   will-change: transform, filter;
-  transform-origin: center center;
+  transform-origin: left center;
 }
 
 .kinetic-fluid-active {
@@ -1538,13 +1594,13 @@ body.light .proj-year {
   transition: filter 0.05s ease-out;
 }
 
-/* 2. Magnetic Mouse-Jacking & Elastic Hover */
+/* 2. Sleek Botanical Precision Cursor */
 .mag-cursor {
   position: fixed;
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
   display: none;
 }
 
@@ -1558,58 +1614,54 @@ body.light .proj-year {
   left: 0;
   width: 6px;
   height: 6px;
-  background: var(--nature);
+  background: #10b981;
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: opacity 0.15s ease, transform 0.08s ease;
-  box-shadow: 0 0 10px var(--nature);
+  transition: opacity 0.15s ease, background 0.2s ease;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.9), 0 0 2px #fff;
+  z-index: 999999;
+  will-change: transform;
 }
 
 .mag-cursor-ring {
   position: fixed;
   top: 0;
   left: 0;
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid rgba(16, 185, 129, 0.5);
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: width 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
-              height 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
-              border-radius 0.22s ease,
+  transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.2s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.2s ease,
               background 0.2s ease,
               opacity 0.2s ease;
+  z-index: 999998;
   will-change: transform, width, height;
 }
 
 body.light .mag-cursor-dot {
   background: #047857;
-  box-shadow: 0 0 8px rgba(4, 120, 87, 0.6);
+  box-shadow: 0 0 6px rgba(4, 120, 87, 0.8), 0 0 1px #fff;
 }
 
 body.light .mag-cursor-ring {
-  border: 1.5px solid rgba(4, 120, 87, 0.45);
+  border: 1.5px solid rgba(4, 120, 87, 0.6);
 }
 
-.mag-cursor-ring.snapped {
-  border-color: var(--nature);
-  background: rgba(16, 185, 129, 0.08);
-  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+.mag-cursor-ring.hovering {
+  border-color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
 }
 
-body.light .mag-cursor-ring.snapped {
+body.light .mag-cursor-ring.hovering {
   border-color: #047857;
-  background: rgba(4, 120, 87, 0.08);
-  box-shadow: 0 0 12px rgba(4, 120, 87, 0.15);
-}
-
-/* Interactive elements get elastic hover transition */
-.mag-target {
-  transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: transform;
+  background: rgba(4, 120, 87, 0.10);
+  box-shadow: 0 0 12px rgba(4, 120, 87, 0.25);
 }
 
 /* 3. Iridescent Mesh Gradients (WebGL Canvas) */
@@ -1628,7 +1680,11 @@ body.light .mag-cursor-ring.snapped {
 
 body.light #iridescent-mesh-canvas,
 body.light #prism-hero-canvas {
-  opacity: 0.85;
+  opacity: 0.98;
+}
+
+body.light #hero .hero-glow {
+  background: radial-gradient(ellipse at 70% 30%, rgba(16, 185, 129, 0.22) 0%, rgba(45, 212, 191, 0.12) 45%, transparent 70%) !important;
 }
 
 /* 4. Bento Grid Parallax Depth */
@@ -1703,5 +1759,152 @@ body.light .hardware-panel-card {
   margin-bottom: 8px;
 }
 
+/* ──────────────────────────────────────────────────────────────
+   ADVANCED INTERACTION SYSTEM SUITE
+   1. Cross-Window Kinetic Elasticity
+   2. Infinite Non-Euclidean 3D Portals
+   3. Vector-Corrosion & CSS Melting Shaders
+   4. Gravitational Inertia & Decoupling
+────────────────────────────────────────────────────────────── */
 
+/* 1. Cross-Window Kinetic Physics */
+#cross-window-main-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99998;
+}
 
+.term-popout-btn {
+  background: rgba(45, 212, 191, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  color: #2dd4bf;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.term-popout-btn:hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: #34d399;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+/* 2. Infinite Non-Euclidean 3D Portal Chamber */
+.non-euclidean-portal-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #020604;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  margin-top: 14px;
+  margin-bottom: 14px;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.9), 0 8px 24px rgba(0, 0, 0, 0.6);
+  cursor: crosshair;
+}
+
+body.light .non-euclidean-portal-container {
+  background: #02140a;
+  border: 1px solid #059669;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 8px 20px rgba(4, 120, 87, 0.15);
+}
+
+.portal-chamber-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.portal-glass-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: radial-gradient(circle at center, transparent 40%, rgba(2, 6, 4, 0.6) 100%);
+}
+
+.portal-header-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: #34d399;
+  text-transform: uppercase;
+  background: rgba(8, 18, 12, 0.85);
+  backdrop-filter: blur(4px);
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  width: fit-content;
+}
+
+.portal-ping {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse 1.5s infinite;
+}
+
+.portal-bottom-coords {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: #94a3b8;
+  background: rgba(8, 18, 12, 0.85);
+  padding: 3px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(45, 212, 191, 0.2);
+}
+
+/* 3. Vector-Corrosion & CSS Melting Shaders */
+.liquid-melt-target {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.15s ease-out;
+  will-change: transform, filter;
+  position: relative;
+}
+
+.liquid-melt-target:hover {
+  filter: url(#liquid-mercury-filter);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* 4. Gravitational Inertia & Decoupling */
+.inertia-physics-card {
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.gravity-stress-active {
+  animation: gravitySway 3s ease-in-out infinite alternate;
+}
+
+@keyframes gravitySway {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(6px) rotate(0.4deg); }
+  100% { transform: translateY(2px) rotate(-0.3deg); }
+}

@@ -40,30 +40,29 @@
     if (!dot || !ring) return;
 
     let mouseX = -100, mouseY = -100;
-    let lastMouseX = -100, lastMouseY = -100;
     let ringX = -100, ringY = -100;
-    let ringWidth = 32, ringHeight = 32;
-    let ringRadius = '50%';
-    let isSnapped = false;
-    let activeElem = null;
-    let speed = 0;
-    let angle = 0;
+    let isHover = false;
+    let isInput = false;
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-
-      const vx = mouseX - lastMouseX;
-      const vy = mouseY - lastMouseY;
-      speed = Math.min(Math.hypot(vx, vy), 40);
-      if (speed > 1) {
-        angle = Math.atan2(vy, vx);
-      }
-
-      lastMouseX = mouseX;
-      lastMouseY = mouseY;
       dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+      dot.style.opacity = isInput ? '0' : '1';
+      ring.style.opacity = isInput ? '0' : '1';
     }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    });
+
+    document.addEventListener('mouseenter', () => {
+      if (!isInput) {
+        dot.style.opacity = '1';
+        ring.style.opacity = '1';
+      }
+    });
 
     const interactiveSelectors = [
       'nav.site-nav a',
@@ -78,79 +77,62 @@
       '.btn-primary',
       '.btn-ghost',
       '.btn-outline',
+      '.btn-terminal',
       '.back-top',
-      '.cert-modal-close'
+      '.cert-modal-close',
+      '.tech-term-dot'
     ].join(',');
 
-    function bindMagneticTargets() {
+    function bindInteractiveCursor() {
       const targets = document.querySelectorAll(interactiveSelectors);
       targets.forEach(elem => {
-        if (elem.dataset.magBound) return;
-        elem.dataset.magBound = 'true';
-        elem.classList.add('mag-target');
+        if (elem.dataset.cursorBound) return;
+        elem.dataset.cursorBound = 'true';
 
         elem.addEventListener('mouseenter', () => {
-          activeElem = elem;
-          isSnapped = true;
-          ring.classList.add('snapped');
+          isHover = true;
+          ring.classList.add('hovering');
         });
 
         elem.addEventListener('mouseleave', () => {
-          if (activeElem === elem) {
-            elem.style.transform = '';
-            activeElem = null;
-            isSnapped = false;
-            ring.classList.remove('snapped');
-          }
+          isHover = false;
+          ring.classList.remove('hovering');
         });
+      });
 
-        elem.addEventListener('mousemove', (e) => {
-          if (elem !== activeElem) return;
-          const rect = elem.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          const dx = (e.clientX - cx) * 0.32;
-          const dy = (e.clientY - cy) * 0.32;
-          elem.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px)`;
+      // Hide custom cursor over inputs and textareas so standard text caret shows
+      const inputs = document.querySelectorAll('input, textarea, [contenteditable="true"]');
+      inputs.forEach(input => {
+        if (input.dataset.cursorBound) return;
+        input.dataset.cursorBound = 'true';
+        input.addEventListener('mouseenter', () => {
+          isInput = true;
+          dot.style.opacity = '0';
+          ring.style.opacity = '0';
+        });
+        input.addEventListener('mouseleave', () => {
+          isInput = false;
+          dot.style.opacity = '1';
+          ring.style.opacity = '1';
         });
       });
     }
 
-    bindMagneticTargets();
-    setInterval(bindMagneticTargets, 2500);
+    bindInteractiveCursor();
+    setInterval(bindInteractiveCursor, 2500);
 
-    function renderMagneticCursor() {
-      if (isSnapped && activeElem) {
-        const rect = activeElem.getBoundingClientRect();
-        const targetX = rect.left + rect.width / 2;
-        const targetY = rect.top + rect.height / 2;
-        ringX += (targetX - ringX) * 0.24;
-        ringY += (targetY - ringY) * 0.24;
-        ringWidth = rect.width + 12;
-        ringHeight = rect.height + 10;
-        const computedStyle = window.getComputedStyle(activeElem);
-        ringRadius = computedStyle.borderRadius || '6px';
-        ring.style.transform = `translate(${ringX - ringWidth / 2}px, ${ringY - ringHeight / 2}px)`;
-      } else {
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        ringWidth = 32;
-        ringHeight = 32;
-        ringRadius = '50%';
+    function renderBotanicalCursor() {
+      ringX += (mouseX - ringX) * 0.28;
+      ringY += (mouseY - ringY) * 0.28;
 
-        // Elastic squash & stretch along movement vector
-        const stretch = 1 + speed * 0.007;
-        const squeeze = Math.max(1 - speed * 0.004, 0.75);
-        ring.style.transform = `translate(${ringX - ringWidth / 2}px, ${ringY - ringHeight / 2}px) rotate(${angle}rad) scale(${stretch}, ${squeeze})`;
-      }
+      const size = isHover ? 32 : 22;
+      ring.style.width = `${size}px`;
+      ring.style.height = `${size}px`;
+      ring.style.transform = `translate(${ringX - size / 2}px, ${ringY - size / 2}px)`;
 
-      ring.style.width = `${ringWidth}px`;
-      ring.style.height = `${ringHeight}px`;
-      ring.style.borderRadius = ringRadius;
-
-      requestAnimationFrame(renderMagneticCursor);
+      requestAnimationFrame(renderBotanicalCursor);
     }
-    renderMagneticCursor();
+    renderBotanicalCursor();
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
@@ -311,10 +293,13 @@
         float alpha;
 
         if (u_isLight > 0.5) {
-          vec3 blend1 = mix(colLightBg, colLightDew, smoothstep(-0.6, 0.6, n1));
-          vec3 blend2 = mix(blend1, colLightSage, smoothstep(-0.4, 0.8, n2));
-          finalColor = mix(blend2, colLightEm, clamp(n3 * 0.18, 0.0, 0.22));
-          alpha = 0.45 * (1.0 - smoothstep(0.1, 1.25, length(uv - vec2(0.5, 0.3)))) * u_intensity;
+          vec3 colMint     = vec3(0.537, 0.925, 0.745); // #89ecc0 fresh luminous mint
+          vec3 colJade     = vec3(0.200, 0.780, 0.580); // #33c794 vibrant botanical jade
+          vec3 colDeepPine = vec3(0.016, 0.380, 0.250); // #046140 deep pine accent
+          vec3 blend1 = mix(colLightDew, colMint, smoothstep(-0.6, 0.5, n1));
+          vec3 blend2 = mix(blend1, colJade, smoothstep(-0.3, 0.7, n2));
+          finalColor = mix(blend2, colDeepPine, clamp(n3 * 0.28, 0.0, 0.35));
+          alpha = 0.75 * (1.0 - smoothstep(0.05, 1.4, length(uv - vec2(0.5, 0.28)))) * u_intensity;
         } else {
           vec3 blend1 = mix(colVoidDark, colPine, smoothstep(-0.8, 0.4, n1));
           vec3 blend2 = mix(blend1, colEmerald, smoothstep(-0.2, 0.9, n2));
@@ -541,13 +526,446 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
-     ORCHESTRATION OF ALL 4 PHASES
+     FEATURE 1: CROSS-WINDOW KINETIC ELASTICITY (BroadcastChannel Desktop Mesh)
+     Target: Pop-out Satellite HUD + Main Window Bridge
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initCrossWindowPhysics() {
+    const mainCanvas = document.getElementById('cross-window-main-canvas');
+    if (!mainCanvas) return;
+    const ctx = mainCanvas.getContext('2d');
+    if (!ctx) return;
+
+    function resizeMainCanvas() {
+      mainCanvas.width = window.innerWidth;
+      mainCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeMainCanvas);
+    resizeMainCanvas();
+
+    const channel = new BroadcastChannel('monocoque_window_mesh');
+    let satellitePos = null;
+    let lastSatTime = 0;
+    let particles = [];
+    let wasConnected = false;
+
+    // Broadcast our window coordinates across the desktop
+    function broadcastMain() {
+      channel.postMessage({
+        type: 'window_pos',
+        sender: 'main',
+        x: window.screenX,
+        y: window.screenY,
+        w: window.outerWidth,
+        h: window.outerHeight,
+        time: Date.now()
+      });
+    }
+
+    channel.onmessage = (e) => {
+      if (e.data && e.data.type === 'window_pos' && e.data.sender === 'satellite') {
+        satellitePos = e.data;
+        lastSatTime = Date.now();
+      }
+    };
+
+    function triggerSplatter(x, y) {
+      for (let i = 0; i < 40; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const spd = Math.random() * 9 + 2;
+        particles.push({
+          x, y,
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
+          life: 1.0,
+          color: Math.random() > 0.5 ? '#10b981' : '#2dd4bf'
+        });
+      }
+    }
+
+    function renderMainBridge() {
+      ctx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+
+      const isAlive = satellitePos && (Date.now() - lastSatTime < 1600);
+
+      if (isAlive) {
+        const myCenterX = window.screenX + window.outerWidth / 2;
+        const myCenterY = window.screenY + window.outerHeight / 2;
+        const otherCenterX = satellitePos.x + satellitePos.w / 2;
+        const otherCenterY = satellitePos.y + satellitePos.h / 2;
+
+        const dx = otherCenterX - myCenterX;
+        const dy = otherCenterY - myCenterY;
+        const dist = Math.hypot(dx, dy);
+        const maxDist = 720;
+
+        if (dist < maxDist) {
+          wasConnected = true;
+          const angle = Math.atan2(dy, dx);
+
+          // Clamped edge point
+          const startX = mainCanvas.width / 2 + Math.cos(angle) * (mainCanvas.width / 2.05);
+          const startY = mainCanvas.height / 2 + Math.sin(angle) * (mainCanvas.height / 2.05);
+
+          const reach = Math.max(1.0 - (dist / maxDist), 0.1);
+          const endX = startX + Math.cos(angle) * (reach * 260);
+          const endY = startY + Math.sin(angle) * (reach * 260);
+
+          const thickness = 24 * reach;
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          ctx.lineWidth = thickness;
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = '#10b981';
+          ctx.shadowColor = '#34d399';
+          ctx.shadowBlur = 25;
+          ctx.stroke();
+
+          // Luminous core filament
+          ctx.beginPath();
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          ctx.lineWidth = thickness * 0.45;
+          ctx.strokeStyle = '#f0fdf4';
+          ctx.shadowColor = '#2dd4bf';
+          ctx.shadowBlur = 12;
+          ctx.stroke();
+
+          // Pulsing energy nodes
+          const pNorm = (Math.sin(Date.now() * 0.007) + 1) / 2;
+          const nodeX = startX + (endX - startX) * pNorm;
+          const nodeY = startY + (endY - startY) * pNorm;
+          ctx.beginPath();
+          ctx.arc(nodeX, nodeY, thickness * 0.7, 0, Math.PI * 2);
+          ctx.fillStyle = '#34d399';
+          ctx.shadowBlur = 20;
+          ctx.fill();
+
+          ctx.restore();
+        } else if (wasConnected) {
+          wasConnected = false;
+          const angle = Math.atan2(dy, dx);
+          const snapX = mainCanvas.width / 2 + Math.cos(angle) * (mainCanvas.width / 2.05);
+          const snapY = mainCanvas.height / 2 + Math.sin(angle) * (mainCanvas.height / 2.05);
+          triggerSplatter(snapX, snapY);
+        }
+      }
+
+      // Splatter particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.94;
+        p.vy *= 0.94;
+        p.life -= 0.025;
+
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+        } else {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 3.5 * p.life, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = p.life;
+          ctx.shadowColor = p.color;
+          ctx.shadowBlur = 10;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      broadcastMain();
+      requestAnimationFrame(renderMainBridge);
+    }
+    renderMainBridge();
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     FEATURE 2: INFINITE NON-EUCLIDEAN 3D PORTALS (The Step-Inside Grid)
+     Target: Flagship Drone Card (#drone-portal-card & #drone-portal-canvas)
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initNonEuclideanPortal() {
+    const container = document.getElementById('drone-portal-card');
+    const canvas = document.getElementById('drone-portal-canvas');
+    const coordEl = document.getElementById('portal-drone-coords');
+    if (!container || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    function resizePortal() {
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio || rect.width;
+      canvas.height = rect.height * window.devicePixelRatio || rect.height;
+    }
+    window.addEventListener('resize', resizePortal);
+    resizePortal();
+
+    let mouseU = 0.5, mouseV = 0.5;
+    let targetU = 0.5, targetV = 0.5;
+    let isHover = false;
+    let rotAngle = 0;
+
+    container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect();
+      targetU = (e.clientX - rect.left) / rect.width;
+      targetV = (e.clientY - rect.top) / rect.height;
+      isHover = true;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      targetU = 0.5;
+      targetV = 0.5;
+      isHover = false;
+    });
+
+    function project3D(x, y, z, cx, cy, fov) {
+      // Perspective projection with camera tilt
+      const eyeX = (mouseU - 0.5) * 140;
+      const eyeY = (mouseV - 0.5) * 90;
+      const camX = x - eyeX;
+      const camY = y - eyeY;
+      const scale = fov / (fov + z);
+      return {
+        x: cx + camX * scale,
+        y: cy + camY * scale,
+        scale: scale
+      };
+    }
+
+    function renderPortal() {
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+      const fov = 340;
+
+      // Smooth camera interpolation
+      mouseU += (targetU - mouseU) * 0.12;
+      mouseV += (targetV - mouseV) * 0.12;
+      rotAngle += 0.022;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Deep dark chamber gradient
+      const bgGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, Math.max(w, h));
+      bgGrad.addColorStop(0, '#041209');
+      bgGrad.addColorStop(1, '#010403');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.save();
+
+      // 1. Receding 3D Depth Grid (Floors, Walls, Ceiling)
+      ctx.lineWidth = 1;
+      const depthSteps = 8;
+      const maxZ = 650;
+
+      for (let i = 0; i < depthSteps; i++) {
+        const z = (i / depthSteps) * maxZ;
+        const alpha = Math.max(0.1, 1 - (z / maxZ)) * 0.65;
+        ctx.strokeStyle = `rgba(16, 185, 129, ${alpha.toFixed(2)})`;
+
+        // 4 Corner boundary rectangle at depth z
+        const p1 = project3D(-cx * 0.95, -cy * 0.95, z, cx, cy, fov);
+        const p2 = project3D(cx * 0.95, -cy * 0.95, z, cx, cy, fov);
+        const p3 = project3D(cx * 0.95, cy * 0.95, z, cx, cy, fov);
+        const p4 = project3D(-cx * 0.95, cy * 0.95, z, cx, cy, fov);
+
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.lineTo(p3.x, p3.y);
+        ctx.lineTo(p4.x, p4.y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Floor longitudinal grid lines
+        for (let col = -3; col <= 3; col++) {
+          const colX = (col / 3) * (cx * 0.95);
+          const fTop = project3D(colX, cy * 0.95, z, cx, cy, fov);
+          const fNext = project3D(colX, cy * 0.95, z + (maxZ / depthSteps), cx, cy, fov);
+          ctx.beginPath();
+          ctx.moveTo(fTop.x, fTop.y);
+          ctx.lineTo(fNext.x, fNext.y);
+          ctx.stroke();
+        }
+      }
+
+      // 2. Corner perspective depth struts
+      ctx.strokeStyle = 'rgba(45, 212, 191, 0.45)';
+      const nearCorners = [
+        project3D(-cx * 0.95, -cy * 0.95, 0, cx, cy, fov),
+        project3D(cx * 0.95, -cy * 0.95, 0, cx, cy, fov),
+        project3D(cx * 0.95, cy * 0.95, 0, cx, cy, fov),
+        project3D(-cx * 0.95, cy * 0.95, 0, cx, cy, fov)
+      ];
+      const farCorners = [
+        project3D(-cx * 0.95, -cy * 0.95, maxZ, cx, cy, fov),
+        project3D(cx * 0.95, -cy * 0.95, maxZ, cx, cy, fov),
+        project3D(cx * 0.95, cy * 0.95, maxZ, cx, cy, fov),
+        project3D(-cx * 0.95, cy * 0.95, maxZ, cx, cy, fov)
+      ];
+      for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(nearCorners[i].x, nearCorners[i].y);
+        ctx.lineTo(farCorners[i].x, farCorners[i].y);
+        ctx.stroke();
+      }
+
+      // 3. Central Holographic 3D Drone Model floating in the chamber
+      const droneZ = 220 + Math.sin(rotAngle * 1.5) * 25;
+      const droneArm = 70;
+      const angles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
+
+      const centerProj = project3D(0, 0, droneZ, cx, cy, fov);
+
+      // LiDAR spherical pulses
+      const pulseR = ((Date.now() * 0.05) % 110) * centerProj.scale;
+      ctx.beginPath();
+      ctx.arc(centerProj.x, centerProj.y, pulseR, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(45, 212, 191, ${(1 - pulseR / (110 * centerProj.scale)).toFixed(2)})`;
+      ctx.stroke();
+
+      // Drone Quad Arms
+      ctx.strokeStyle = '#34d399';
+      ctx.lineWidth = 2 * centerProj.scale;
+      ctx.shadowColor = '#10b981';
+      ctx.shadowBlur = 12;
+
+      for (let a of angles) {
+        const curA = a + rotAngle;
+        const ax = Math.cos(curA) * droneArm;
+        const ay = Math.sin(curA) * droneArm * 0.45; // slight pitch
+        const armProj = project3D(ax, ay, droneZ, cx, cy, fov);
+
+        ctx.beginPath();
+        ctx.moveTo(centerProj.x, centerProj.y);
+        ctx.lineTo(armProj.x, armProj.y);
+        ctx.stroke();
+
+        // Rotor disc
+        ctx.beginPath();
+        ctx.ellipse(armProj.x, armProj.y, 16 * centerProj.scale, 8 * centerProj.scale, curA, 0, Math.PI * 2);
+        ctx.strokeStyle = '#2dd4bf';
+        ctx.stroke();
+      }
+
+      // Central avionics core
+      ctx.beginPath();
+      ctx.arc(centerProj.x, centerProj.y, 9 * centerProj.scale, 0, Math.PI * 2);
+      ctx.fillStyle = '#f0fdf4';
+      ctx.shadowBlur = 16;
+      ctx.fill();
+
+      ctx.restore();
+
+      // Update live coordinates readout
+      if (coordEl && isHover) {
+        const pitch = ((mouseV - 0.5) * -34).toFixed(1);
+        const yaw = ((mouseU - 0.5) * 58).toFixed(1);
+        coordEl.textContent = `YAW: ${yaw}° | PITCH: ${pitch}° | ALT: ${(droneZ * 0.1).toFixed(1)}m`;
+      }
+
+      requestAnimationFrame(renderPortal);
+    }
+    renderPortal();
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     FEATURE 3: VECTOR-CORROSION & CSS MELTING SHADERS
+     Target: Toolkit buttons, project pills, and category filters
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initLiquidMercuryMelting() {
+    const turbNode = document.getElementById('mercury-turb');
+    if (!turbNode) return;
+
+    // Attach to interactive pills & buttons in Toolkit, Projects, and Ideas
+    const targets = document.querySelectorAll('.toolkit-btn, .filter-btn, .ptag, .status-pill');
+    targets.forEach(t => t.classList.add('liquid-melt-target'));
+
+    let isMelting = false;
+    let meltTime = 0;
+
+    targets.forEach(elem => {
+      elem.addEventListener('mouseenter', () => { isMelting = true; });
+      elem.addEventListener('mouseleave', () => { isMelting = false; });
+    });
+
+    function updateLiquidMelting() {
+      if (isMelting) {
+        meltTime += 0.04;
+        const freqX = (0.04 + Math.sin(meltTime) * 0.015).toFixed(3);
+        const freqY = (0.04 + Math.cos(meltTime * 0.8) * 0.015).toFixed(3);
+        turbNode.setAttribute('baseFrequency', `${freqX} ${freqY}`);
+      }
+      requestAnimationFrame(updateLiquidMelting);
+    }
+    updateLiquidMelting();
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     FEATURE 4: DIGITAL DECOUPLING & GRAVITATIONAL INERTIA
+     Target: Toolkit & Achievements cards deflect dynamically on scroll velocity
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initGravitationalInertia() {
+    if (prefersReducedMotion) return;
+
+    const cards = document.querySelectorAll('.toolkit-card, .achieve-stat-block, .timeline-item');
+    if (!cards.length) return;
+
+    cards.forEach(c => c.classList.add('inertia-physics-card'));
+
+    let lastY = window.scrollY;
+    let scrollVelocity = 0;
+    let currentTilt = 0;
+    let targetTilt = 0;
+
+    window.addEventListener('scroll', () => {
+      const curY = window.scrollY;
+      const dy = curY - lastY;
+      scrollVelocity = Math.max(Math.min(dy * 0.18, 12), -12);
+      lastY = curY;
+      targetTilt = scrollVelocity;
+    }, { passive: true });
+
+    function renderInertia() {
+      // Spring decay
+      targetTilt *= 0.88;
+      currentTilt += (targetTilt - currentTilt) * 0.18;
+
+      if (Math.abs(currentTilt) > 0.05) {
+        const rad = (currentTilt * 0.4).toFixed(2);
+        cards.forEach((card, idx) => {
+          const stagger = (idx % 2 === 0 ? 1 : -1) * 0.5;
+          card.style.transform = `translate3d(0, ${(currentTilt * 0.6).toFixed(1)}px, 0) rotate(${((currentTilt + stagger) * 0.08).toFixed(2)}deg)`;
+        });
+      } else if (currentTilt !== 0) {
+        currentTilt = 0;
+        cards.forEach(card => card.style.transform = '');
+      }
+
+      requestAnimationFrame(renderInertia);
+    }
+    renderInertia();
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     ORCHESTRATION OF ALL SYSTEMS
   ───────────────────────────────────────────────────────────────────────────── */
   function initAllPhases() {
     initPhase1MagneticCursor();
     initPhase2Bento3DParallax();
     initPhase3IridescentNatureMesh();
     initPhase4KineticTypography();
+
+    // The 4 Advanced Non-Hero Systems
+    initCrossWindowPhysics();
+    initNonEuclideanPortal();
+    initLiquidMercuryMelting();
+    initGravitationalInertia();
   }
 
   if (document.readyState === 'loading') {
