@@ -805,3 +805,119 @@ select {
   font-family: var(--font-mono);
 }
 
+/* ──────────────────────────────────────────────────────────────
+   INTERACTIVE PRISM & CHROMATIC ABERRATION DESIGN SYSTEM
+────────────────────────────────────────────────────────────── */
+.prism-canvas-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.75;
+}
+
+.prism-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Perspective container for realistic 3D glass tilt */
+.prism-perspective-wrap {
+  perspective: 1200px;
+}
+
+/* Prism Card with multi-layered glassmorphism, dynamic spotlight and chromatic edge */
+.prism-card {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --chroma-offset: 1px;
+  position: relative;
+  background: rgba(19, 19, 18, 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 12px 36px -8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.14s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.25s;
+  overflow: hidden;
+}
+
+body.light .prism-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 16px 36px -10px rgba(0, 0, 0, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* 1. Dynamic Cursor Spotlight (Light Cone / Focal Glow) */
+.prism-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    650px circle at var(--mouse-x) var(--mouse-y), 
+    rgba(201, 168, 108, 0.12),
+    rgba(255, 255, 255, 0.03) 25%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  opacity: 0.85;
+}
+
+/* 2. Chromatic Aberration & Spectral Rainbow Sheen at Bevel Edges */
+.prism-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    calc(120deg + var(--tilt-y) * 4),
+    rgba(255, 0, 80, 0.35) 0%,
+    rgba(0, 240, 255, 0.35) 50%,
+    rgba(255, 220, 0, 0.35) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.3;
+  transition: opacity 0.35s ease, filter 0.35s ease;
+}
+
+.prism-card:hover::after {
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.3));
+}
+
+.prism-card-inner {
+  position: relative;
+  z-index: 3;
+}
+
+/* Chromatic Aberration Split Title Effect on hover */
+.chroma-text {
+  position: relative;
+  display: inline-block;
+  transition: text-shadow 0.25s ease;
+}
+
+.prism-card:hover .chroma-text {
+  text-shadow: 
+    -1.5px 0 0 rgba(255, 30, 80, 0.75),
+    1.5px 0 0 rgba(0, 230, 255, 0.75);
+}
+
+

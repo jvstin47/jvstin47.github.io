@@ -36,8 +36,31 @@
     </div>
   </nav>
 
+<!-- SVG DISPLACEMENT & CHROMATIC ABERRATION DISPERSION FILTER -->
+<svg style="display:none;" width="0" height="0">
+  <defs>
+    <filter id="prism-chromatic-filter" x="-20%" y="-20%" width="140%" height="140%">
+      <!-- Channel separation & displacement -->
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red_chan"/>
+      <feOffset in="red_chan" dx="-2.5" dy="0" result="red_offset"/>
+      
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green_chan"/>
+      <feOffset in="green_chan" dx="0" dy="0" result="green_offset"/>
+      
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue_chan"/>
+      <feOffset in="blue_chan" dx="2.5" dy="0" result="blue_offset"/>
+      
+      <feBlend in="red_offset" in2="green_offset" mode="screen" result="rg_blend"/>
+      <feBlend in="rg_blend" in2="blue_offset" mode="screen"/>
+    </filter>
+  </defs>
+</svg>
+
 <!-- HERO -->
-<section id="hero">
+<section id="hero" style="position:relative;">
+  <div class="prism-canvas-container">
+    <canvas id="prism-hero-canvas" class="prism-canvas"></canvas>
+  </div>
   <div class="hero-glow"></div>
   <div class="wrap" style="position:relative;z-index:1;">
     <div class="hero-eyebrow anim anim-1">
@@ -151,73 +174,79 @@
 
     <div class="projects-grid">
       <!-- Project Phoenix-X: Sovereign AI Predictive Logistics -->
-      <div class="project-card featured reveal reveal-d2">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <p class="project-type">Defense AI · C4ISR Tactical Ops · Thermodynamic Modeling · SIH 2026 (PS: 26251)</p>
-          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(234,179,8,0.15);color:#eab308;">● MoD / DSSC Track</span>
-        </div>
-        <h3 class="project-title">Phoenix-X — Sovereign AI Predictive Logistics &amp; High-Altitude Supply Chain</h3>
-        <p class="project-desc">
-          Air-gapped, zero-cloud military logistics platform engineered for high-altitude sectors (Eastern Ladakh, Siachen, Depsang). Fuses environmental thermodynamics (altitude lapse rates, caloric scaling, arctic POL consumption) with Bayesian hybrid demand forecasting (&lt;4.2% MAPE vs 6.5% SLA limit) and non-linear terrain-penalized routing to guarantee unbroken forward combat resupply under 15ms latency.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">Python 3.11</span>
-            <span class="ptag">Thermodynamic Physics</span>
-            <span class="ptag">Bayesian Forecasting</span>
-            <span class="ptag">Non-Linear Routing</span>
-            <span class="ptag">Tactical HUD</span>
+      <div class="project-card featured prism-card reveal reveal-d2">
+        <div class="prism-card-inner">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <p class="project-type">Defense AI · C4ISR Tactical Ops · Thermodynamic Modeling · SIH 2026 (PS: 26251)</p>
+            <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(234,179,8,0.15);color:#eab308;">● MoD / DSSC Track</span>
           </div>
-          <div style="display:flex;gap:12px;">
-            <a href="projects.html#p10" class="project-link" style="color:var(--gold);">Architecture Deep Dive <span>→</span></a>
+          <h3 class="project-title chroma-text">Phoenix-X — Sovereign AI Predictive Logistics &amp; High-Altitude Supply Chain</h3>
+          <p class="project-desc">
+            Air-gapped, zero-cloud military logistics platform engineered for high-altitude sectors (Eastern Ladakh, Siachen, Depsang). Fuses environmental thermodynamics (altitude lapse rates, caloric scaling, arctic POL consumption) with Bayesian hybrid demand forecasting (&lt;4.2% MAPE vs 6.5% SLA limit) and non-linear terrain-penalized routing to guarantee unbroken forward combat resupply under 15ms latency.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">Python 3.11</span>
+              <span class="ptag">Thermodynamic Physics</span>
+              <span class="ptag">Bayesian Forecasting</span>
+              <span class="ptag">Non-Linear Routing</span>
+              <span class="ptag">Tactical HUD</span>
+            </div>
+            <div style="display:flex;gap:12px;">
+              <a href="projects.html#p10" class="project-link" style="color:var(--gold);">Architecture Deep Dive <span>→</span></a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- F1 Strategy Simulator -->
-      <div class="project-card featured reveal reveal-d2">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <p class="project-type">Simulation · Python · FastF1 · Dynamic Programming</p>
-          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
-        </div>
-        <h3 class="project-title">F1 Monte Carlo Race Strategy Simulator</h3>
-        <p class="project-desc">
-          High-performance Formula 1 race strategy engine powered by a vectorized 10,000-run Monte Carlo simulation, non-linear tyre degradation modeling, and Bellman-equation dynamic programming to compute optimal pit windows against stochastic safety cars and weather shifts.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">Python</span>
-            <span class="ptag">NumPy Vectorization</span>
-            <span class="ptag">FastF1 Telemetry</span>
-            <span class="ptag">React Frontend</span>
+      <div class="project-card featured prism-card reveal reveal-d2">
+        <div class="prism-card-inner">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <p class="project-type">Simulation · Python · FastF1 · Dynamic Programming</p>
+            <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
           </div>
-          <div style="display:flex;gap:12px;">
-            <a href="https://f1-monte-carlo-race-strategy-simula.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live App ↗</a>
-            <a href="projects.html#p2" class="project-link">Deep dive <span>→</span></a>
+          <h3 class="project-title chroma-text">F1 Monte Carlo Race Strategy Simulator</h3>
+          <p class="project-desc">
+            High-performance Formula 1 race strategy engine powered by a vectorized 10,000-run Monte Carlo simulation, non-linear tyre degradation modeling, and Bellman-equation dynamic programming to compute optimal pit windows against stochastic safety cars and weather shifts.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">Python</span>
+              <span class="ptag">NumPy Vectorization</span>
+              <span class="ptag">FastF1 Telemetry</span>
+              <span class="ptag">React Frontend</span>
+            </div>
+            <div style="display:flex;gap:12px;">
+              <a href="https://f1-monte-carlo-race-strategy-simula.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live App ↗</a>
+              <a href="projects.html#p2" class="project-link">Deep dive <span>→</span></a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Captain Lakshmi: Invicta -->
-      <div class="project-card featured reveal reveal-d2">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <p class="project-type">Creative Web · Canvas 2D · Historical Archive · React 19</p>
-          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
-        </div>
-        <h3 class="project-title">Captain Lakshmi: Invicta — Scroll-Driven Historical Monograph</h3>
-        <p class="project-desc">
-          Hardware-accelerated Canvas 2D frame sequencer scrubbing 3,100+ HD frames across 14 historical acts in real-time. An editorial-grade interactive monograph commemorating Dr. Lakshmi Sahgal — physician, INA Commander, lifelong healer — with cinematic scroll-driven immersion.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">React 19</span>
-            <span class="ptag">Canvas 2D</span>
-            <span class="ptag">60 FPS Frame Sequencing</span>
-            <span class="ptag">Vite 5</span>
+      <div class="project-card featured prism-card reveal reveal-d2">
+        <div class="prism-card-inner">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <p class="project-type">Creative Web · Canvas 2D · Historical Archive · React 19</p>
+            <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
           </div>
-          <div style="display:flex;gap:12px;">
-            <a href="https://captain-lakshmi-invicta.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Launch ↗</a>
-            <a href="projects.html#p6" class="project-link">Case study <span>→</span></a>
+          <h3 class="project-title chroma-text">Captain Lakshmi: Invicta — Scroll-Driven Historical Monograph</h3>
+          <p class="project-desc">
+            Hardware-accelerated Canvas 2D frame sequencer scrubbing 3,100+ HD frames across 14 historical acts in real-time. An editorial-grade interactive monograph commemorating Dr. Lakshmi Sahgal — physician, INA Commander, lifelong healer — with cinematic scroll-driven immersion.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">React 19</span>
+              <span class="ptag">Canvas 2D</span>
+              <span class="ptag">60 FPS Frame Sequencing</span>
+              <span class="ptag">Vite 5</span>
+            </div>
+            <div style="display:flex;gap:12px;">
+              <a href="https://captain-lakshmi-invicta.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Launch ↗</a>
+              <a href="projects.html#p6" class="project-link">Case study <span>→</span></a>
+            </div>
           </div>
         </div>
       </div>
@@ -1193,6 +1222,114 @@
       toggleTechTerminal();
     }
   });
+
+  /* ──────────────────────────────────────────────────────────────
+     PRISM SYSTEM: CURSOR SPOTLIGHT TRACKING & 3D TILT PHYSICS
+  ────────────────────────────────────────────────────────────── */
+  (function initPrismElements() {
+    const prismCards = document.querySelectorAll('.prism-card');
+    
+    prismCards.forEach(card => {
+      let isHovering = false;
+      let targetX = 0, targetY = 0;
+      let currentX = 0, currentY = 0;
+
+      card.addEventListener('mouseenter', () => {
+        isHovering = true;
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        // Dynamic Spotlight coordinates
+        card.style.setProperty('--mouse-x', `${mouseX}px`);
+        card.style.setProperty('--mouse-y', `${mouseY}px`);
+
+        // Compute 3D Perspective Tilt angles (-10deg to +10deg)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        targetY = ((mouseX - centerX) / centerX) * 8.0;
+        targetX = -((mouseY - centerY) / centerY) * 8.0;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHovering = false;
+        targetX = 0;
+        targetY = 0;
+      });
+
+      // Smooth RAF damping for natural glass momentum
+      function renderTilt() {
+        currentX += (targetX - currentX) * 0.15;
+        currentY += (targetY - currentY) * 0.15;
+        card.style.setProperty('--tilt-x', `${currentX.toFixed(2)}deg`);
+        card.style.setProperty('--tilt-y', `${currentY.toFixed(2)}deg`);
+        requestAnimationFrame(renderTilt);
+      }
+      renderTilt();
+    });
+
+    /* ── LIQUID SPECTRUM PRISM CANVAS (WAVE CHROMATIC REFRACTION) ── */
+    const canvas = document.getElementById('prism-hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let time = 0;
+    let mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
+
+    function resize() {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.offsetWidth;
+      height = canvas.height = canvas.parentElement.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.targetX = e.clientX / window.innerWidth;
+      mouse.targetY = e.clientY / window.innerHeight;
+    });
+
+    function drawSpectrumWaves() {
+      time += 0.015;
+      mouse.x += (mouse.targetX - mouse.x) * 0.06;
+      mouse.y += (mouse.targetY - mouse.y) * 0.06;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Render 3 chromatic caustic bands (Red, Green, Blue refraction offset)
+      const bands = [
+        { color: 'rgba(255, 60, 90, 0.065)', phase: 0.0, speed: 1.0, amp: 45 },
+        { color: 'rgba(0, 240, 255, 0.060)', phase: 1.8, speed: 1.15, amp: 55 },
+        { color: 'rgba(201, 168, 108, 0.075)', phase: 3.4, speed: 0.85, amp: 50 }
+      ];
+
+      bands.forEach(b => {
+        ctx.beginPath();
+        const baseY = height * (0.35 + (mouse.y - 0.5) * 0.25);
+        ctx.moveTo(0, baseY);
+
+        for (let x = 0; x <= width; x += 15) {
+          const nx = x / width;
+          const wave1 = Math.sin(nx * 4.5 + time * b.speed + b.phase) * b.amp;
+          const wave2 = Math.cos(nx * 2.2 - time * 0.8 + (mouse.x * 2.0)) * (b.amp * 0.6);
+          const y = baseY + wave1 + wave2;
+          ctx.lineTo(x, y);
+        }
+
+        ctx.lineTo(width, height);
+        ctx.lineTo(0, height);
+        ctx.closePath();
+        ctx.fillStyle = b.color;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(drawSpectrumWaves);
+    }
+    drawSpectrumWaves();
+  })();
 </script>
 
 </body>
