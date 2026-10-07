@@ -762,6 +762,206 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
+     FEATURE 5: HERO LIGHT-MODE INTERACTIVE SYSTEMS
+     1. Computational Topography Vector Isolines Canvas (#hero-light-contour)
+     2. Tactile 3D Gyroscopic Systems Reticle (#hero-reticle)
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initHeroLightInteractive() {
+    // 1. TOPOGRAPHICAL CONTOUR ISOLINES CANVAS
+    const canvas = document.getElementById('hero-light-contour');
+    const heroSection = document.getElementById('hero');
+    if (canvas && heroSection) {
+      const ctx = canvas.getContext('2d');
+      let mouseX = -1000, mouseY = -1000;
+      let targetMouseX = -1000, targetMouseY = -1000;
+      let time = 0;
+      let ripples = [];
+
+      function resizeCanvas() {
+        const rect = heroSection.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        targetMouseX = e.clientX - rect.left;
+        targetMouseY = e.clientY - rect.top;
+      }, { passive: true });
+
+      heroSection.addEventListener('mouseleave', () => {
+        targetMouseX = -1000;
+        targetMouseY = -1000;
+      });
+
+      heroSection.addEventListener('click', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        ripples.push({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+          radius: 0,
+          maxRadius: 280,
+          strength: 28
+        });
+      });
+
+      function renderContours() {
+        if (!document.body.classList.contains('light')) {
+          requestAnimationFrame(renderContours);
+          return;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        time += 0.014;
+
+        // Smooth cursor lerp
+        mouseX += (targetMouseX - mouseX) * 0.12;
+        mouseY += (targetMouseY - mouseY) * 0.12;
+
+        const numLines = 16;
+        const spacing = canvas.height / (numLines + 1);
+        const stepX = 14;
+
+        // Update ripples
+        for (let r = ripples.length - 1; r >= 0; r--) {
+          const rip = ripples[r];
+          rip.radius += 5.5;
+          rip.strength *= 0.94;
+          if (rip.radius > rip.maxRadius || rip.strength < 0.2) {
+            ripples.splice(r, 1);
+          }
+        }
+
+        for (let i = 1; i <= numLines; i++) {
+          const baseY = i * spacing;
+          const isMajor = (i % 4 === 0);
+
+          ctx.beginPath();
+          ctx.lineWidth = isMajor ? 1.4 : 0.85;
+          ctx.strokeStyle = isMajor ? 'rgba(4, 120, 87, 0.28)' : 'rgba(16, 185, 129, 0.14)';
+
+          for (let x = 0; x <= canvas.width + stepX; x += stepX) {
+            // Harmonic terrain wave
+            const wave = Math.sin(x * 0.0035 + time * 0.8 + i * 0.3) * 10
+                       + Math.cos(x * 0.007 - time * 0.5) * 6;
+
+            // Cursor topographical deformation
+            let cursorDisp = 0;
+            if (mouseX > 0) {
+              const dx = x - mouseX;
+              const dy = baseY - mouseY;
+              const dist = Math.hypot(dx, dy);
+              if (dist < 220) {
+                const norm = Math.max(0, 1 - dist / 220);
+                cursorDisp = Math.sin(norm * Math.PI) * 42 * (dy > 0 ? 1 : -0.7);
+              }
+            }
+
+            // Ripple influence
+            let rippleDisp = 0;
+            for (let rip of ripples) {
+              const rDist = Math.hypot(x - rip.x, baseY - rip.y);
+              const delta = Math.abs(rDist - rip.radius);
+              if (delta < 40) {
+                rippleDisp += Math.sin((1 - delta / 40) * Math.PI) * rip.strength;
+              }
+            }
+
+            const y = baseY + wave + cursorDisp + rippleDisp;
+            if (x === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+          ctx.stroke();
+        }
+
+        requestAnimationFrame(renderContours);
+      }
+      renderContours();
+    }
+
+    // 2. TACTILE 3D GYROSCOPIC SYSTEMS RETICLE
+    const reticle = document.getElementById('hero-reticle');
+    const gimbal = document.getElementById('reticle-gimbal');
+    const needle = document.getElementById('reticle-needle');
+    const coordsEl = document.getElementById('reticle-coords');
+    const modeEl = document.getElementById('reticle-mode');
+
+    if (reticle && gimbal) {
+      let curTiltX = 0, curTiltY = 0;
+      let targetTiltX = 0, targetTiltY = 0;
+      let targetNeedleAngle = 0;
+      let curNeedleAngle = 0;
+
+      const modes = [
+        'SYSTEMS 3D VECTOR',
+        'AUTONOMOUS SAR GIMBAL',
+        'MONTE CARLO FIELD'
+      ];
+      let modeIdx = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        const rect = reticle.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        const dist = Math.hypot(dx, dy);
+
+        // Tilt gimbal towards mouse
+        const clamp = Math.min(dist / 350, 1.0);
+        targetTiltX = (dy / 350) * -26 * clamp;
+        targetTiltY = (dx / 350) * 26 * clamp;
+
+        // Needle orientation angle
+        targetNeedleAngle = Math.atan2(dy, dx) + Math.PI / 2;
+      }, { passive: true });
+
+      reticle.addEventListener('mouseleave', () => {
+        targetTiltX = 0;
+        targetTiltY = 0;
+      });
+
+      reticle.addEventListener('click', () => {
+        modeIdx = (modeIdx + 1) % modes.length;
+        if (modeEl) modeEl.textContent = modes[modeIdx];
+        
+        // Haptic expansion pulse
+        reticle.style.transform = 'scale(0.96)';
+        setTimeout(() => { reticle.style.transform = ''; }, 140);
+      });
+
+      function updateReticlePhysics() {
+        curTiltX += (targetTiltX - curTiltX) * 0.16;
+        curTiltY += (targetTiltY - curTiltY) * 0.16;
+
+        // Angular interpolation
+        let diff = targetNeedleAngle - curNeedleAngle;
+        while (diff < -Math.PI) diff += Math.PI * 2;
+        while (diff > Math.PI) diff -= Math.PI * 2;
+        curNeedleAngle += diff * 0.14;
+
+        gimbal.style.transform = `perspective(450px) rotateX(${curTiltX.toFixed(2)}deg) rotateY(${curTiltY.toFixed(2)}deg)`;
+        if (needle) {
+          needle.style.transform = `rotate(${curNeedleAngle.toFixed(3)}rad)`;
+        }
+
+        if (coordsEl) {
+          coordsEl.textContent = `PITCH: ${curTiltX.toFixed(1)}° · YAW: ${curTiltY.toFixed(1)}°`;
+        }
+
+        requestAnimationFrame(updateReticlePhysics);
+      }
+      updateReticlePhysics();
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
      ORCHESTRATION OF ALL SYSTEMS
   ───────────────────────────────────────────────────────────────────────────── */
   function initAllPhases() {
@@ -770,10 +970,11 @@
     initPhase3IridescentNatureMesh();
     initPhase4KineticTypography();
 
-    // Advanced Non-Hero Systems
+    // Advanced Systems
     initCrossWindowPhysics();
     initLiquidMercuryMelting();
     initGravitationalInertia();
+    initHeroLightInteractive();
   }
 
   if (document.readyState === 'loading') {
