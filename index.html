@@ -81,6 +81,10 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
         Explore Projects
       </a>
+      <button class="btn btn-ghost" onclick="toggleTechTerminal()" style="border-color:rgba(45,212,191,0.4);color:#2dd4bf;" title="Launch Interactive Systems Terminal">
+        <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2dd4bf;margin-right:6px;animation:pulse 2s infinite;"></span>
+        sh ./terminal.sh [~]
+      </button>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/jvstin47/" target="_blank" title="LinkedIn Profile">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24Z"/></svg>
         LinkedIn ↗
@@ -1077,11 +1081,13 @@
   <div class="tech-terminal-box">
     <div class="tech-terminal-topbar">
       <div class="tech-terminal-dots">
-        <span class="tech-term-dot red" onclick="toggleTechTerminal()" style="cursor:pointer;" title="Close"></span>
-        <span class="tech-term-dot yellow"></span>
-        <span class="tech-term-dot green"></span>
+        <span class="tech-term-dot red" onclick="toggleTechTerminal()" title="Close Terminal (ESC)">✕</span>
+        <span class="tech-term-dot yellow" onclick="minimizeTerminal()" title="Minimize / Clear Buffer">—</span>
+        <span class="tech-term-dot green" onclick="maximizeTerminal()" title="Toggle Fullscreen Expansion">⤢</span>
       </div>
-      <span class="tech-terminal-title">justin@workstation: ~/systems-architecture</span>
+      <span class="tech-terminal-title">
+        <span style="color:var(--gold);">⚡</span> justin@monocoque: <span id="term-pwd" style="color:#2dd4bf;">~/projects</span> (bash)
+      </span>
       <button class="cert-modal-close" onclick="toggleTechTerminal()" style="width:24px;height:24px;font-size:12px;">✕</button>
     </div>
     <div class="tech-terminal-body" id="term-body">
@@ -1118,69 +1124,173 @@
     }
   }
 
-  function closeTerminalOnBackdrop(e) {
-    if (e.target.id === 'tech-terminal') {
-      toggleTechTerminal();
+  // Window management functions
+  function maximizeTerminal() {
+    const box = document.querySelector('.tech-terminal-box');
+    if (box) box.classList.toggle('maximized');
+  }
+
+  function minimizeTerminal() {
+    const termOutput = document.getElementById('term-output');
+    if (termOutput) {
+      termOutput.innerHTML = '<div style="color:var(--faint);">[Buffer cleared] Type "help" or "ls" to inspect directory.</div>';
     }
   }
 
   const termInput = document.getElementById('term-input');
   const termOutput = document.getElementById('term-output');
+  const termPwd = document.getElementById('term-pwd');
+
+  // Virtual Filesystem State
+  let currentDir = '~/projects';
+  const fileSystem = {
+    '~': ['projects', 'telemetry', 'bio.txt', 'resume.pdf'],
+    '~/projects': [
+      '01_phoenix_x_c4isr',
+      '02_f1_monte_carlo',
+      '03_captain_lakshmi',
+      '04_phoenix_sar_uav',
+      '05_song_chord_mir',
+      '06_aroggyagram3',
+      '07_autometer_iot',
+      '08_opportunity_os',
+      '09_uno_q_arena',
+      '10_crt_lock'
+    ],
+    '~/telemetry': ['f1_pit_telemetry.json', 'ladakh_lapse_rate.py', 'qualcomm_npu_bench.log']
+  };
+
+  const fileContents = {
+    'bio.txt': 'Justin Joe Mathew — Software Engineer & Systems Builder.\nB.Tech CSE (2025–2029) @ Amal Jyothi College of Engineering.\nFocus: Vectorized simulation, C4ISR defense logistics, edge AI NPUs, and offline mobile OS.',
+    'resume.pdf': 'Latest 2026 Engineering Resume available at Justin_Mathew_Resume.pdf',
+    'f1_pit_telemetry.json': '{\n  "sim_runs": 10000,\n  "tyre_compounds": ["Soft", "Medium", "Hard"],\n  "solver": "Bellman Dynamic Programming",\n  "telemetry_stream": "FastF1 API v3.4"\n}',
+    'ladakh_lapse_rate.py': '# Environmental Thermodynamics Solver\ndef temp_at_altitude(base_t, elev_m):\n    return base_t - (6.5 * (elev_m / 1000.0))\n# Caloric scaling: k_cal = 1.0 + 0.00012*(Elev-3000) + 0.012*(-T)',
+    'qualcomm_npu_bench.log': '[RB5 NPU] ThermalNet YOLOv8: 18.4ms/frame | LoRa 915MHz P2P: 5.2km range OK | Zero Cloud: Verified'
+  };
 
   if (termInput && termOutput) {
     termInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
-        const val = this.value.trim().toLowerCase();
-        if (!val) return;
+        const raw = this.value.trim();
+        if (!raw) return;
+        const parts = raw.split(' ');
+        const cmd = parts[0].toLowerCase();
+        const arg = parts.slice(1).join(' ').trim();
         
         const line = document.createElement('div');
-        line.innerHTML = `<span style="color:var(--gold)">guest@justin:~$</span> <span style="color:#fff;">${this.value}</span>`;
+        line.innerHTML = `<span style="color:var(--gold)">justin@monocoque:${currentDir}$</span> <span style="color:#fff;">${this.value}</span>`;
         termOutput.appendChild(line);
         
         const resp = document.createElement('div');
         resp.style.marginTop = '4px';
         resp.style.marginBottom = '12px';
         
-        switch(val) {
+        switch(cmd) {
           case 'help':
             resp.innerHTML = `
-              <div style="color:var(--sub)">Available system commands:</div>
-              <div style="margin-left:10px;line-height:1.7;">
-                • <strong style="color:#27c93f;">projects</strong> — List all 10 verified engineering systems & repositories<br/>
-                • <strong style="color:#27c93f;">phoenix</strong> — Output Project Phoenix-X C4ISR military logistics telemetry<br/>
-                • <strong style="color:#27c93f;">bench</strong> — Run live client-side vectorized Monte Carlo simulation pass (1,000 runs)<br/>
-                • <strong style="color:#27c93f;">skills</strong> — Display active stack proficiencies and low-level competencies<br/>
-                • <strong style="color:#27c93f;">awards</strong> — View verified hackathon podiums and government awards<br/>
-                • <strong style="color:#27c93f;">contact</strong> — Print direct communication keys and public endpoints<br/>
-                • <strong style="color:#27c93f;">clear</strong> — Clear active console buffer
+              <div style="color:var(--sub)">Terminal System Commands:</div>
+              <div style="margin-left:8px;line-height:1.75;display:grid;grid-template-columns:140px 1fr;gap:4px 10px;">
+                <span style="color:#2dd4bf;">ls / la</span> <span>List contents of current directory</span>
+                <span style="color:#2dd4bf;">cd &lt;dir&gt;</span> <span>Change directory (~, projects, telemetry, ..)</span>
+                <span style="color:#2dd4bf;">cat &lt;file&gt;</span> <span>Display file content</span>
+                <span style="color:#2dd4bf;">pwd</span> <span>Print current working directory path</span>
+                <span style="color:#2dd4bf;">projects</span> <span>List all 10 verified production systems & repos</span>
+                <span style="color:#2dd4bf;">phoenix</span> <span>Dump Project Phoenix-X C4ISR military logistics metrics</span>
+                <span style="color:#2dd4bf;">bench</span> <span>Run live 1,000-run Monte Carlo client benchmark</span>
+                <span style="color:#2dd4bf;">f1</span> <span>Output active Formula 1 simulation configuration</span>
+                <span style="color:#2dd4bf;">skills</span> <span>Print low-level and high-level stack specs</span>
+                <span style="color:#2dd4bf;">awards</span> <span>View hackathon championships and govt honors</span>
+                <span style="color:#2dd4bf;">clear</span> <span>Clear terminal buffer</span>
+                <span style="color:#2dd4bf;">exit / quit</span> <span>Close terminal console</span>
               </div>`;
             break;
+
+          case 'pwd':
+            resp.innerHTML = `<div style="color:#2dd4bf;">${currentDir}</div>`;
+            break;
+
+          case 'ls':
+          case 'la':
+          case 'dir':
+            const items = fileSystem[currentDir] || [];
+            if (cmd === 'la') {
+              resp.innerHTML = `
+                <div style="color:var(--faint);font-size:11px;">drwxr-xr-x  staff  .</div>
+                <div style="color:var(--faint);font-size:11px;">drwxr-xr-x  staff  ..</div>
+                ${items.map(it => `<div style="color:${it.endsWith('.txt') || it.endsWith('.json') || it.endsWith('.py') || it.endsWith('.log') || it.endsWith('.pdf') ? '#fff' : '#2dd4bf'};">${it.includes('.') ? '-rw-r--r--' : 'drwxr-xr-x'}  staff  ${it}</div>`).join('')}`;
+            } else {
+              resp.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:14px;">${items.map(it => `<span style="color:${it.includes('.') ? '#e9edea' : '#2dd4bf'};font-weight:${it.includes('.') ? 'normal' : '600'};">${it}${it.includes('.') ? '' : '/'}</span>`).join('')}</div>`;
+            }
+            break;
+
+          case 'cd':
+            if (!arg || arg === '~' || arg === 'projects') {
+              currentDir = arg === 'projects' ? '~/projects' : '~';
+            } else if (arg === '..' || arg === '../') {
+              currentDir = '~';
+            } else if (arg === 'telemetry') {
+              currentDir = '~/telemetry';
+            } else if (currentDir === '~' && fileSystem[`~/${arg}`]) {
+              currentDir = `~/${arg}`;
+            } else if (fileSystem[arg]) {
+              currentDir = arg;
+            } else {
+              resp.innerHTML = `<span style="color:#ff5f56;">cd: no such file or directory: ${arg}</span>`;
+              break;
+            }
+            if (termPwd) termPwd.textContent = currentDir;
+            resp.innerHTML = `<span style="color:var(--faint);">Changed directory to ${currentDir}</span>`;
+            break;
+
+          case 'cat':
+            if (!arg) {
+              resp.innerHTML = `<span style="color:#ff5f56;">usage: cat &lt;filename&gt;</span>`;
+            } else if (fileContents[arg]) {
+              resp.innerHTML = `<pre style="color:#fff;background:rgba(255,255,255,0.03);padding:10px;border-radius:4px;overflow-x:auto;">${fileContents[arg]}</pre>`;
+            } else {
+              resp.innerHTML = `<span style="color:#ff5f56;">cat: ${arg}: No such file</span>`;
+            }
+            break;
+
           case 'projects':
             resp.innerHTML = `
-              <div style="color:var(--sub);line-height:1.6;">
-                [01] <strong>Phoenix-X</strong> — High-altitude C4ISR military logistics platform (SIH 26251 MoD)<br/>
-                [02] <strong>F1 Monte Carlo</strong> — Vectorized race strategy engine with Bellman optimization<br/>
-                [03] <strong>Capt. Lakshmi Invicta</strong> — Scroll-driven canvas monograph (3,100+ HD frames)<br/>
-                [04] <strong>Phoenix X SAR UAV</strong> — Qualcomm RB5 edge AI micro-UAV (SIH 26177)<br/>
-                [05] <strong>Song Chord Analyzer</strong> — MIR desktop app w/ Demucs v4 & BTC Transformer<br/>
-                [06] <strong>AroggyaGram-3</strong> — Autonomous AI community health-triage network<br/>
-                [07] <strong>AutoMeter</strong> — Dual sensor-fusion IoT transit fare meter & UPI engine<br/>
-                [08] <strong>Opportunity OS</strong> — Offline-first Android/Wear OS executive planner<br/>
-                [09] <strong>CRT Lock</strong> — Tactile 3D modular arithmetic safe mechanism (React/WebGL)<br/>
-                [10] <strong>UNO-Q Arena</strong> — Real-time RL policy @ 60 FPS in Genesis emulation
+              <div style="color:var(--sub);line-height:1.65;">
+                [01] <strong style="color:#2dd4bf;">Phoenix-X</strong> — High-altitude C4ISR military logistics (SIH 26251 MoD)<br/>
+                [02] <strong style="color:#2dd4bf;">F1 Monte Carlo</strong> — Vectorized race strategy engine with Bellman solver<br/>
+                [03] <strong style="color:#2dd4bf;">Capt. Lakshmi Invicta</strong> — Scroll-driven canvas monograph (3,100+ HD frames)<br/>
+                [04] <strong style="color:#2dd4bf;">Phoenix X SAR UAV</strong> — Qualcomm RB5 edge AI micro-UAV (SIH 26177)<br/>
+                [05] <strong style="color:#2dd4bf;">Song Chord Analyzer</strong> — MIR desktop app w/ Demucs v4 & BTC Transformer<br/>
+                [06] <strong style="color:#2dd4bf;">AroggyaGram-3</strong> — Autonomous AI community health-triage network<br/>
+                [07] <strong style="color:#2dd4bf;">AutoMeter</strong> — Dual sensor-fusion IoT transit fare meter & UPI engine<br/>
+                [08] <strong style="color:#2dd4bf;">Opportunity OS</strong> — Offline-first Android/Wear OS executive planner<br/>
+                [09] <strong style="color:#2dd4bf;">CRT Lock</strong> — Tactile 3D modular arithmetic safe mechanism (React/WebGL)<br/>
+                [10] <strong style="color:#2dd4bf;">UNO-Q Arena</strong> — Real-time RL policy @ 60 FPS in Genesis emulation
               </div>`;
             break;
+
           case 'phoenix':
             resp.innerHTML = `
               <div style="color:#eab308;font-weight:600;">[DEFENSE C4ISR] Project Phoenix-X Operational Telemetry:</div>
-              <div style="color:var(--sub);line-height:1.6;margin-top:4px;">
-                • Sector: 14 Corps / Eastern Ladakh & Siachen Glacier<br/>
-                • Problem Statement ID: SIH 26251 (MoD / DSSC Track)<br/>
+              <div style="color:var(--sub);line-height:1.65;margin-top:4px;">
+                • Sector: 14 Corps / Eastern Ladakh, Siachen Glacier, Depsang Plains<br/>
+                • Problem Statement: SIH 26251 (MoD / DSSC Track)<br/>
                 • Forecast Accuracy: 1.36% - 4.2% MAPE (Target SLA: &lt;6.5%)<br/>
                 • Decision Compute Latency: 0.014ms - 15.0ms (Target: &lt;50ms)<br/>
-                • Multimodal Convoy: Altitude lapse thermodynamics + drone sortie fallback
+                • Multimodal Convoy: Altitude lapse thermodynamics + autonomous cargo drone fallback
               </div>`;
             break;
+
+          case 'f1':
+            resp.innerHTML = `
+              <div style="color:#ff334b;font-weight:600;">[F1 RACE STRATEGY SIMULATOR] Engine State:</div>
+              <div style="color:var(--sub);line-height:1.6;margin-top:4px;">
+                • Engine: Vectorized NumPy Monte Carlo (10,000 iterations per compute pass)<br/>
+                • Dynamic Programming: Bellman Equation stochastic backward induction<br/>
+                • Degradation Profiles: Non-linear thermal & graining curves calibrated with FastF1 API<br/>
+                • Live Web: <a href="https://f1-monte-carlo-race-strategy-simula.vercel.app" target="_blank" style="color:#2dd4bf;">f1-monte-carlo-race-strategy-simula.vercel.app ↗</a>
+              </div>`;
+            break;
+
           case 'bench':
             const t0 = performance.now();
             let sum = 0;
@@ -1194,23 +1304,25 @@
             }
             const dt = (performance.now() - t0).toFixed(2);
             resp.innerHTML = `
-              <div style="color:#27c93f;">✔ COMPLETED 1,000 MONTE CARLO STOCHASTIC RACE RUNS</div>
+              <div style="color:#2dd4bf;font-weight:600;">✔ COMPLETED 1,000 MONTE CARLO STOCHASTIC RACE RUNS</div>
               <div style="color:var(--sub);margin-top:4px;">
                 Compute Time: <span style="color:#fff;">${dt} ms</span> | Simulated Laps: <span style="color:#fff;">57,000</span> | Vector Status: Stable (Mean Wear: ${(sum/N).toFixed(3)}s/lap)
               </div>`;
             break;
+
           case 'skills':
             resp.innerHTML = `
-              <div style="color:var(--sub);line-height:1.6;">
-                • <strong>Core Systems:</strong> C, C++, Python 3.11, Kotlin, TypeScript, Dart, Linux Shell<br/>
-                • <strong>AI & Math:</strong> NumPy, PyTorch, Demucs v4, YOLOv8, FastF1, Bellman DP, Monte Carlo<br/>
-                • <strong>Mobile & Edge:</strong> Jetpack Compose, Room SQLite, Wear OS, Flutter, Qualcomm RB5, Arduino<br/>
-                • <strong>Web & 3D:</strong> React 19, Next.js, Canvas 2D, Three.js, WebGL, Tailwind, FastAPI
+              <div style="color:var(--sub);line-height:1.65;">
+                • <strong style="color:#e9edea;">Core Systems:</strong> C, C++, Python 3.11, Kotlin, TypeScript, Dart, Linux Shell<br/>
+                • <strong style="color:#e9edea;">AI & Math:</strong> NumPy, PyTorch, Demucs v4, YOLOv8, FastF1, Bellman DP, Monte Carlo<br/>
+                • <strong style="color:#e9edea;">Mobile & Edge:</strong> Jetpack Compose, Room SQLite, Wear OS, Flutter, Qualcomm RB5, Arduino<br/>
+                • <strong style="color:#e9edea;">Web & 3D:</strong> React 19, Next.js, Canvas 2D, Three.js, WebGL, Tailwind, FastAPI
               </div>`;
             break;
+
           case 'awards':
             resp.innerHTML = `
-              <div style="color:var(--sub);line-height:1.6;">
+              <div style="color:var(--sub);line-height:1.65;">
                 🥇 <strong>1st Place Champion:</strong> ACM Vibefest Hackathon 2026<br/>
                 🥇 <strong>1st Place Winner:</strong> Idea From Industry S2 (MakerHub / BIRAC / MoE)<br/>
                 🥇 <strong>1st Place:</strong> AI Club Ideathon 2026<br/>
@@ -1218,20 +1330,29 @@
                 🌟 <strong>State Award:</strong> K-DISC Young Innovators Programme (YIP 8.0) Govt of Kerala
               </div>`;
             break;
+
           case 'contact':
             resp.innerHTML = `
-              <div style="color:var(--sub);line-height:1.6;">
-                Email: <a href="mailto:jvstin47@gmail.com" style="color:var(--gold);">jvstin47@gmail.com</a><br/>
-                GitHub: <a href="https://github.com/jvstin47" target="_blank" style="color:var(--gold);">github.com/jvstin47</a><br/>
-                LinkedIn: <a href="https://www.linkedin.com/in/jvstin47/" target="_blank" style="color:var(--gold);">linkedin.com/in/jvstin47</a>
+              <div style="color:var(--sub);line-height:1.65;">
+                Email: <a href="mailto:jvstin47@gmail.com" style="color:#2dd4bf;">jvstin47@gmail.com</a><br/>
+                GitHub: <a href="https://github.com/jvstin47" target="_blank" style="color:#2dd4bf;">github.com/jvstin47</a><br/>
+                LinkedIn: <a href="https://www.linkedin.com/in/jvstin47/" target="_blank" style="color:#2dd4bf;">linkedin.com/in/jvstin47</a>
               </div>`;
             break;
+
+          case 'exit':
+          case 'quit':
+            toggleTechTerminal();
+            this.value = '';
+            return;
+
           case 'clear':
             termOutput.innerHTML = '';
             this.value = '';
             return;
+
           default:
-            resp.innerHTML = `<span style="color:#ff5f56;">Command not recognized: '${val}'. Type 'help' to see valid commands.</span>`;
+            resp.innerHTML = `<span style="color:#ff5f56;">Command not recognized: '${cmd}'. Type 'help' to see valid commands.</span>`;
             break;
         }
         termOutput.appendChild(resp);
@@ -1331,11 +1452,11 @@
 
       ctx.clearRect(0, 0, width, height);
 
-      // Render 3 chromatic caustic bands (Red, Green, Blue refraction offset)
+      // Render 3 chromatic caustic bands (F1 Apex Crimson, Nature Pine Emerald, Soft Compound Amber)
       const bands = [
-        { color: 'rgba(255, 60, 90, 0.065)', phase: 0.0, speed: 1.0, amp: 45 },
-        { color: 'rgba(0, 240, 255, 0.060)', phase: 1.8, speed: 1.15, amp: 55 },
-        { color: 'rgba(201, 168, 108, 0.075)', phase: 3.4, speed: 0.85, amp: 50 }
+        { color: 'rgba(255, 51, 75, 0.075)', phase: 0.0, speed: 1.0, amp: 48 },    /* F1 Apex Crimson */
+        { color: 'rgba(45, 212, 191, 0.085)', phase: 2.1, speed: 1.2, amp: 55 },   /* Nature Tech Emerald */
+        { color: 'rgba(251, 191, 36, 0.065)', phase: 3.8, speed: 0.85, amp: 42 }   /* F1 Soft Compound Amber */
       ];
 
       bands.forEach(b => {
