@@ -163,7 +163,7 @@
 
     <div class="projects-grid">
       <!-- Flagship 01: Phoenix X Autonomous AI Search & Rescue (SAR) UAV -->
-      <div class="project-card featured prism-card reveal reveal-d2">
+      <div class="project-card featured prism-card reveal reveal-d2 hardware-panel-card">
         <div class="prism-card-inner">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <p class="project-type">Edge AI · Autonomous Robotics · Qualcomm RB5 · LoRa Mesh · SIH 2026 (PS: SIH26177)</p>
@@ -1076,6 +1076,7 @@
 <!-- INTERACTIVE TECH CONSOLE MODAL -->
 <div id="tech-terminal" class="tech-terminal-modal" onclick="closeTerminalOnBackdrop(event)">
   <div class="tech-terminal-box">
+    <canvas id="term-mesh-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.25;border-radius:inherit;"></canvas>
     <div class="tech-terminal-topbar">
       <div class="tech-terminal-dots">
         <span class="tech-term-dot red" onclick="toggleTechTerminal()" title="Close Terminal (ESC)">✕</span>

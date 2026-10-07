@@ -1,11 +1,12 @@
 /**
- * ═══════════════════════════════════════════════════════════════════
+ * ═══════════════════════════════════════════════════════════════════════════════════════
  * JUSTIN MATHEW PORTFOLIO — 4 CUTTING-EDGE INTERACTIVE DESIGN SYSTEMS
- * 1. Kinetic Typography & Fluid Distortion (Spring Physics & Displacement)
- * 2. Magnetic Mouse-Jacking & Elastic Hover (Spring Damped Target Snapping)
- * 3. Iridescent Mesh Gradients (GPU WebGL Fragment Shader with Nature Palette)
- * 4. Bento Grid Parallax Depth (Layered 3D Multi-plane Transform)
- * ═══════════════════════════════════════════════════════════════════
+ * 
+ * Phase 1: Magnetic Cursor & Elastic Hover (Nav links, terminal button, and project cards)
+ * Phase 2: Bento 3D Parallax Depth (Flagship drone card #p8, project cards, toolkit)
+ * Phase 3: Iridescent Nature Mesh (Hero backdrop & terminal console backdrop)
+ * Phase 4: Kinetic Typography (Hero headline / Section titles)
+ * ═══════════════════════════════════════════════════════════════════════════════════════
  */
 
 (function() {
@@ -14,113 +15,12 @@
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ──────────────────────────────────────────────────────────────
-     SYSTEM 1: KINETIC TYPOGRAPHY & FLUID DISTORTION
-     - Treats text like a liquid canvas
-     - SVG turbulence + displacement driven by cursor velocity
-     - Damped spring physics smoothly restores geometric crispness
-  ────────────────────────────────────────────────────────────── */
-  function initKineticTypography() {
-    if (prefersReducedMotion) return;
-
-    // Inject SVG filter definition if not present
-    if (!document.getElementById('kinetic-fluid-filter')) {
-      const svgNS = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('style', 'position:absolute;width:0;height:0;pointer-events:none;');
-      svg.setAttribute('aria-hidden', 'true');
-      svg.innerHTML = `
-        <defs>
-          <filter id="kinetic-fluid-filter" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox">
-            <feTurbulence id="kinetic-turb" type="fractalNoise" baseFrequency="0.035 0.035" numOctaves="2" result="noise" />
-            <feDisplacementMap id="kinetic-disp" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
-          </filter>
-        </defs>
-      `;
-      document.body.appendChild(svg);
-    }
-
-    const dispMap = document.getElementById('kinetic-disp');
-    const turbNode = document.getElementById('kinetic-turb');
-    if (!dispMap || !turbNode) return;
-
-    const targets = document.querySelectorAll('.hero-name, .section-title, .intro-h1, h1');
-    if (!targets.length) return;
-
-    targets.forEach(t => t.classList.add('kinetic-text-wrap'));
-
-    let mouseX = 0, mouseY = 0;
-    let lastX = 0, lastY = 0;
-    let velocity = 0;
-    let currentScale = 0;
-    let targetScale = 0;
-    let scaleVelocity = 0;
-    const tension = 0.16;
-    const damping = 0.74;
-    let isNear = false;
-    let time = 0;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      const dx = mouseX - lastX;
-      const dy = mouseY - lastY;
-      velocity = Math.min(Math.hypot(dx, dy), 50);
-      lastX = mouseX;
-      lastY = mouseY;
-
-      isNear = false;
-      targets.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        const pad = 75;
-        if (
-          mouseX >= rect.left - pad &&
-          mouseX <= rect.right + pad &&
-          mouseY >= rect.top - pad &&
-          mouseY <= rect.bottom + pad
-        ) {
-          isNear = true;
-          el.classList.add('kinetic-fluid-active');
-        } else {
-          el.classList.remove('kinetic-fluid-active');
-        }
-      });
-
-      if (isNear) {
-        targetScale = Math.min(velocity * 0.7, 28);
-      }
-    }, { passive: true });
-
-    function updatePhysics() {
-      time += 0.02;
-      const force = (targetScale - currentScale) * tension;
-      scaleVelocity = (scaleVelocity + force) * damping;
-      currentScale += scaleVelocity;
-      targetScale *= 0.85;
-
-      if (currentScale > 0.1) {
-        dispMap.setAttribute('scale', currentScale.toFixed(2));
-        turbNode.setAttribute('baseFrequency', `${(0.03 + Math.sin(time) * 0.005).toFixed(3)} ${(0.035 + Math.cos(time) * 0.005).toFixed(3)}`);
-      } else if (currentScale !== 0) {
-        currentScale = 0;
-        scaleVelocity = 0;
-        dispMap.setAttribute('scale', '0');
-        targets.forEach(el => el.classList.remove('kinetic-fluid-active'));
-      }
-
-      requestAnimationFrame(updatePhysics);
-    }
-    updatePhysics();
-  }
-
-  /* ──────────────────────────────────────────────────────────────
-     SYSTEM 2: MAGNETIC MOUSE-JACKING & ELASTIC HOVER
-     - Custom precision cursor dot + elastic trailer ring
-     - Magnetically attracts to interactive buttons/links
-     - Snaps & conforms perimeter with spring physics
-     - Physically translates button slightly toward cursor
-  ────────────────────────────────────────────────────────────── */
-  function initMagneticCursor() {
+  /* ─────────────────────────────────────────────────────────────────────────────
+     PHASE 1: MAGNETIC CURSOR & ELASTIC HOVER
+     Target Placement: Nav links, terminal button, project cards, action buttons
+     Features: Velocity squash & stretch, magnetic target snapping, spring attraction
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initPhase1MagneticCursor() {
     if (isTouch || prefersReducedMotion) return;
 
     let cursorWrap = document.getElementById('mag-cursor');
@@ -140,29 +40,53 @@
     if (!dot || !ring) return;
 
     let mouseX = -100, mouseY = -100;
+    let lastMouseX = -100, lastMouseY = -100;
     let ringX = -100, ringY = -100;
     let ringWidth = 32, ringHeight = 32;
     let ringRadius = '50%';
     let isSnapped = false;
     let activeElem = null;
+    let speed = 0;
+    let angle = 0;
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+
+      const vx = mouseX - lastMouseX;
+      const vy = mouseY - lastMouseY;
+      speed = Math.min(Math.hypot(vx, vy), 40);
+      if (speed > 1) {
+        angle = Math.atan2(vy, vx);
+      }
+
+      lastMouseX = mouseX;
+      lastMouseY = mouseY;
       dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     }, { passive: true });
 
     const interactiveSelectors = [
-      'a', 'button', '.btn', '.nav-links a', '.project-link', 
-      '.repo-link', '.jump-pill', '.toolkit-btn', '.filter-btn', 
-      '.tech-terminal-trigger', '#theme-btn', '.back-top'
+      'nav.site-nav a',
+      '.nav-links a',
+      '.tech-terminal-trigger',
+      '#theme-btn',
+      '.project-link',
+      '.repo-link',
+      '.jump-pill',
+      '.toolkit-btn',
+      '.filter-btn',
+      '.btn-primary',
+      '.btn-ghost',
+      '.btn-outline',
+      '.back-top',
+      '.cert-modal-close'
     ].join(',');
 
-    function updateMagneticTargets() {
+    function bindMagneticTargets() {
       const targets = document.querySelectorAll(interactiveSelectors);
       targets.forEach(elem => {
-        if (elem.dataset.magAttached) return;
-        elem.dataset.magAttached = 'true';
+        if (elem.dataset.magBound) return;
+        elem.dataset.magBound = 'true';
         elem.classList.add('mag-target');
 
         elem.addEventListener('mouseenter', () => {
@@ -185,56 +109,138 @@
           const rect = elem.getBoundingClientRect();
           const cx = rect.left + rect.width / 2;
           const cy = rect.top + rect.height / 2;
-          const dx = (e.clientX - cx) * 0.28;
-          const dy = (e.clientY - cy) * 0.28;
+          const dx = (e.clientX - cx) * 0.32;
+          const dy = (e.clientY - cy) * 0.32;
           elem.style.transform = `translate(${dx.toFixed(2)}px, ${dy.toFixed(2)}px)`;
         });
       });
     }
-    updateMagneticTargets();
-    setInterval(updateMagneticTargets, 2500);
 
-    function renderRing() {
+    bindMagneticTargets();
+    setInterval(bindMagneticTargets, 2500);
+
+    function renderMagneticCursor() {
       if (isSnapped && activeElem) {
         const rect = activeElem.getBoundingClientRect();
         const targetX = rect.left + rect.width / 2;
         const targetY = rect.top + rect.height / 2;
-        ringX += (targetX - ringX) * 0.22;
-        ringY += (targetY - ringY) * 0.22;
+        ringX += (targetX - ringX) * 0.24;
+        ringY += (targetY - ringY) * 0.24;
         ringWidth = rect.width + 12;
         ringHeight = rect.height + 10;
-        const style = window.getComputedStyle(activeElem);
-        ringRadius = style.borderRadius || '6px';
+        const computedStyle = window.getComputedStyle(activeElem);
+        ringRadius = computedStyle.borderRadius || '6px';
+        ring.style.transform = `translate(${ringX - ringWidth / 2}px, ${ringY - ringHeight / 2}px)`;
       } else {
         ringX += (mouseX - ringX) * 0.18;
         ringY += (mouseY - ringY) * 0.18;
         ringWidth = 32;
         ringHeight = 32;
         ringRadius = '50%';
+
+        // Elastic squash & stretch along movement vector
+        const stretch = 1 + speed * 0.007;
+        const squeeze = Math.max(1 - speed * 0.004, 0.75);
+        ring.style.transform = `translate(${ringX - ringWidth / 2}px, ${ringY - ringHeight / 2}px) rotate(${angle}rad) scale(${stretch}, ${squeeze})`;
       }
 
-      ring.style.transform = `translate(${ringX - ringWidth / 2}px, ${ringY - ringHeight / 2}px)`;
       ring.style.width = `${ringWidth}px`;
       ring.style.height = `${ringHeight}px`;
       ring.style.borderRadius = ringRadius;
 
-      requestAnimationFrame(renderRing);
+      requestAnimationFrame(renderMagneticCursor);
     }
-    renderRing();
+    renderMagneticCursor();
   }
 
-  /* ──────────────────────────────────────────────────────────────
-     SYSTEM 3: IRIDESCENT MESH GRADIENTS (GPU WebGL Fragment Shader)
-     - High-end biquadratic silk/mesh gradient simulation
-     - GPU GLSL Simplex noise with time and mouse interactivity
-     - Pure Nature palette (Dark void + emerald silk / Light morning dew)
-  ────────────────────────────────────────────────────────────── */
-  function initIridescentMesh() {
-    const canvas = document.getElementById('prism-hero-canvas') || document.getElementById('iridescent-mesh-canvas');
-    if (!canvas) return;
+  /* ─────────────────────────────────────────────────────────────────────────────
+     PHASE 2: BENTO 3D PARALLAX DEPTH
+     Target Placement: Flagship drone card (#p8 / .hardware-panel-card), project cards, toolkit
+     Impact: Turns flat cards into layered physical hardware panels
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initPhase2Bento3DParallax() {
+    if (isTouch || prefersReducedMotion) return;
 
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: true, powerPreference: 'low-power' });
-    if (!gl) return;
+    const cards = document.querySelectorAll('.prism-card, .project-card, .hardware-panel-card, .proof-card, .toolkit-card');
+    cards.forEach(card => {
+      card.classList.add('bento-parallax-card');
+
+      // Stratify child layers
+      const midLayers = card.querySelectorAll('.project-title, .proj-title, .project-desc, .field-body, .timeline-desc, .toolkit-card-list, .proj-hook');
+      midLayers.forEach(el => el.classList.add('bento-layer-mid'));
+
+      const foreLayers = card.querySelectorAll('.ptag, .tag, .proj-badge, .project-link, .repo-link, .outcome-big, .proof-stat, .toolkit-btn, .proj-num');
+      foreLayers.forEach(el => el.classList.add('bento-layer-fore'));
+
+      let targetX = 0, targetY = 0;
+      let curX = 0, curY = 0;
+      let isHover = false;
+      let raf = null;
+
+      card.addEventListener('mouseenter', () => {
+        isHover = true;
+        if (!raf) raf = requestAnimationFrame(animateBento);
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width - 0.5;
+        const ny = (e.clientY - rect.top) / rect.height - 0.5;
+        targetX = ny * -13; // tiltX
+        targetY = nx * 13;  // tiltY
+
+        card.style.setProperty('--mouse-x', `${((nx + 0.5) * 100).toFixed(1)}%`);
+        card.style.setProperty('--mouse-y', `${((ny + 0.5) * 100).toFixed(1)}%`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHover = false;
+        targetX = 0;
+        targetY = 0;
+      });
+
+      function animateBento() {
+        curX += (targetX - curX) * 0.16;
+        curY += (targetY - curY) * 0.16;
+
+        card.style.transform = `perspective(1000px) rotateX(${curX.toFixed(2)}deg) rotateY(${curY.toFixed(2)}deg)`;
+
+        // Foreground elements slide with elevated ratio
+        const foreOffset = `translate3d(${(curY * 0.75).toFixed(1)}px, ${(curX * -0.75).toFixed(1)}px, 50px)`;
+        foreLayers.forEach(el => {
+          el.style.transform = foreOffset;
+        });
+
+        // Mid elements slide with gentle ratio
+        const midOffset = `translate3d(${(curY * 0.28).toFixed(1)}px, ${(curX * -0.28).toFixed(1)}px, 24px)`;
+        midLayers.forEach(el => {
+          el.style.transform = midOffset;
+        });
+
+        if (isHover || Math.abs(curX) > 0.05 || Math.abs(curY) > 0.05) {
+          raf = requestAnimationFrame(animateBento);
+        } else {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+          foreLayers.forEach(el => el.style.transform = '');
+          midLayers.forEach(el => el.style.transform = '');
+          raf = null;
+        }
+      }
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
+     PHASE 3: IRIDESCENT NATURE MESH (GPU WebGL Fragment Shader)
+     Target Placement: Hero backdrop (#prism-hero-canvas) & Terminal console backdrop (#term-mesh-canvas)
+     Impact: Adds organic fluid depth locked to emerald/pine palette
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initPhase3IridescentNatureMesh() {
+    const targetCanvases = [
+      document.getElementById('prism-hero-canvas'),
+      document.getElementById('term-mesh-canvas')
+    ].filter(Boolean);
+
+    if (!targetCanvases.length) return;
 
     const vsSource = `
       attribute vec2 a_position;
@@ -249,6 +255,7 @@
       uniform vec2 u_mouse;
       uniform float u_time;
       uniform float u_isLight;
+      uniform float u_intensity;
 
       vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
       vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -307,190 +314,245 @@
           vec3 blend1 = mix(colLightBg, colLightDew, smoothstep(-0.6, 0.6, n1));
           vec3 blend2 = mix(blend1, colLightSage, smoothstep(-0.4, 0.8, n2));
           finalColor = mix(blend2, colLightEm, clamp(n3 * 0.18, 0.0, 0.22));
-          alpha = 0.45 * (1.0 - smoothstep(0.1, 1.25, length(uv - vec2(0.5, 0.3))));
+          alpha = 0.45 * (1.0 - smoothstep(0.1, 1.25, length(uv - vec2(0.5, 0.3)))) * u_intensity;
         } else {
           vec3 blend1 = mix(colVoidDark, colPine, smoothstep(-0.8, 0.4, n1));
           vec3 blend2 = mix(blend1, colEmerald, smoothstep(-0.2, 0.9, n2));
           vec3 blend3 = mix(blend2, colGlacier, smoothstep(0.1, 1.1, n3));
           finalColor = mix(blend3, colSprout, clamp(n1 * n2 * 0.4, 0.0, 0.4));
-          alpha = 0.65 * (1.0 - smoothstep(0.05, 1.3, length(uv - vec2(0.5, 0.25))));
+          alpha = 0.65 * (1.0 - smoothstep(0.05, 1.3, length(uv - vec2(0.5, 0.25)))) * u_intensity;
         }
 
         gl_FragColor = vec4(finalColor, alpha);
       }
     `;
 
-    function createShader(gl, type, source) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        gl.deleteShader(shader);
-        return null;
+    function attachShader(canvas, intensityMultiplier) {
+      const gl = canvas.getContext('webgl', { alpha: true, antialias: true, powerPreference: 'low-power' });
+      if (!gl) return null;
+
+      function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
       }
-      return shader;
+
+      const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+      const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+      if (!vs || !fs) return null;
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
+
+      gl.useProgram(program);
+
+      const posBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+        -1,  1,
+         1, -1,
+         1,  1
+      ]), gl.STATIC_DRAW);
+
+      const aPos = gl.getAttribLocation(program, 'a_position');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const uRes = gl.getUniformLocation(program, 'u_resolution');
+      const uMouse = gl.getUniformLocation(program, 'u_mouse');
+      const uTime = gl.getUniformLocation(program, 'u_time');
+      const uLight = gl.getUniformLocation(program, 'u_isLight');
+      const uInt = gl.getUniformLocation(program, 'u_intensity');
+
+      let mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
+      window.addEventListener('mousemove', (e) => {
+        mouse.targetX = e.clientX / window.innerWidth;
+        mouse.targetY = 1.0 - (e.clientY / window.innerHeight);
+      }, { passive: true });
+
+      function resize() {
+        const parent = canvas.parentElement || document.body;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = parent.offsetWidth || window.innerWidth;
+        const height = parent.offsetHeight || window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      const startTime = performance.now();
+      return function render(now) {
+        // If canvas is not visible (e.g. terminal modal closed), skip heavy draw
+        if (canvas.offsetParent === null && canvas.id === 'term-mesh-canvas') {
+          return;
+        }
+
+        const elapsed = (now - startTime) * 0.001;
+        mouse.x += (mouse.targetX - mouse.x) * 0.05;
+        mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+        const isLight = document.body.classList.contains('light') ? 1.0 : 0.0;
+
+        gl.useProgram(program);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform2f(uMouse, mouse.x, mouse.y);
+        gl.uniform1f(uTime, elapsed);
+        gl.uniform1f(uLight, isLight);
+        gl.uniform1f(uInt, intensityMultiplier);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      };
     }
 
-    const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
-    const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
-    if (!vs || !fs) return;
+    const renderers = [];
+    const heroCanvas = document.getElementById('prism-hero-canvas');
+    if (heroCanvas) {
+      const r = attachShader(heroCanvas, 1.0);
+      if (r) renderers.push(r);
+    }
+    const termCanvas = document.getElementById('term-mesh-canvas');
+    if (termCanvas) {
+      const r = attachShader(termCanvas, 0.45);
+      if (r) renderers.push(r);
+    }
 
-    const program = gl.createProgram();
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+    if (renderers.length > 0) {
+      function loopAll(now) {
+        for (let i = 0; i < renderers.length; i++) {
+          renderers[i](now);
+        }
+        requestAnimationFrame(loopAll);
+      }
+      requestAnimationFrame(loopAll);
+    }
+  }
 
-    gl.useProgram(program);
+  /* ─────────────────────────────────────────────────────────────────────────────
+     PHASE 4: KINETIC TYPOGRAPHY & FLUID DISTORTION
+     Target Placement: Hero headline (.hero-name) / Section titles (.section-title, .intro-h1, h1)
+     Impact: Fluid liquid text displacement on hover with spring recovery
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initPhase4KineticTypography() {
+    if (prefersReducedMotion) return;
 
-    const posBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1,
-       1, -1,
-      -1,  1,
-      -1,  1,
-       1, -1,
-       1,  1
-    ]), gl.STATIC_DRAW);
+    if (!document.getElementById('kinetic-fluid-filter')) {
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('style', 'position:absolute;width:0;height:0;pointer-events:none;');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.innerHTML = `
+        <defs>
+          <filter id="kinetic-fluid-filter" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox">
+            <feTurbulence id="kinetic-turb" type="fractalNoise" baseFrequency="0.035 0.035" numOctaves="2" result="noise" />
+            <feDisplacementMap id="kinetic-disp" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      `;
+      document.body.appendChild(svg);
+    }
 
-    const aPos = gl.getAttribLocation(program, 'a_position');
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+    const dispMap = document.getElementById('kinetic-disp');
+    const turbNode = document.getElementById('kinetic-turb');
+    if (!dispMap || !turbNode) return;
 
-    const uRes = gl.getUniformLocation(program, 'u_resolution');
-    const uMouse = gl.getUniformLocation(program, 'u_mouse');
-    const uTime = gl.getUniformLocation(program, 'u_time');
-    const uLight = gl.getUniformLocation(program, 'u_isLight');
+    const titles = document.querySelectorAll('.hero-name, .section-title, .intro-h1, h1');
+    if (!titles.length) return;
 
-    let mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
+    titles.forEach(t => t.classList.add('kinetic-text-wrap'));
+
+    let mouseX = 0, mouseY = 0;
+    let lastX = 0, lastY = 0;
+    let velocity = 0;
+    let currentScale = 0;
+    let targetScale = 0;
+    let scaleVelocity = 0;
+    const tension = 0.18;
+    const damping = 0.76;
+    let isNear = false;
+    let time = 0;
+
     window.addEventListener('mousemove', (e) => {
-      mouse.targetX = e.clientX / window.innerWidth;
-      mouse.targetY = 1.0 - (e.clientY / window.innerHeight);
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      const dx = mouseX - lastX;
+      const dy = mouseY - lastY;
+      velocity = Math.min(Math.hypot(dx, dy), 50);
+      lastX = mouseX;
+      lastY = mouseY;
+
+      isNear = false;
+      titles.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const pad = 80;
+        if (
+          mouseX >= rect.left - pad &&
+          mouseX <= rect.right + pad &&
+          mouseY >= rect.top - pad &&
+          mouseY <= rect.bottom + pad
+        ) {
+          isNear = true;
+          el.classList.add('kinetic-fluid-active');
+        } else {
+          el.classList.remove('kinetic-fluid-active');
+        }
+      });
+
+      if (isNear) {
+        targetScale = Math.min(velocity * 0.75, 32);
+      }
     }, { passive: true });
 
-    function resize() {
-      const parent = canvas.parentElement || document.body;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = parent.offsetWidth;
-      const height = parent.offsetHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    }
-    resize();
-    window.addEventListener('resize', resize);
+    function updateKineticPhysics() {
+      time += 0.02;
+      const force = (targetScale - currentScale) * tension;
+      scaleVelocity = (scaleVelocity + force) * damping;
+      currentScale += scaleVelocity;
+      targetScale *= 0.84; // spring decay once velocity drops
 
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-    const startTime = performance.now();
-    function render(now) {
-      const elapsed = (now - startTime) * 0.001;
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
-
-      const isLight = document.body.classList.contains('light') ? 1.0 : 0.0;
-
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform2f(uMouse, mouse.x, mouse.y);
-      gl.uniform1f(uTime, elapsed);
-      gl.uniform1f(uLight, isLight);
-
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
-  }
-
-  /* ──────────────────────────────────────────────────────────────
-     SYSTEM 4: BENTO GRID PARALLAX DEPTH
-     - Multi-layer 3D transforms inspired by Apple Dashboard
-     - Foreground elements (tags, badges, CTAs) float and slide 
-       with higher parallax ratio than background
-     - Silky spring damping on enter and leave
-  ────────────────────────────────────────────────────────────── */
-  function initBentoGridParallax() {
-    if (isTouch || prefersReducedMotion) return;
-
-    const cards = document.querySelectorAll('.prism-card, .project-card, .proof-card, .toolkit-card');
-    cards.forEach(card => {
-      card.classList.add('bento-parallax-card');
-
-      const midLayers = card.querySelectorAll('.project-title, .proj-title, .project-desc, .field-body, .timeline-desc, .toolkit-card-list');
-      midLayers.forEach(el => el.classList.add('bento-layer-mid'));
-
-      const foreLayers = card.querySelectorAll('.ptag, .tag, .proj-badge, .project-link, .repo-link, .proof-stat, .toolkit-btn');
-      foreLayers.forEach(el => el.classList.add('bento-layer-fore'));
-
-      let targetX = 0, targetY = 0;
-      let curX = 0, curY = 0;
-      let isHover = false;
-      let raf = null;
-
-      card.addEventListener('mouseenter', () => {
-        isHover = true;
-        if (!raf) raf = requestAnimationFrame(animate);
-      });
-
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const nx = (e.clientX - rect.left) / rect.width - 0.5;
-        const ny = (e.clientY - rect.top) / rect.height - 0.5;
-        targetX = ny * -13;
-        targetY = nx * 13;
-
-        card.style.setProperty('--mouse-x', `${((nx + 0.5) * 100).toFixed(1)}%`);
-        card.style.setProperty('--mouse-y', `${((ny + 0.5) * 100).toFixed(1)}%`);
-      });
-
-      card.addEventListener('mouseleave', () => {
-        isHover = false;
-        targetX = 0;
-        targetY = 0;
-      });
-
-      function animate() {
-        curX += (targetX - curX) * 0.16;
-        curY += (targetY - curY) * 0.16;
-
-        card.style.transform = `perspective(1000px) rotateX(${curX.toFixed(2)}deg) rotateY(${curY.toFixed(2)}deg)`;
-
-        const foreOffset = `translate3d(${(curY * 0.65).toFixed(1)}px, ${(curX * -0.65).toFixed(1)}px, 42px)`;
-        foreLayers.forEach(el => {
-          el.style.transform = foreOffset;
-        });
-
-        const midOffset = `translate3d(${(curY * 0.25).toFixed(1)}px, ${(curX * -0.25).toFixed(1)}px, 20px)`;
-        midLayers.forEach(el => {
-          el.style.transform = midOffset;
-        });
-
-        if (isHover || Math.abs(curX) > 0.05 || Math.abs(curY) > 0.05) {
-          raf = requestAnimationFrame(animate);
-        } else {
-          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-          foreLayers.forEach(el => el.style.transform = '');
-          midLayers.forEach(el => el.style.transform = '');
-          raf = null;
-        }
+      if (currentScale > 0.1) {
+        dispMap.setAttribute('scale', currentScale.toFixed(2));
+        turbNode.setAttribute('baseFrequency', `${(0.032 + Math.sin(time) * 0.006).toFixed(3)} ${(0.036 + Math.cos(time) * 0.006).toFixed(3)}`);
+      } else if (currentScale !== 0) {
+        currentScale = 0;
+        scaleVelocity = 0;
+        dispMap.setAttribute('scale', '0');
+        titles.forEach(el => el.classList.remove('kinetic-fluid-active'));
       }
-    });
+
+      requestAnimationFrame(updateKineticPhysics);
+    }
+    updateKineticPhysics();
   }
 
-  /* ──────────────────────────────────────────────────────────────
-     INITIALIZATION
-  ────────────────────────────────────────────────────────────── */
-  function initAll() {
-    initKineticTypography();
-    initMagneticCursor();
-    initIridescentMesh();
-    initBentoGridParallax();
+  /* ─────────────────────────────────────────────────────────────────────────────
+     ORCHESTRATION OF ALL 4 PHASES
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initAllPhases() {
+    initPhase1MagneticCursor();
+    initPhase2Bento3DParallax();
+    initPhase3IridescentNatureMesh();
+    initPhase4KineticTypography();
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAll);
+    document.addEventListener('DOMContentLoaded', initAllPhases);
   } else {
-    initAll();
+    initAllPhases();
   }
 })();

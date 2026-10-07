@@ -1415,4 +1415,49 @@ body.light #prism-hero-canvas {
   will-change: transform;
 }
 
+/* ── PHYSICAL HARDWARE PANEL (FLAGSHIP DRONE & HIGH-TIER CARDS) ── */
+.hardware-panel-card {
+  position: relative;
+  border: 1px solid rgba(16, 185, 129, 0.42) !important;
+  box-shadow: 
+    0 24px 60px -12px rgba(0, 0, 0, 0.95),
+    0 0 35px rgba(16, 185, 129, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.8) !important;
+}
+
+body.light .hardware-panel-card {
+  border: 1px solid #059669 !important;
+  box-shadow: 
+    0 18px 44px -10px rgba(0, 0, 0, 0.08),
+    0 0 24px rgba(4, 120, 87, 0.10),
+    inset 0 1px 0 #ffffff !important;
+}
+
+.hardware-panel-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.75;
+}
+
+.hardware-panel-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--nature);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+
 
