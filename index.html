@@ -39,13 +39,13 @@
     <filter id="prism-chromatic-filter" x="-20%" y="-20%" width="140%" height="140%">
       <!-- Channel separation & displacement -->
       <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red_chan"/>
-      <feOffset in="red_chan" dx="-2.5" dy="0" result="red_offset"/>
+      <feOffset id="prism-red-offset" in="red_chan" dx="-2.5" dy="0" result="red_offset"/>
       
       <feColorMatrix type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green_chan"/>
       <feOffset in="green_chan" dx="0" dy="0" result="green_offset"/>
       
       <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue_chan"/>
-      <feOffset in="blue_chan" dx="2.5" dy="0" result="blue_offset"/>
+      <feOffset id="prism-blue-offset" in="blue_chan" dx="2.5" dy="0" result="blue_offset"/>
       
       <feBlend in="red_offset" in2="green_offset" mode="screen" result="rg_blend"/>
       <feBlend in="rg_blend" in2="blue_offset" mode="screen"/>
@@ -264,151 +264,165 @@
       </div>
 
       <!-- AroggyaGram-3 -->
-      <div class="project-card reveal reveal-d3">
-        <p class="project-type">AI Agents · Crisis Response · Full-Stack</p>
-        <h3 class="project-title">AroggyaGram-3 Community Health Network</h3>
-        <p class="project-desc">
-          Intelligent crisis dispatch ecosystem that ingests unstructured distress requests, uses autonomous AI reasoning to classify medical urgency, and performs proximity routing to field health workers.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">TypeScript</span>
-            <span class="ptag">Next.js</span>
-            <span class="ptag">AI Triage</span>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://github.com/jvstin47/AroggyaGram-3" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
-            <a href="projects.html#p1" class="project-link">Case study →</a>
+      <div class="project-card prism-card reveal reveal-d3">
+        <div class="prism-card-inner">
+          <p class="project-type">AI Agents · Crisis Response · Full-Stack</p>
+          <h3 class="project-title chroma-text">AroggyaGram-3 Community Health Network</h3>
+          <p class="project-desc">
+            Intelligent crisis dispatch ecosystem that ingests unstructured distress requests, uses autonomous AI reasoning to classify medical urgency, and performs proximity routing to field health workers.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">TypeScript</span>
+              <span class="ptag">Next.js</span>
+              <span class="ptag">AI Triage</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://github.com/jvstin47/AroggyaGram-3" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
+              <a href="projects.html#p1" class="project-link">Case study →</a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Phoenix X SAR UAV -->
-      <div class="project-card reveal reveal-d3">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <p class="project-type">Edge AI · UAV · Robotics · SIH 2026</p>
-          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(251,146,60,0.15);color:#fb923c;">● SIH Shortlisted</span>
-        </div>
-        <h3 class="project-title">Phoenix X — Autonomous AI SAR UAV</h3>
-        <p class="project-desc">
-          DGCA-compliant Micro-UAV fusing Qualcomm RB5 edge AI (ThermalNet YOLOv8 at &lt;20ms) with LoRa 5km mesh comms for survivor detection through smoke and darkness — no cell towers needed.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">Qualcomm RB5</span>
-            <span class="ptag">YOLOv8</span>
-            <span class="ptag">LoRa 915 MHz</span>
+      <div class="project-card prism-card reveal reveal-d3">
+        <div class="prism-card-inner">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <p class="project-type">Edge AI · UAV · Robotics · SIH 2026</p>
+            <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(251,146,60,0.15);color:#fb923c;">● SIH Shortlisted</span>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://phoenix-sar-uav.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live Mission ↗</a>
-            <a href="projects.html#p8" class="project-link">Case study →</a>
+          <h3 class="project-title chroma-text">Phoenix X — Autonomous AI SAR UAV</h3>
+          <p class="project-desc">
+            DGCA-compliant Micro-UAV fusing Qualcomm RB5 edge AI (ThermalNet YOLOv8 at &lt;20ms) with LoRa 5km mesh comms for survivor detection through smoke and darkness — no cell towers needed.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">Qualcomm RB5</span>
+              <span class="ptag">YOLOv8</span>
+              <span class="ptag">LoRa 915 MHz</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://phoenix-sar-uav.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live Mission ↗</a>
+              <a href="projects.html#p8" class="project-link">Case study →</a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- AutoMeter -->
-      <div class="project-card reveal reveal-d3">
-        <p class="project-type">IoT Transit · Flutter · Sensor Fusion</p>
-        <h3 class="project-title">AutoMeter — Smart Dynamic UPI Fare System</h3>
-        <p class="project-desc">
-          Tamper-resilient transit fare meter fusing GPS speed deltas and wheel pulses with instant on-screen dynamic UPI QR generation for frictionless auto-rickshaw transit.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">Flutter</span>
-            <span class="ptag">Android Native</span>
-            <span class="ptag">UPI Protocol</span>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://github.com/jvstin47/AutoMeter" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
-            <a href="projects.html#p3" class="project-link">View →</a>
+      <div class="project-card prism-card reveal reveal-d3">
+        <div class="prism-card-inner">
+          <p class="project-type">IoT Transit · Flutter · Sensor Fusion</p>
+          <h3 class="project-title chroma-text">AutoMeter — Smart Dynamic UPI Fare System</h3>
+          <p class="project-desc">
+            Tamper-resilient transit fare meter fusing GPS speed deltas and wheel pulses with instant on-screen dynamic UPI QR generation for frictionless auto-rickshaw transit.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">Flutter</span>
+              <span class="ptag">Android Native</span>
+              <span class="ptag">UPI Protocol</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://github.com/jvstin47/AutoMeter" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
+              <a href="projects.html#p3" class="project-link">View →</a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Song Chord Analyzer -->
-      <div class="project-card reveal reveal-d4">
-        <p class="project-type">AI · MIR · Desktop App · Electron · PyTorch</p>
-        <h3 class="project-title">Song Chord Analyzer — AI Music Transcription Desktop</h3>
-        <p class="project-desc">
-          Drag-and-drop desktop app that runs full MIR pipeline locally: Demucs v4 stem separation → BTC Transformer chord recognition (170-chord vocab) → beat alignment → interactive musician chord chart, with PDF/TXT/JSON export.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">PyTorch</span>
-            <span class="ptag">Demucs v4</span>
-            <span class="ptag">Electron</span>
-            <span class="ptag">CUDA</span>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://github.com/jvstin47/Song-Chord-Analyzer--Mac" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
-            <a href="projects.html#p7" class="project-link">Case study →</a>
+      <div class="project-card prism-card reveal reveal-d4">
+        <div class="prism-card-inner">
+          <p class="project-type">AI · MIR · Desktop App · Electron · PyTorch</p>
+          <h3 class="project-title chroma-text">Song Chord Analyzer — AI Music Transcription Desktop</h3>
+          <p class="project-desc">
+            Drag-and-drop desktop app that runs full MIR pipeline locally: Demucs v4 stem separation → BTC Transformer chord recognition (170-chord vocab) → beat alignment → interactive musician chord chart, with PDF/TXT/JSON export.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">PyTorch</span>
+              <span class="ptag">Demucs v4</span>
+              <span class="ptag">Electron</span>
+              <span class="ptag">CUDA</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://github.com/jvstin47/Song-Chord-Analyzer--Mac" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
+              <a href="projects.html#p7" class="project-link">Case study →</a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Opportunity Task Planner -->
-      <div class="project-card reveal reveal-d4">
-        <p class="project-type">Mobile Systems · Kotlin · Wear OS</p>
-        <h3 class="project-title">Opportunity — Offline-First Task Ecosystem</h3>
-        <p class="project-desc">
-          Deterministic task scoring, capacity-aware schedule allocation, Room DB local storage, WorkManager background jobs, and a synchronized Wear OS companion.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">Kotlin</span>
-            <span class="ptag">Jetpack Compose</span>
-            <span class="ptag">Wear OS</span>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://github.com/jvstin47/opportunity-android-task-planner" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
-            <a href="projects.html#p4" class="project-link">View →</a>
+      <div class="project-card prism-card reveal reveal-d4">
+        <div class="prism-card-inner">
+          <p class="project-type">Mobile Systems · Kotlin · Wear OS</p>
+          <h3 class="project-title chroma-text">Opportunity — Offline-First Task Ecosystem</h3>
+          <p class="project-desc">
+            Deterministic task scoring, capacity-aware schedule allocation, Room DB local storage, WorkManager background jobs, and a synchronized Wear OS companion.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">Kotlin</span>
+              <span class="ptag">Jetpack Compose</span>
+              <span class="ptag">Wear OS</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://github.com/jvstin47/opportunity-android-task-planner" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
+              <a href="projects.html#p4" class="project-link">View →</a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- UNO-Q Arena -->
-      <div class="project-card reveal reveal-d4">
-        <p class="project-type">Edge AI · Embedded · Reinforcement Learning</p>
-        <h3 class="project-title">UNO-Q Arena — Edge AI Retro Gaming</h3>
-        <p class="project-desc">
-          Human vs AI Street Fighter II and Combat Cars — RL policy running at 60 FPS inside classic Sega Genesis emulation. Designed for Arduino UNO-Q edge hardware deployment.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">Python</span>
-            <span class="ptag">RL</span>
-            <span class="ptag">RetroGym</span>
-            <span class="ptag">Edge AI</span>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://github.com/jvstin47/UNO-Q-Arena-Edge-AI-Retro-Gaming-on-Arduino-UNO-Q" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
-            <a href="projects.html#p9" class="project-link">View →</a>
+      <div class="project-card prism-card reveal reveal-d4">
+        <div class="prism-card-inner">
+          <p class="project-type">Edge AI · Embedded · Reinforcement Learning</p>
+          <h3 class="project-title chroma-text">UNO-Q Arena — Edge AI Retro Gaming</h3>
+          <p class="project-desc">
+            Human vs AI Street Fighter II and Combat Cars — RL policy running at 60 FPS inside classic Sega Genesis emulation. Designed for Arduino UNO-Q edge hardware deployment.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">Python</span>
+              <span class="ptag">RL</span>
+              <span class="ptag">RetroGym</span>
+              <span class="ptag">Edge AI</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://github.com/jvstin47/UNO-Q-Arena-Edge-AI-Retro-Gaming-on-Arduino-UNO-Q" target="_blank" class="project-link" style="color:var(--gold);">GitHub Repo ↗</a>
+              <a href="projects.html#p9" class="project-link">View →</a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- CRT Lock & 3D Interactive Web -->
-      <div class="project-card reveal reveal-d4">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-          <p class="project-type">Creative Web · WebGL · Number Theory</p>
-          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
-        </div>
-        <h3 class="project-title">CRT Modular Lock &amp; 3D Web Mechanics</h3>
-        <p class="project-desc">
-          Tactile digital recreation of a physical Chinese Remainder Theorem modular lock with interactive dials, sliding latch mechanics, and high-framerate WebGL rendering.
-        </p>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="ptag">React</span>
-            <span class="ptag">TypeScript</span>
-            <span class="ptag">Framer Motion</span>
-            <span class="ptag">WebGL</span>
+      <div class="project-card prism-card reveal reveal-d4">
+        <div class="prism-card-inner">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <p class="project-type">Creative Web · WebGL · Number Theory</p>
+            <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(16,185,129,0.15);color:#10b981;">● Live Demo</span>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="https://crt-chinese-reminder-theorem.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live App ↗</a>
-            <a href="https://github.com/jvstin47/CRT--Chinese-Reminder-Theorem" target="_blank" class="project-link">GitHub ↗</a>
-            <a href="projects.html#p5" class="project-link">View →</a>
+          <h3 class="project-title chroma-text">CRT Modular Lock &amp; 3D Web Mechanics</h3>
+          <p class="project-desc">
+            Tactile digital recreation of a physical Chinese Remainder Theorem modular lock with interactive dials, sliding latch mechanics, and high-framerate WebGL rendering.
+          </p>
+          <div class="project-footer">
+            <div class="project-tags">
+              <span class="ptag">React</span>
+              <span class="ptag">TypeScript</span>
+              <span class="ptag">Framer Motion</span>
+              <span class="ptag">WebGL</span>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="https://crt-chinese-reminder-theorem.vercel.app" target="_blank" class="project-link" style="color:var(--gold);">Live App ↗</a>
+              <a href="https://github.com/jvstin47/CRT--Chinese-Reminder-Theorem" target="_blank" class="project-link">GitHub ↗</a>
+              <a href="projects.html#p5" class="project-link">View →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -1381,14 +1395,18 @@
   ────────────────────────────────────────────────────────────── */
   (function initPrismElements() {
     const prismCards = document.querySelectorAll('.prism-card');
+    const feRed = document.getElementById('prism-red-offset');
+    const feBlue = document.getElementById('prism-blue-offset');
     
     prismCards.forEach(card => {
       let isHovering = false;
       let targetX = 0, targetY = 0;
       let currentX = 0, currentY = 0;
+      let rafId = null;
 
       card.addEventListener('mouseenter', () => {
         isHovering = true;
+        if (!rafId) renderTilt();
       });
 
       card.addEventListener('mousemove', (e) => {
@@ -1400,37 +1418,66 @@
         card.style.setProperty('--mouse-x', `${mouseX}px`);
         card.style.setProperty('--mouse-y', `${mouseY}px`);
 
-        // Compute 3D Perspective Tilt angles (-10deg to +10deg)
+        // Compute 3D Perspective Tilt angles (-8deg to +8deg)
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        targetY = ((mouseX - centerX) / centerX) * 8.0;
-        targetX = -((mouseY - centerY) / centerY) * 8.0;
+        const normX = (mouseX - centerX) / centerX;
+        const normY = (mouseY - centerY) / centerY;
+        targetY = normX * 8.5;
+        targetX = -normY * 8.5;
+
+        // Dynamic SVG chromatic offset primitive shift based on cursor
+        if (feRed && feBlue) {
+          const shift = normX * 4.5;
+          feRed.setAttribute('dx', (-shift).toFixed(2));
+          feBlue.setAttribute('dx', (shift).toFixed(2));
+        }
       });
 
       card.addEventListener('mouseleave', () => {
         isHovering = false;
         targetX = 0;
         targetY = 0;
+        if (feRed && feBlue) {
+          feRed.setAttribute('dx', '-2.5');
+          feBlue.setAttribute('dx', '2.5');
+        }
       });
 
       // Smooth RAF damping for natural glass momentum
       function renderTilt() {
-        currentX += (targetX - currentX) * 0.15;
-        currentY += (targetY - currentY) * 0.15;
+        currentX += (targetX - currentX) * 0.14;
+        currentY += (targetY - currentY) * 0.14;
         card.style.setProperty('--tilt-x', `${currentX.toFixed(2)}deg`);
         card.style.setProperty('--tilt-y', `${currentY.toFixed(2)}deg`);
-        requestAnimationFrame(renderTilt);
+        
+        if (isHovering || Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05) {
+          rafId = requestAnimationFrame(renderTilt);
+        } else {
+          card.style.setProperty('--tilt-x', '0deg');
+          card.style.setProperty('--tilt-y', '0deg');
+          rafId = null;
+        }
       }
-      renderTilt();
     });
 
-    /* ── LIQUID SPECTRUM PRISM CANVAS (WAVE CHROMATIC REFRACTION) ── */
+    /* ── LIQUID SPECTRUM PRISM CANVAS (WAVE CHROMATIC REFRACTION & CAUSTIC RAYS) ── */
     const canvas = document.getElementById('prism-hero-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let width, height;
     let time = 0;
     let mouse = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5 };
+
+    // Floating prismatic photons
+    const particles = Array.from({ length: 24 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      vx: (Math.random() - 0.5) * 0.001,
+      vy: (Math.random() - 0.5) * 0.001,
+      size: Math.random() * 2.5 + 1.2,
+      color: ['rgba(45, 212, 191, 0.65)', 'rgba(255, 51, 75, 0.55)', 'rgba(56, 189, 248, 0.65)', 'rgba(251, 191, 36, 0.6)'][Math.floor(Math.random() * 4)]
+    }));
 
     function resize() {
       if (!canvas.parentElement) return;
@@ -1446,28 +1493,53 @@
     });
 
     function drawSpectrumWaves() {
-      time += 0.015;
+      time += 0.016;
       mouse.x += (mouse.targetX - mouse.x) * 0.06;
       mouse.y += (mouse.targetY - mouse.y) * 0.06;
 
       ctx.clearRect(0, 0, width, height);
 
-      // Render 3 chromatic caustic bands (F1 Apex Crimson, Nature Pine Emerald, Soft Compound Amber)
+      // Optical Additive Blending (mimics real physical refraction through glass)
+      ctx.globalCompositeOperation = 'screen';
+
+      // 1. Refraction Caustic Wave Bands (Apex Crimson, Nature Emerald, Telemetry Amber, Cyan)
       const bands = [
-        { color: 'rgba(255, 51, 75, 0.075)', phase: 0.0, speed: 1.0, amp: 48 },    /* F1 Apex Crimson */
-        { color: 'rgba(45, 212, 191, 0.085)', phase: 2.1, speed: 1.2, amp: 55 },   /* Nature Tech Emerald */
-        { color: 'rgba(251, 191, 36, 0.065)', phase: 3.8, speed: 0.85, amp: 42 }   /* F1 Soft Compound Amber */
+        { 
+          color1: 'rgba(255, 51, 75, 0.35)',
+          color2: 'rgba(255, 51, 75, 0.0)',
+          phase: 0.0, speed: 0.95, amp: 75, yOffset: 0.32
+        },
+        { 
+          color1: 'rgba(45, 212, 191, 0.40)',
+          color2: 'rgba(45, 212, 191, 0.0)',
+          phase: 1.8, speed: 1.2, amp: 85, yOffset: 0.38
+        },
+        { 
+          color1: 'rgba(56, 189, 248, 0.35)',
+          color2: 'rgba(56, 189, 248, 0.0)',
+          phase: 3.2, speed: 1.05, amp: 70, yOffset: 0.44
+        },
+        { 
+          color1: 'rgba(251, 191, 36, 0.30)',
+          color2: 'rgba(251, 191, 36, 0.0)',
+          phase: 4.6, speed: 0.85, amp: 60, yOffset: 0.50
+        }
       ];
 
       bands.forEach(b => {
+        const baseY = height * (b.yOffset + (mouse.y - 0.5) * 0.22);
+        const grad = ctx.createLinearGradient(0, baseY - b.amp, 0, height);
+        grad.addColorStop(0, b.color1);
+        grad.addColorStop(0.7, b.color2);
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
         ctx.beginPath();
-        const baseY = height * (0.35 + (mouse.y - 0.5) * 0.25);
         ctx.moveTo(0, baseY);
 
-        for (let x = 0; x <= width; x += 15) {
+        for (let x = 0; x <= width; x += 12) {
           const nx = x / width;
-          const wave1 = Math.sin(nx * 4.5 + time * b.speed + b.phase) * b.amp;
-          const wave2 = Math.cos(nx * 2.2 - time * 0.8 + (mouse.x * 2.0)) * (b.amp * 0.6);
+          const wave1 = Math.sin(nx * 4.2 + time * b.speed + b.phase) * b.amp;
+          const wave2 = Math.cos(nx * 2.0 - time * 0.75 + (mouse.x * 2.2)) * (b.amp * 0.55);
           const y = baseY + wave1 + wave2;
           ctx.lineTo(x, y);
         }
@@ -1475,9 +1547,48 @@
         ctx.lineTo(width, height);
         ctx.lineTo(0, height);
         ctx.closePath();
-        ctx.fillStyle = b.color;
+        ctx.fillStyle = grad;
         ctx.fill();
       });
+
+      // 2. Cursor Prism Refraction Flare & Caustic Ray
+      const mx = mouse.x * width;
+      const my = mouse.y * height;
+      
+      const flareGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 280);
+      flareGrad.addColorStop(0, 'rgba(45, 212, 191, 0.28)');
+      flareGrad.addColorStop(0.35, 'rgba(56, 189, 248, 0.16)');
+      flareGrad.addColorStop(0.65, 'rgba(255, 51, 75, 0.08)');
+      flareGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      
+      ctx.beginPath();
+      ctx.arc(mx, my, 280, 0, Math.PI * 2);
+      ctx.fillStyle = flareGrad;
+      ctx.fill();
+
+      // 3. Floating Prismatic Photons
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
+
+        const px = p.x * width;
+        const py = p.y * height;
+
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Restore normal blending for other draws
+      ctx.globalCompositeOperation = 'source-over';
 
       requestAnimationFrame(drawSpectrumWaves);
     }

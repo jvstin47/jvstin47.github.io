@@ -856,7 +856,7 @@ select {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-  opacity: 0.75;
+  opacity: 1.0;
 }
 
 .prism-canvas {
@@ -871,95 +871,121 @@ select {
 }
 
 /* Prism Card with multi-layered glassmorphism, dynamic spotlight and chromatic edge */
-.prism-card {
+.prism-card,
+.project-card.prism-card {
   --mouse-x: 50%;
   --mouse-y: 50%;
   --tilt-x: 0deg;
   --tilt-y: 0deg;
-  --chroma-offset: 1px;
+  --chroma-offset: 3px;
   position: relative;
-  background: rgba(19, 19, 18, 0.72);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(14, 22, 18, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+  border: 1px solid rgba(45, 212, 191, 0.35) !important;
   box-shadow: 
-    0 12px 36px -8px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+    0 18px 46px -10px rgba(0, 0, 0, 0.8),
+    0 0 28px rgba(45, 212, 191, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
   transform-style: preserve-3d;
-  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.14s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.25s;
-  overflow: hidden;
+  transform: perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) !important;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s;
+  overflow: visible;
 }
 
-body.light .prism-card {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+body.light .prism-card,
+body.light .project-card.prism-card {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(45, 212, 191, 0.4) !important;
   box-shadow: 
-    0 16px 36px -10px rgba(0, 0, 0, 0.07),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    0 18px 40px -10px rgba(0, 0, 0, 0.12),
+    0 0 24px rgba(45, 212, 191, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-/* 1. Dynamic Cursor Spotlight (Light Cone / Focal Glow) */
-.prism-card::before {
+/* 1. Dynamic Cursor Spotlight (Light Cone / Focal Glow) - High Vibrancy */
+.prism-card::before,
+.project-card.prism-card::before {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background: radial-gradient(
-    650px circle at var(--mouse-x) var(--mouse-y), 
-    rgba(201, 168, 108, 0.12),
-    rgba(255, 255, 255, 0.03) 25%,
-    transparent 60%
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(45, 212, 191, 0.32) 0%,
+    rgba(56, 189, 248, 0.18) 26%,
+    rgba(255, 51, 75, 0.12) 48%,
+    transparent 68%
   );
   pointer-events: none;
   z-index: 1;
-  transition: opacity 0.3s ease;
-  opacity: 0.85;
+  transition: opacity 0.25s ease;
+  opacity: 0.9;
 }
 
-/* 2. Chromatic Aberration & Spectral Rainbow Sheen at Bevel Edges */
-.prism-card::after {
+.prism-card:hover::before,
+.project-card.prism-card:hover::before {
+  opacity: 1;
+}
+
+/* 2. Chromatic Aberration & Spectral Rainbow Sheen at Bevel Edges - High Definition */
+.prism-card::after,
+.project-card.prism-card::after {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: -1.5px;
+  bottom: -1.5px !important;
+  left: -1.5px !important;
+  right: -1.5px !important;
+  height: auto !important;
   border-radius: inherit;
-  padding: 1px;
+  padding: 1.5px;
   background: linear-gradient(
-    calc(120deg + var(--tilt-y) * 4),
-    rgba(255, 0, 80, 0.35) 0%,
-    rgba(0, 240, 255, 0.35) 50%,
-    rgba(255, 220, 0, 0.35) 100%
-  );
+    calc(115deg + var(--tilt-y) * 4),
+    rgba(255, 51, 75, 0.85) 0%,
+    rgba(251, 191, 36, 0.8) 22%,
+    rgba(45, 212, 191, 0.95) 50%,
+    rgba(56, 189, 248, 0.85) 75%,
+    rgba(168, 85, 247, 0.8) 100%
+  ) !important;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
   z-index: 2;
-  opacity: 0.3;
-  transition: opacity 0.35s ease, filter 0.35s ease;
+  opacity: 0.65;
+  transform: none !important;
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-.prism-card:hover::after {
-  opacity: 0.85;
-  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.3));
+.prism-card:hover::after,
+.project-card.prism-card:hover::after {
+  opacity: 1.0;
+  filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.75)) drop-shadow(0 0 18px rgba(255, 51, 75, 0.5));
 }
 
 .prism-card-inner {
   position: relative;
   z-index: 3;
+  transform: translateZ(20px);
+  transform-style: preserve-3d;
 }
 
 /* Chromatic Aberration Split Title Effect on hover */
 .chroma-text {
   position: relative;
   display: inline-block;
-  transition: text-shadow 0.25s ease;
+  transition: text-shadow 0.25s ease, filter 0.25s ease;
 }
 
-.prism-card:hover .chroma-text {
+.prism-card:hover .chroma-text,
+.project-card.prism-card:hover .chroma-text {
+  filter: url(#prism-chromatic-filter);
   text-shadow: 
-    -1.5px 0 0 rgba(255, 30, 80, 0.75),
-    1.5px 0 0 rgba(0, 230, 255, 0.75);
+    -2.5px 0 0 rgba(255, 51, 75, 0.95),
+    2.5px 0 0 rgba(56, 189, 248, 0.95),
+    0 0 14px rgba(45, 212, 191, 0.6);
 }
 
 
