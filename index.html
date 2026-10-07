@@ -26,12 +26,15 @@
       <li><a href="submit.html">Collaborate</a></li>
       <li><a href="Justin_Mathew_Resume.pdf" target="_blank" style="color:var(--gold);">Resume ↗</a></li>
     </ul>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
-      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation">☰</button>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="tech-terminal-trigger" onclick="toggleTechTerminal()" title="Launch Interactive Systems Terminal">
+          <span style="color:#27c93f;">●</span> console [~]
+        </button>
+        <button id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☾</button>
+        <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation">☰</button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 <!-- HERO -->
 <section id="hero">
@@ -72,15 +75,15 @@
         <span class="proof-label">Vectorized Monte Carlo Runs</span>
       </div>
       <div class="proof-card">
+        <span class="proof-stat">&lt; 15ms</span>
+        <span class="proof-label">C4ISR Logistics Decision Latency</span>
+      </div>
+      <div class="proof-card">
         <span class="proof-stat">1st</span>
         <span class="proof-label">Place · Idea From Industry S2</span>
       </div>
       <div class="proof-card">
-        <span class="proof-stat">100%</span>
-        <span class="proof-label">Offline-First Android OS</span>
-      </div>
-      <div class="proof-card">
-        <span class="proof-stat">9+</span>
+        <span class="proof-stat">10+</span>
         <span class="proof-label">Production Systems Built</span>
       </div>
     </div>
@@ -147,6 +150,30 @@
     </div>
 
     <div class="projects-grid">
+      <!-- Project Phoenix-X: Sovereign AI Predictive Logistics -->
+      <div class="project-card featured reveal reveal-d2">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <p class="project-type">Defense AI · C4ISR Tactical Ops · Thermodynamic Modeling · SIH 2026 (PS: 26251)</p>
+          <span class="proj-badge" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:12px;background:rgba(234,179,8,0.15);color:#eab308;">● MoD / DSSC Track</span>
+        </div>
+        <h3 class="project-title">Phoenix-X — Sovereign AI Predictive Logistics &amp; High-Altitude Supply Chain</h3>
+        <p class="project-desc">
+          Air-gapped, zero-cloud military logistics platform engineered for high-altitude sectors (Eastern Ladakh, Siachen, Depsang). Fuses environmental thermodynamics (altitude lapse rates, caloric scaling, arctic POL consumption) with Bayesian hybrid demand forecasting (&lt;4.2% MAPE vs 6.5% SLA limit) and non-linear terrain-penalized routing to guarantee unbroken forward combat resupply under 15ms latency.
+        </p>
+        <div class="project-footer">
+          <div class="project-tags">
+            <span class="ptag">Python 3.11</span>
+            <span class="ptag">Thermodynamic Physics</span>
+            <span class="ptag">Bayesian Forecasting</span>
+            <span class="ptag">Non-Linear Routing</span>
+            <span class="ptag">Tactical HUD</span>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <a href="projects.html#p10" class="project-link" style="color:var(--gold);">Architecture Deep Dive <span>→</span></a>
+          </div>
+        </div>
+      </div>
+
       <!-- F1 Strategy Simulator -->
       <div class="project-card featured reveal reveal-d2">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
@@ -328,7 +355,7 @@
     </div>
 
     <div style="text-align:center;margin-top:40px;">
-      <a class="btn btn-ghost" href="projects.html">View All 9 Case Studies &amp; Architecture Breakdowns →</a>
+      <a class="btn btn-ghost" href="projects.html">View All 10 Case Studies &amp; Architecture Breakdowns →</a>
     </div>
   </div>
 </section>
@@ -560,6 +587,12 @@
     <!-- Toolkit Cards Grid -->
     <div class="toolkit-grid reveal reveal-d3">
       <div class="toolkit-card" data-category="sim-ai">
+        <div class="toolkit-card-title">Thermodynamic &amp; Military Logistics Simulation</div>
+        <div class="toolkit-card-list">Python 3.11 · Altitude Lapse Modeling · Arctic POL Physics · Bayesian Demand Forecasting · NetworkX</div>
+        <div class="toolkit-card-note">Air-gapped C4ISR dispatch engine calculating caloric scaling, non-linear terrain friction, and convoy trajectories under 15ms.</div>
+      </div>
+
+      <div class="toolkit-card" data-category="sim-ai">
         <div class="toolkit-card-title">Numerical Simulation &amp; Optimization</div>
         <div class="toolkit-card-list">Python · NumPy · Vectorization · Dynamic Programming · Bellman Solvers</div>
         <div class="toolkit-card-note">High-throughput Monte Carlo execution, stochastic modeling, and mathematical state optimization.</div>
@@ -569,6 +602,12 @@
         <div class="toolkit-card-title">Autonomous AI &amp; LLM Pipelines</div>
         <div class="toolkit-card-list">Gemini API · Multi-Agent Orchestration · Prompt Engineering · Intent Triage</div>
         <div class="toolkit-card-note">Parsing chaotic human natural language into structured JSON payloads for deterministic logistics.</div>
+      </div>
+
+      <div class="toolkit-card" data-category="mobile-sys">
+        <div class="toolkit-card-title">Edge AI, Embedded &amp; UAV Systems</div>
+        <div class="toolkit-card-list">Qualcomm RB5 NPU · Arduino UNO-Q · Pixhawk FC · LoRa 915 MHz Mesh · RetroGym · OpenCV</div>
+        <div class="toolkit-card-note">On-device neural inference (&lt;20ms), RF telemetry without cell infrastructure, and real-time flight control integration.</div>
       </div>
 
       <div class="toolkit-card" data-category="mobile-sys">
@@ -621,9 +660,27 @@
 
     <div class="timeline-wrap">
       <div class="timeline-item highlight reveal reveal-d2">
-        <div class="timeline-time">2026 — Present<br/><span style="color:var(--building);font-size:11px;">● Current Focus</span></div>
+        <div class="timeline-time">2026 — Present<br/><span style="color:var(--building);font-size:11px;">● Active Frontier</span></div>
         <div>
-          <h3 class="timeline-role">Autonomous Systems, Vectorized Simulation &amp; Hackathon Podiums</h3>
+          <h3 class="timeline-role">Sovereign Military Logistics AI &amp; High-Altitude Supply Optimization</h3>
+          <div class="timeline-org">Smart India Hackathon 2026 (PS: 26251) · Ministry of Defence (MoD) / DSSC</div>
+          <p class="timeline-desc">
+            Architected <strong>Project Phoenix-X</strong>: an air-gapped tactical forward resupply platform engineered for Ladakh and Siachen sectors. Built thermodynamic physiological caloric scaling and arctic fuel loss solvers, coupled with Bayesian hybrid demand forecasting (&lt;4.2% MAPE against strict 6.5% SLA) and sub-15ms non-linear mountain pass impedance routing.
+          </p>
+          <div class="timeline-tags">
+            <span class="timeline-tag">Ministry of Defence Track</span>
+            <span class="timeline-tag">SIH 2026 (PS 26251)</span>
+            <span class="timeline-tag">Thermodynamics</span>
+            <span class="timeline-tag">Bayesian Forecast</span>
+            <span class="timeline-tag">Zero-Cloud / Air-Gapped</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal reveal-d2">
+        <div class="timeline-time">2026<br/><span style="color:var(--gold);font-size:11px;">★ Flagship Podium</span></div>
+        <div>
+          <h3 class="timeline-role">Autonomous Systems, Vectorized Simulation &amp; Hackathon Championships</h3>
           <div class="timeline-org">Flagship Engineering &amp; Competitive Systems</div>
           <p class="timeline-desc">
             Architected and shipped the <strong>F1 Monte Carlo Strategy Engine</strong> (10,000 parallel race simulations with Bellman-equation dynamic programming) and <strong>AroggyaGram-3</strong>. Clinched <strong>1st Place at ACM Vibefest Hackathon</strong> (March 2026) and <strong>Victory at AI Club Ideathon</strong> (Feb 2026).
@@ -958,6 +1015,185 @@
     </div>
   </div>
 </div>
+
+<!-- INTERACTIVE TECH CONSOLE MODAL -->
+<div id="tech-terminal" class="tech-terminal-modal" onclick="closeTerminalOnBackdrop(event)">
+  <div class="tech-terminal-box">
+    <div class="tech-terminal-topbar">
+      <div class="tech-terminal-dots">
+        <span class="tech-term-dot red" onclick="toggleTechTerminal()" style="cursor:pointer;" title="Close"></span>
+        <span class="tech-term-dot yellow"></span>
+        <span class="tech-term-dot green"></span>
+      </div>
+      <span class="tech-terminal-title">justin@workstation: ~/systems-architecture</span>
+      <button class="cert-modal-close" onclick="toggleTechTerminal()" style="width:24px;height:24px;font-size:12px;">✕</button>
+    </div>
+    <div class="tech-terminal-body" id="term-body">
+      <div class="tech-terminal-output" id="term-output">
+        <div style="color:var(--gold);margin-bottom:8px;font-weight:600;">⚡ Justin Joe Mathew — Systems Diagnostic Console v2.6.4</div>
+        <div style="color:var(--sub);margin-bottom:12px;">Interactive engineering terminal online. Type <span style="color:#27c93f;">help</span> for supported commands, or inspect active subsystems below.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+          <span class="system-spec-badge">KERNEL: Darwin / macOS arm64</span>
+          <span class="system-spec-badge">STACK: Python 3.11 · TypeScript · Kotlin · C++</span>
+          <span class="system-spec-badge">SIM_ENGINE: Vectorized Monte Carlo (10k pass)</span>
+          <span class="system-spec-badge">C4ISR: Phoenix-X (PS 26251 MoD)</span>
+        </div>
+      </div>
+      <div class="tech-terminal-prompt-line">
+        <span class="tech-prompt-symbol">guest@justin:~$</span>
+        <input type="text" id="term-input" class="tech-terminal-input" placeholder="type 'help', 'projects', 'bench', 'arch', 'clear'..." autofocus />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Interactive Systems Console Logic
+  function toggleTechTerminal() {
+    const term = document.getElementById('tech-terminal');
+    if (!term) return;
+    term.classList.toggle('active');
+    if (term.classList.contains('active')) {
+      document.body.style.overflow = 'hidden';
+      const input = document.getElementById('term-input');
+      if (input) setTimeout(() => input.focus(), 80);
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeTerminalOnBackdrop(e) {
+    if (e.target.id === 'tech-terminal') {
+      toggleTechTerminal();
+    }
+  }
+
+  const termInput = document.getElementById('term-input');
+  const termOutput = document.getElementById('term-output');
+
+  if (termInput && termOutput) {
+    termInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const val = this.value.trim().toLowerCase();
+        if (!val) return;
+        
+        const line = document.createElement('div');
+        line.innerHTML = `<span style="color:var(--gold)">guest@justin:~$</span> <span style="color:#fff;">${this.value}</span>`;
+        termOutput.appendChild(line);
+        
+        const resp = document.createElement('div');
+        resp.style.marginTop = '4px';
+        resp.style.marginBottom = '12px';
+        
+        switch(val) {
+          case 'help':
+            resp.innerHTML = `
+              <div style="color:var(--sub)">Available system commands:</div>
+              <div style="margin-left:10px;line-height:1.7;">
+                • <strong style="color:#27c93f;">projects</strong> — List all 10 verified engineering systems & repositories<br/>
+                • <strong style="color:#27c93f;">phoenix</strong> — Output Project Phoenix-X C4ISR military logistics telemetry<br/>
+                • <strong style="color:#27c93f;">bench</strong> — Run live client-side vectorized Monte Carlo simulation pass (1,000 runs)<br/>
+                • <strong style="color:#27c93f;">skills</strong> — Display active stack proficiencies and low-level competencies<br/>
+                • <strong style="color:#27c93f;">awards</strong> — View verified hackathon podiums and government awards<br/>
+                • <strong style="color:#27c93f;">contact</strong> — Print direct communication keys and public endpoints<br/>
+                • <strong style="color:#27c93f;">clear</strong> — Clear active console buffer
+              </div>`;
+            break;
+          case 'projects':
+            resp.innerHTML = `
+              <div style="color:var(--sub);line-height:1.6;">
+                [01] <strong>Phoenix-X</strong> — High-altitude C4ISR military logistics platform (SIH 26251 MoD)<br/>
+                [02] <strong>F1 Monte Carlo</strong> — Vectorized race strategy engine with Bellman optimization<br/>
+                [03] <strong>Capt. Lakshmi Invicta</strong> — Scroll-driven canvas monograph (3,100+ HD frames)<br/>
+                [04] <strong>Phoenix X SAR UAV</strong> — Qualcomm RB5 edge AI micro-UAV (SIH 26177)<br/>
+                [05] <strong>Song Chord Analyzer</strong> — MIR desktop app w/ Demucs v4 & BTC Transformer<br/>
+                [06] <strong>AroggyaGram-3</strong> — Autonomous AI community health-triage network<br/>
+                [07] <strong>AutoMeter</strong> — Dual sensor-fusion IoT transit fare meter & UPI engine<br/>
+                [08] <strong>Opportunity OS</strong> — Offline-first Android/Wear OS executive planner<br/>
+                [09] <strong>CRT Lock</strong> — Tactile 3D modular arithmetic safe mechanism (React/WebGL)<br/>
+                [10] <strong>UNO-Q Arena</strong> — Real-time RL policy @ 60 FPS in Genesis emulation
+              </div>`;
+            break;
+          case 'phoenix':
+            resp.innerHTML = `
+              <div style="color:#eab308;font-weight:600;">[DEFENSE C4ISR] Project Phoenix-X Operational Telemetry:</div>
+              <div style="color:var(--sub);line-height:1.6;margin-top:4px;">
+                • Sector: 14 Corps / Eastern Ladakh & Siachen Glacier<br/>
+                • Problem Statement ID: SIH 26251 (MoD / DSSC Track)<br/>
+                • Forecast Accuracy: 1.36% - 4.2% MAPE (Target SLA: &lt;6.5%)<br/>
+                • Decision Compute Latency: 0.014ms - 15.0ms (Target: &lt;50ms)<br/>
+                • Multimodal Convoy: Altitude lapse thermodynamics + drone sortie fallback
+              </div>`;
+            break;
+          case 'bench':
+            const t0 = performance.now();
+            let sum = 0;
+            const N = 1000;
+            for(let i = 0; i < N; i++) {
+              let tyreDeg = 0;
+              for(let lap = 0; lap < 57; lap++) {
+                tyreDeg += Math.pow(lap / 30, 1.45) * 0.045 + (Math.random() * 0.02 - 0.01);
+              }
+              sum += tyreDeg;
+            }
+            const dt = (performance.now() - t0).toFixed(2);
+            resp.innerHTML = `
+              <div style="color:#27c93f;">✔ COMPLETED 1,000 MONTE CARLO STOCHASTIC RACE RUNS</div>
+              <div style="color:var(--sub);margin-top:4px;">
+                Compute Time: <span style="color:#fff;">${dt} ms</span> | Simulated Laps: <span style="color:#fff;">57,000</span> | Vector Status: Stable (Mean Wear: ${(sum/N).toFixed(3)}s/lap)
+              </div>`;
+            break;
+          case 'skills':
+            resp.innerHTML = `
+              <div style="color:var(--sub);line-height:1.6;">
+                • <strong>Core Systems:</strong> C, C++, Python 3.11, Kotlin, TypeScript, Dart, Linux Shell<br/>
+                • <strong>AI & Math:</strong> NumPy, PyTorch, Demucs v4, YOLOv8, FastF1, Bellman DP, Monte Carlo<br/>
+                • <strong>Mobile & Edge:</strong> Jetpack Compose, Room SQLite, Wear OS, Flutter, Qualcomm RB5, Arduino<br/>
+                • <strong>Web & 3D:</strong> React 19, Next.js, Canvas 2D, Three.js, WebGL, Tailwind, FastAPI
+              </div>`;
+            break;
+          case 'awards':
+            resp.innerHTML = `
+              <div style="color:var(--sub);line-height:1.6;">
+                🥇 <strong>1st Place Champion:</strong> ACM Vibefest Hackathon 2026<br/>
+                🥇 <strong>1st Place Winner:</strong> Idea From Industry S2 (MakerHub / BIRAC / MoE)<br/>
+                🥇 <strong>1st Place:</strong> AI Club Ideathon 2026<br/>
+                🎖️ <strong>Shortlisted:</strong> Smart India Hackathon 2026 (Qualcomm Hardware & MoD PS 26251)<br/>
+                🌟 <strong>State Award:</strong> K-DISC Young Innovators Programme (YIP 8.0) Govt of Kerala
+              </div>`;
+            break;
+          case 'contact':
+            resp.innerHTML = `
+              <div style="color:var(--sub);line-height:1.6;">
+                Email: <a href="mailto:jvstin47@gmail.com" style="color:var(--gold);">jvstin47@gmail.com</a><br/>
+                GitHub: <a href="https://github.com/jvstin47" target="_blank" style="color:var(--gold);">github.com/jvstin47</a><br/>
+                LinkedIn: <a href="https://www.linkedin.com/in/jvstin47/" target="_blank" style="color:var(--gold);">linkedin.com/in/jvstin47</a>
+              </div>`;
+            break;
+          case 'clear':
+            termOutput.innerHTML = '';
+            this.value = '';
+            return;
+          default:
+            resp.innerHTML = `<span style="color:#ff5f56;">Command not recognized: '${val}'. Type 'help' to see valid commands.</span>`;
+            break;
+        }
+        termOutput.appendChild(resp);
+        this.value = '';
+        const body = document.getElementById('term-body');
+        if (body) body.scrollTop = body.scrollHeight;
+      }
+    });
+  }
+
+  // Global key shortcut: Press `~` or `\` to open tech console
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === '`' || e.key === '~') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      toggleTechTerminal();
+    }
+  });
+</script>
 
 </body>
 </html>

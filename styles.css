@@ -675,3 +675,133 @@ select {
   border-radius: 2px;
 }
 
+/* ──────────────────────────────────────────────────────────────
+   INTERACTIVE TECH CONSOLE / TERMINAL DRAWER
+────────────────────────────────────────────────────────────── */
+.tech-terminal-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(201, 168, 108, 0.08);
+  border: 1px solid rgba(201, 168, 108, 0.28);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tech-terminal-trigger:hover {
+  background: rgba(201, 168, 108, 0.16);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(201, 168, 108, 0.2);
+}
+
+.tech-terminal-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 8, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.tech-terminal-modal.active {
+  display: flex;
+}
+
+.tech-terminal-box {
+  background: #0d0e11;
+  border: 1px solid rgba(201, 168, 108, 0.35);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(201, 168, 108, 0.1);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 760px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+
+.tech-terminal-topbar {
+  background: #14161b;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tech-terminal-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.tech-term-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tech-term-dot.red { background: #ff5f56; }
+.tech-term-dot.yellow { background: #ffbd2e; }
+.tech-term-dot.green { background: #27c93f; }
+
+.tech-terminal-title {
+  color: var(--sub);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.tech-terminal-body {
+  padding: 18px 20px;
+  max-height: 480px;
+  overflow-y: auto;
+  color: #c0caf5;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.tech-terminal-output {
+  margin-bottom: 14px;
+}
+
+.tech-terminal-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-prompt-symbol {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.tech-terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  width: 100%;
+}
+
+.system-spec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 10.5px;
+  color: var(--sub);
+  font-family: var(--font-mono);
+}
+
