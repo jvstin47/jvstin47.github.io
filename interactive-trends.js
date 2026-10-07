@@ -456,7 +456,7 @@
     const turbNode = document.getElementById('kinetic-turb');
     if (!dispMap || !turbNode) return;
 
-    const titles = document.querySelectorAll('.hero-name, .section-title, .intro-h1, h1');
+    const titles = document.querySelectorAll('.section-title, .intro-h1');
     if (!titles.length) return;
 
     titles.forEach(t => t.classList.add('kinetic-text-wrap'));
@@ -682,197 +682,6 @@
     renderMainBridge();
   }
 
-  /* ─────────────────────────────────────────────────────────────────────────────
-     FEATURE 2: INFINITE NON-EUCLIDEAN 3D PORTALS (The Step-Inside Grid)
-     Target: Flagship Drone Card (#drone-portal-card & #drone-portal-canvas)
-  ───────────────────────────────────────────────────────────────────────────── */
-  function initNonEuclideanPortal() {
-    const container = document.getElementById('drone-portal-card');
-    const canvas = document.getElementById('drone-portal-canvas');
-    const coordEl = document.getElementById('portal-drone-coords');
-    if (!container || !canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    function resizePortal() {
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio || rect.width;
-      canvas.height = rect.height * window.devicePixelRatio || rect.height;
-    }
-    window.addEventListener('resize', resizePortal);
-    resizePortal();
-
-    let mouseU = 0.5, mouseV = 0.5;
-    let targetU = 0.5, targetV = 0.5;
-    let isHover = false;
-    let rotAngle = 0;
-
-    container.addEventListener('mousemove', (e) => {
-      const rect = container.getBoundingClientRect();
-      targetU = (e.clientX - rect.left) / rect.width;
-      targetV = (e.clientY - rect.top) / rect.height;
-      isHover = true;
-    });
-
-    container.addEventListener('mouseleave', () => {
-      targetU = 0.5;
-      targetV = 0.5;
-      isHover = false;
-    });
-
-    function project3D(x, y, z, cx, cy, fov) {
-      // Perspective projection with camera tilt
-      const eyeX = (mouseU - 0.5) * 140;
-      const eyeY = (mouseV - 0.5) * 90;
-      const camX = x - eyeX;
-      const camY = y - eyeY;
-      const scale = fov / (fov + z);
-      return {
-        x: cx + camX * scale,
-        y: cy + camY * scale,
-        scale: scale
-      };
-    }
-
-    function renderPortal() {
-      const w = canvas.width;
-      const h = canvas.height;
-      const cx = w / 2;
-      const cy = h / 2;
-      const fov = 340;
-
-      // Smooth camera interpolation
-      mouseU += (targetU - mouseU) * 0.12;
-      mouseV += (targetV - mouseV) * 0.12;
-      rotAngle += 0.022;
-
-      ctx.clearRect(0, 0, w, h);
-
-      // Deep dark chamber gradient
-      const bgGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, Math.max(w, h));
-      bgGrad.addColorStop(0, '#041209');
-      bgGrad.addColorStop(1, '#010403');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.save();
-
-      // 1. Receding 3D Depth Grid (Floors, Walls, Ceiling)
-      ctx.lineWidth = 1;
-      const depthSteps = 8;
-      const maxZ = 650;
-
-      for (let i = 0; i < depthSteps; i++) {
-        const z = (i / depthSteps) * maxZ;
-        const alpha = Math.max(0.1, 1 - (z / maxZ)) * 0.65;
-        ctx.strokeStyle = `rgba(16, 185, 129, ${alpha.toFixed(2)})`;
-
-        // 4 Corner boundary rectangle at depth z
-        const p1 = project3D(-cx * 0.95, -cy * 0.95, z, cx, cy, fov);
-        const p2 = project3D(cx * 0.95, -cy * 0.95, z, cx, cy, fov);
-        const p3 = project3D(cx * 0.95, cy * 0.95, z, cx, cy, fov);
-        const p4 = project3D(-cx * 0.95, cy * 0.95, z, cx, cy, fov);
-
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.lineTo(p3.x, p3.y);
-        ctx.lineTo(p4.x, p4.y);
-        ctx.closePath();
-        ctx.stroke();
-
-        // Floor longitudinal grid lines
-        for (let col = -3; col <= 3; col++) {
-          const colX = (col / 3) * (cx * 0.95);
-          const fTop = project3D(colX, cy * 0.95, z, cx, cy, fov);
-          const fNext = project3D(colX, cy * 0.95, z + (maxZ / depthSteps), cx, cy, fov);
-          ctx.beginPath();
-          ctx.moveTo(fTop.x, fTop.y);
-          ctx.lineTo(fNext.x, fNext.y);
-          ctx.stroke();
-        }
-      }
-
-      // 2. Corner perspective depth struts
-      ctx.strokeStyle = 'rgba(45, 212, 191, 0.45)';
-      const nearCorners = [
-        project3D(-cx * 0.95, -cy * 0.95, 0, cx, cy, fov),
-        project3D(cx * 0.95, -cy * 0.95, 0, cx, cy, fov),
-        project3D(cx * 0.95, cy * 0.95, 0, cx, cy, fov),
-        project3D(-cx * 0.95, cy * 0.95, 0, cx, cy, fov)
-      ];
-      const farCorners = [
-        project3D(-cx * 0.95, -cy * 0.95, maxZ, cx, cy, fov),
-        project3D(cx * 0.95, -cy * 0.95, maxZ, cx, cy, fov),
-        project3D(cx * 0.95, cy * 0.95, maxZ, cx, cy, fov),
-        project3D(-cx * 0.95, cy * 0.95, maxZ, cx, cy, fov)
-      ];
-      for (let i = 0; i < 4; i++) {
-        ctx.beginPath();
-        ctx.moveTo(nearCorners[i].x, nearCorners[i].y);
-        ctx.lineTo(farCorners[i].x, farCorners[i].y);
-        ctx.stroke();
-      }
-
-      // 3. Central Holographic 3D Drone Model floating in the chamber
-      const droneZ = 220 + Math.sin(rotAngle * 1.5) * 25;
-      const droneArm = 70;
-      const angles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
-
-      const centerProj = project3D(0, 0, droneZ, cx, cy, fov);
-
-      // LiDAR spherical pulses
-      const pulseR = ((Date.now() * 0.05) % 110) * centerProj.scale;
-      ctx.beginPath();
-      ctx.arc(centerProj.x, centerProj.y, pulseR, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(45, 212, 191, ${(1 - pulseR / (110 * centerProj.scale)).toFixed(2)})`;
-      ctx.stroke();
-
-      // Drone Quad Arms
-      ctx.strokeStyle = '#34d399';
-      ctx.lineWidth = 2 * centerProj.scale;
-      ctx.shadowColor = '#10b981';
-      ctx.shadowBlur = 12;
-
-      for (let a of angles) {
-        const curA = a + rotAngle;
-        const ax = Math.cos(curA) * droneArm;
-        const ay = Math.sin(curA) * droneArm * 0.45; // slight pitch
-        const armProj = project3D(ax, ay, droneZ, cx, cy, fov);
-
-        ctx.beginPath();
-        ctx.moveTo(centerProj.x, centerProj.y);
-        ctx.lineTo(armProj.x, armProj.y);
-        ctx.stroke();
-
-        // Rotor disc
-        ctx.beginPath();
-        ctx.ellipse(armProj.x, armProj.y, 16 * centerProj.scale, 8 * centerProj.scale, curA, 0, Math.PI * 2);
-        ctx.strokeStyle = '#2dd4bf';
-        ctx.stroke();
-      }
-
-      // Central avionics core
-      ctx.beginPath();
-      ctx.arc(centerProj.x, centerProj.y, 9 * centerProj.scale, 0, Math.PI * 2);
-      ctx.fillStyle = '#f0fdf4';
-      ctx.shadowBlur = 16;
-      ctx.fill();
-
-      ctx.restore();
-
-      // Update live coordinates readout
-      if (coordEl && isHover) {
-        const pitch = ((mouseV - 0.5) * -34).toFixed(1);
-        const yaw = ((mouseU - 0.5) * 58).toFixed(1);
-        coordEl.textContent = `YAW: ${yaw}° | PITCH: ${pitch}° | ALT: ${(droneZ * 0.1).toFixed(1)}m`;
-      }
-
-      requestAnimationFrame(renderPortal);
-    }
-    renderPortal();
-  }
 
   /* ─────────────────────────────────────────────────────────────────────────────
      FEATURE 3: VECTOR-CORROSION & CSS MELTING SHADERS
@@ -961,9 +770,8 @@
     initPhase3IridescentNatureMesh();
     initPhase4KineticTypography();
 
-    // The 4 Advanced Non-Hero Systems
+    // Advanced Non-Hero Systems
     initCrossWindowPhysics();
-    initNonEuclideanPortal();
     initLiquidMercuryMelting();
     initGravitationalInertia();
   }
