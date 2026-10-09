@@ -519,10 +519,10 @@
       <!-- Song Chord Analyzer -->
       <div class="project-card prism-card reveal reveal-d4">
         <div class="prism-card-inner">
-          <p class="project-type">AI · MIR · Desktop App · Electron · PyTorch</p>
+          <p class="project-type">AI · MIR · Desktop App · Electron · PyTorch · Collab w/ @jerinjomy07</p>
           <h3 class="project-title chroma-text">Song Chord Analyzer — AI Music Transcription Desktop</h3>
           <p class="project-desc">
-            Drag-and-drop desktop app that runs full MIR pipeline locally: Demucs v4 stem separation → BTC Transformer chord recognition (170-chord vocab) → beat alignment → interactive musician chord chart, with PDF/TXT/JSON export.
+            Drag-and-drop desktop app that runs full MIR pipeline locally: Demucs v4 stem separation → BTC Transformer chord recognition (170-chord vocab) → beat alignment → interactive musician chord chart, with PDF/TXT/JSON export. Built in collaboration with <a href="https://github.com/jerinjomy07" target="_blank" style="color:var(--nature);text-decoration:underline;text-underline-offset:2px;">@jerinjomy07</a>.
           </p>
           <div class="project-footer">
             <div class="project-tags">
@@ -532,7 +532,8 @@
               <span class="ptag">CUDA</span>
             </div>
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
-              <a href="https://github.com/jvstin47/Song-Chord-Analyzer--Mac" target="_blank" class="project-link" style="color:var(--nature);">GitHub Repo ↗</a>
+              <a href="https://github.com/jvstin47/Song-Chord-Analyzer--Mac" target="_blank" class="project-link" style="color:var(--nature);">macOS Repo ↗</a>
+              <a href="https://github.com/jerinjomy07/Song-Chord-Analyzer" target="_blank" class="project-link" style="color:var(--sub);">Jerin's Repo ↗</a>
               <a href="projects.html#p7" class="project-link">Case study →</a>
             </div>
           </div>
@@ -1669,17 +1670,20 @@ A digital biographical monograph chronicling the life, military leadership, and 
     '~/projects/captain-lakshmi/live_demo.url': 'https://capt-lakshmi.vercel.app',
 
     /* 05. CHORD-ANALYZER */
-    '~/projects/chord-analyzer/README.md': `# Song Chord Analyzer — macOS
+    '~/projects/chord-analyzer/README.md': `# Song Chord Analyzer — macOS & Windows
 
 **Music Information Retrieval (MIR)** · Demucs v4 Separation · BTC Transformer
 
 ## Executive Overview
-An AI music transcription desktop application engineered for professional arrangers and musicians. Ingests raw polyphonic audio (MP3, WAV, FLAC), isolates acoustic instruments using Meta's Demucs v4 neural stem separator, and identifies complex harmonic sequences across 170 chord classifications via Bidirectional Transformer CRNNs.
+An AI music transcription desktop application engineered for professional arrangers and musicians. Ingests raw polyphonic audio (MP3, WAV, FLAC), isolates acoustic instruments using Meta's Demucs v4 neural stem separator, and identifies complex harmonic sequences across 170 chord classifications via Bidirectional Transformer CRNNs. Built in collaboration with Jerin Jomy (@jerinjomy07).
+
+## Collaboration & Repositories
+- macOS Client: https://github.com/jvstin47/Song-Chord-Analyzer--Mac (Justin)
+- Windows / Core MIR Repo: https://github.com/jerinjomy07/Song-Chord-Analyzer (Jerin Jomy)
 
 ## Highlights
 - 4-stem GPU-accelerated audio stem extraction.
-- Automatic key detection, BPM tap tempo inference, and chord sheet PDF export.
-- GitHub: https://github.com/jvstin47/Song-Chord-Analyzer--Mac`,
+- Automatic key detection, BPM tap tempo inference, and chord sheet PDF export.`,
     '~/projects/chord-analyzer/demucs_pipeline.py': `import torch
 
 class StemSeparator:

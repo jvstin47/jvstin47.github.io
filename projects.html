@@ -597,7 +597,8 @@
         </div>
         <div class="proj-meta">
           <span class="proj-year">Distributed Application</span>
-          <span class="proj-badge"><span class="proj-badge-dot"></span>Windows App</span>
+          <span class="proj-badge"><span class="proj-badge-dot"></span>Windows &amp; macOS Desktop</span>
+          <span class="proj-badge" style="background:rgba(45,212,191,0.12);color:var(--cyan);border:1px solid rgba(45,212,191,0.25);">Co-engineered w/ @jerinjomy07</span>
         </div>
       </div>
 
@@ -623,8 +624,8 @@
             <p class="field-body">Full local-first pipeline: Demucs v4 GPU stem separation (vocals/bass/drums/guitar/piano) → Bass-stem inversion detection (30–350 Hz sub-bass analysis for slash chords) → BTC chord recognition on 4 parallel harmonic channels → Beat &amp; bar alignment → Musical section clustering. All within one VRAM-managed CUDA pass.</p>
           </div>
           <div class="field">
-            <span class="field-label">Architecture &amp; Stack</span>
-            <p class="field-body">Electron desktop shell wrapping a FastAPI backend and a React frontend. Python ML pipeline with PyTorch BTC model and Demucs v4 — packaged as a standalone Windows installer with bundled FFmpeg and auto-detected NVIDIA CUDA acceleration (graceful CPU fallback).</p>
+            <span class="field-label">Architecture &amp; Collaboration</span>
+            <p class="field-body">Engineered in collaboration with <a href="https://github.com/jerinjomy07" target="_blank" style="color:var(--nature);text-decoration:underline;">Jerin Jomy (@jerinjomy07)</a>. Jerin led the original core Windows application architecture, FastAPI orchestration, and PyTorch ML bundling (<a href="https://github.com/jerinjomy07/Song-Chord-Analyzer" target="_blank" style="color:var(--nature);text-decoration:underline;">jerinjomy07/Song-Chord-Analyzer</a>). I developed the native macOS port, Apple Silicon / MPS hardware acceleration bridges, and cross-platform packaging.</p>
             <div class="tags">
               <span class="tag">Python</span>
               <span class="tag">PyTorch</span>
@@ -632,7 +633,7 @@
               <span class="tag">FastAPI</span>
               <span class="tag">Demucs v4</span>
               <span class="tag">BTC Transformer</span>
-              <span class="tag">CUDA</span>
+              <span class="tag">CUDA / MPS</span>
             </div>
           </div>
         </div>
@@ -650,8 +651,12 @@
       </div>
 
       <div class="proj-footer">
-        <span class="repo-label">Source code &amp; documentation</span>
-        <a href="https://github.com/jvstin47/Song-Chord-Analyzer--Mac" target="_blank" class="repo-link">View Repository <span class="arr">↗</span></a>
+        <span class="repo-label">Source code &amp; repositories · Co-authored with Jerin Jomy</span>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <a href="https://github.com/jvstin47/Song-Chord-Analyzer--Mac" target="_blank" class="repo-link" style="color:var(--nature);">macOS Repository (Justin) <span class="arr">↗</span></a>
+          <a href="https://github.com/jerinjomy07/Song-Chord-Analyzer" target="_blank" class="repo-link">Windows / Core Repo (Jerin Jomy) <span class="arr">↗</span></a>
+          <a href="https://github.com/jerinjomy07" target="_blank" class="repo-link" style="color:var(--sub);">@jerinjomy07 Profile <span class="arr">↗</span></a>
+        </div>
       </div>
     </section>
 
