@@ -703,6 +703,145 @@
       </div>
     </div>
 
+    <!-- Interactive 3D Credentials Vault (From Uiverse.io by byllzz) -->
+    <div class="credentials-vault-card reveal reveal-d2">
+      <div class="vault-info">
+        <div class="vault-badge">
+          <span class="vault-live-dot"></span>
+          <span>Verified Podium Vault</span>
+        </div>
+        <h3 class="vault-title">Tactile Credentials <em>Deck</em></h3>
+        <p class="vault-desc">
+          Interactive physical wallet holding cryptographic podium cards from national hackathons and competitions. Hover the wallet to reveal verification status, hover any card to inspect problem statement details, and click to view the official credential certificate.
+        </p>
+        <div class="vault-actions-hint">
+          <span class="vault-hint-chip">Hover pocket to unlock</span>
+          <span class="vault-hint-chip">Hover card to expand</span>
+          <span class="vault-hint-chip">Click card to verify cert</span>
+        </div>
+      </div>
+
+      <div class="vault-interactive-zone">
+        <div class="vault-wallet">
+          <div class="vault-wallet-back"></div>
+
+          <!-- Card 1: SIH 2026 -->
+          <div class="vault-card card-sih" onclick="openCert('images/certificates/sih-2026.jpg', 'Smart India Hackathon 2026 — National Shortlist Appreciation')" title="Click to verify SIH 2026 Certificate">
+            <div class="vault-card-inner">
+              <div class="vault-card-top">
+                <span>SIH 2026</span>
+                <div class="vault-chip"></div>
+              </div>
+              <div class="vault-card-bottom">
+                <div class="vault-card-info">
+                  <span class="vault-label">Track / Problem Statement</span>
+                  <span class="vault-value">PS SIH26169 · CAMERA POSE</span>
+                </div>
+                <div class="vault-card-number-wrapper">
+                  <span class="vault-hidden-stars">**** 26169</span>
+                  <span class="vault-card-number">NATIONAL SHORTLIST</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: ACM Vibefest 2026 -->
+          <div class="vault-card card-vibefest" onclick="openCert('images/certificates/vibefest-2026.jpg', 'ACM Vibefest 2026 — 1st Place Certificate of Achievement')" title="Click to verify ACM Vibefest Certificate">
+            <div class="vault-card-inner">
+              <div class="vault-card-top">
+                <span>ACM-W Chapter</span>
+                <div class="vault-chip"></div>
+              </div>
+              <div class="vault-card-bottom">
+                <div class="vault-card-info">
+                  <span class="vault-label">Competitive Podium</span>
+                  <span class="vault-value">VIBEFEST 2026 · 24H HACK</span>
+                </div>
+                <div class="vault-card-number-wrapper">
+                  <span class="vault-hidden-stars">**** 2026</span>
+                  <span class="vault-card-number">🥇 1ST PLACE CHAMPION</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Idea From Industry S2 -->
+          <div class="vault-card card-birac" onclick="openCert('images/certificates/idea-industry-2026.jpg', 'Idea From Industry Season 2 — Winner Certificate of Achievement')" title="Click to verify BIRAC / IEDC Certificate">
+            <div class="vault-card-inner">
+              <div class="vault-card-top">
+                <span>BIRAC · MoE</span>
+                <div class="vault-chip"></div>
+              </div>
+              <div class="vault-card-bottom">
+                <div class="vault-card-info">
+                  <span class="vault-label">Innovation Challenge</span>
+                  <span class="vault-value">MAKERHUB IEDC · SEASON 2</span>
+                </div>
+                <div class="vault-card-number-wrapper">
+                  <span class="vault-hidden-stars">**** S2</span>
+                  <span class="vault-card-number">🏆 PHASE 1 WINNER</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pocket -->
+          <div class="vault-pocket">
+            <svg class="vault-pocket-svg" viewBox="0 0 280 160" fill="none">
+              <path
+                d="M 0 20 C 0 10, 5 10, 10 10 C 20 10, 25 25, 40 25 L 240 25 C 255 25, 260 10, 270 10 C 275 10, 280 10, 280 20 L 280 120 C 280 155, 260 160, 240 160 L 40 160 C 20 160, 0 155, 0 120 Z"
+                class="vault-pocket-bg"
+              ></path>
+              <path
+                d="M 8 22 C 8 16, 12 16, 15 16 C 23 16, 27 29, 40 29 L 240 29 C 253 29, 257 16, 265 16 C 268 16, 272 16, 272 22 L 272 120 C 272 150, 255 152, 240 152 L 40 152 C 25 152, 8 152, 8 120 Z"
+                class="vault-pocket-stitch"
+                stroke-width="1.5"
+                stroke-dasharray="6 4"
+              ></path>
+            </svg>
+            <div class="vault-pocket-content">
+              <div style="position: relative; height: 24px; width: 100%;">
+                <div class="vault-balance-stars">******</div>
+                <div class="vault-balance-real">3 PODIUMS</div>
+              </div>
+              <div class="vault-pocket-sub">
+                COMPETITIVE VAULT
+              </div>
+              <div class="vault-eye-icon-wrapper">
+                <svg
+                  class="vault-eye-icon vault-eye-slash"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <line x1="3" y1="3" x2="21" y2="21"></line>
+                </svg>
+                <svg
+                  class="vault-eye-icon vault-eye-open"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Achievements Grid -->
     <div class="achieve-grid">
       <!-- 1. ACM Vibefest 2026 -->
