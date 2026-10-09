@@ -333,6 +333,47 @@
           <p class="project-desc">
             DGCA-compliant autonomous Micro-UAV engineered for disaster zones suffering total communication blackout and zero optical visibility. Fuses on-device Qualcomm Robotics RB5 compute with ThermalNet YOLOv8 human detection at &lt;20ms inference latency, 5km off-grid LoRa 915 MHz peer-to-peer mesh telemetry without cellular towers or satellite links, and an open ground control cockpit to locate trapped survivors within the critical 72-hour golden window.
           </p>
+
+          <!-- Tactile 3D Gyroscopic Gimbal Telemetry HUD -->
+          <div class="drone-avionics-telemetry">
+            <div class="telemetry-info">
+              <div class="telemetry-header">
+                <span class="telemetry-dot"></span>
+                <span class="telemetry-title">QUALCOMM RB5 FLIGHT GIMBAL HUD</span>
+              </div>
+              <p class="telemetry-desc">
+                Interactive 3D gyroscopic orientation reticle. Hover to articulate gimbal pitch &amp; yaw kinematics; click to cycle telemetry channels.
+              </p>
+              <div class="telemetry-stats">
+                <div class="tel-stat"><span class="tel-label">Gimbal Axis</span><span class="tel-val">3-Axis Brushless</span></div>
+                <div class="tel-stat"><span class="tel-label">Angular Jitter</span><span class="tel-val">&lt; ±0.02°</span></div>
+                <div class="tel-stat"><span class="tel-label">Target Lock</span><span class="tel-val">ThermalNet YOLO</span></div>
+              </div>
+            </div>
+            <div class="hero-interactive-reticle drone-reticle-widget" id="drone-reticle" title="Click to cycle sensor channels · Move cursor to tilt gimbal">
+              <div class="reticle-outer-ring">
+                <span class="reticle-tick t-0">0°</span>
+                <span class="reticle-tick t-90">90°</span>
+                <span class="reticle-tick t-180">180°</span>
+                <span class="reticle-tick t-270">270°</span>
+              </div>
+              <div class="reticle-gimbal" id="reticle-gimbal">
+                <div class="reticle-crosshair ch-x"></div>
+                <div class="reticle-crosshair ch-y"></div>
+                <div class="reticle-compass-needle" id="reticle-needle"></div>
+                <div class="reticle-center-core"></div>
+                <div class="reticle-pulse-ring"></div>
+              </div>
+              <div class="reticle-readout">
+                <div class="reticle-readout-line">
+                  <span class="reticle-status-dot"></span>
+                  <span id="reticle-mode">AUTONOMOUS SAR GIMBAL</span>
+                </div>
+                <div class="reticle-coords" id="reticle-coords">PITCH: 0.0° · YAW: 0.0°</div>
+              </div>
+            </div>
+          </div>
+
           <div class="project-footer">
             <div class="project-tags">
               <span class="ptag liquid-melt-target">Qualcomm RB5 NPU</span>

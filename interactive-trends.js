@@ -1256,6 +1256,151 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
+     FEATURE 6: 3D GYROSCOPIC GIMBAL & AVIONICS TELEMETRY RETICLE
+     Target Placement: Phoenix X Autonomous SAR Micro-UAV Hardware Card (.drone-avionics-telemetry)
+     Features: 3D perspective gimbal tilt, magnetic needle heading, live pitch/yaw telemetry,
+               multi-mode sensor channel cycling (SAR, ThermalNet, LiDAR, Kalman, LoRa).
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initGyroscopicReticle() {
+    const reticles = document.querySelectorAll('.drone-reticle-widget');
+    if (!reticles.length) return;
+
+    const TELEMETRY_MODES = [
+      { name: 'AUTONOMOUS SAR GIMBAL', label: 'AUTONOMOUS SAR' },
+      { name: 'THERMALNET TARGET LOCK', label: 'TARGET LOCKED (98.4%)' },
+      { name: 'LIDAR KINEMATICS SCAN', label: '3D SLAM MAPPING' },
+      { name: 'RB5 KALMAN ATTITUDE FILTER', label: '6-DoF FUSION' },
+      { name: 'RF LORA MESH TRACKING', label: '915 MHz P2P MESH' }
+    ];
+
+    reticles.forEach((reticle) => {
+      const container = reticle.closest('.drone-avionics-telemetry') || reticle.parentElement;
+      const gimbal = reticle.querySelector('.reticle-gimbal');
+      const needle = reticle.querySelector('.reticle-compass-needle');
+      const modeText = reticle.querySelector('#reticle-mode') || reticle.querySelector('.reticle-readout-line span:last-child');
+      const coordsText = reticle.querySelector('#reticle-coords') || reticle.querySelector('.reticle-coords');
+      const modeVal = container ? container.querySelector('#tel-mode-val') : null;
+      const pitchYawVal = container ? container.querySelector('#tel-pitch-yaw') : null;
+
+      let currentModeIndex = 0;
+      let isInteracting = false;
+      let targetPitch = 0;
+      let targetYaw = 0;
+      let currentPitch = 0;
+      let currentYaw = 0;
+      let targetNeedleAngle = 0;
+      let currentNeedleAngle = 0;
+      let animFrameId = null;
+
+      function updateGimbalPhysics() {
+        currentPitch += (targetPitch - currentPitch) * 0.15;
+        currentYaw += (targetYaw - currentYaw) * 0.15;
+        currentNeedleAngle += (targetNeedleAngle - currentNeedleAngle) * 0.16;
+
+        if (gimbal) {
+          gimbal.style.transform = `perspective(360px) rotateX(${currentPitch.toFixed(2)}deg) rotateY(${currentYaw.toFixed(2)}deg)`;
+        }
+
+        if (needle) {
+          needle.style.transform = `rotate(${currentNeedleAngle.toFixed(1)}deg)`;
+        }
+
+        const pitchStr = (currentPitch >= 0 ? '+' : '') + currentPitch.toFixed(1) + '°';
+        const yawStr = (currentYaw >= 0 ? '+' : '') + currentYaw.toFixed(1) + '°';
+
+        if (coordsText) {
+          coordsText.textContent = `PITCH: ${pitchStr} · YAW: ${yawStr}`;
+        }
+        if (pitchYawVal) {
+          pitchYawVal.textContent = `${pitchStr} / ${yawStr}`;
+        }
+
+        if (isInteracting || Math.abs(currentPitch) > 0.05 || Math.abs(currentYaw) > 0.05) {
+          animFrameId = requestAnimationFrame(updateGimbalPhysics);
+        } else {
+          currentPitch = 0;
+          currentYaw = 0;
+          if (gimbal) gimbal.style.transform = 'perspective(360px) rotateX(0deg) rotateY(0deg)';
+          if (coordsText) coordsText.textContent = 'PITCH: 0.0° · YAW: 0.0°';
+          if (pitchYawVal) pitchYawVal.textContent = '0.0° / 0.0°';
+          animFrameId = null;
+        }
+      }
+
+      function handleMove(e) {
+        const rect = reticle.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        const radius = rect.width / 2;
+
+        const normX = Math.max(-1, Math.min(1, dx / radius));
+        const normY = Math.max(-1, Math.min(1, dy / radius));
+
+        targetPitch = -normY * 26;
+        targetYaw = normX * 32;
+
+        const rad = Math.atan2(dy, dx);
+        targetNeedleAngle = rad * (180 / Math.PI) + 90;
+
+        isInteracting = true;
+        if (!animFrameId) {
+          animFrameId = requestAnimationFrame(updateGimbalPhysics);
+        }
+      }
+
+      reticle.addEventListener('mousemove', handleMove, { passive: true });
+      if (container && container !== reticle) {
+        container.addEventListener('mousemove', (e) => {
+          const rRect = reticle.getBoundingClientRect();
+          const distToReticle = Math.hypot(e.clientX - (rRect.left + rRect.width / 2), e.clientY - (rRect.top + rRect.height / 2));
+          if (distToReticle < 300) {
+            handleMove(e);
+          }
+        }, { passive: true });
+      }
+
+      reticle.addEventListener('mouseleave', () => {
+        targetPitch = 0;
+        targetYaw = 0;
+        targetNeedleAngle = 0;
+        isInteracting = false;
+        if (!animFrameId) {
+          animFrameId = requestAnimationFrame(updateGimbalPhysics);
+        }
+      });
+
+      if (container && container !== reticle) {
+        container.addEventListener('mouseleave', () => {
+          targetPitch = 0;
+          targetYaw = 0;
+          targetNeedleAngle = 0;
+          isInteracting = false;
+          if (!animFrameId) {
+            animFrameId = requestAnimationFrame(updateGimbalPhysics);
+          }
+        });
+      }
+
+      // Click to cycle telemetry channels
+      reticle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentModeIndex = (currentModeIndex + 1) % TELEMETRY_MODES.length;
+        const mode = TELEMETRY_MODES[currentModeIndex];
+
+        if (modeText) modeText.textContent = mode.name;
+        if (modeVal) modeVal.textContent = mode.label;
+
+        reticle.style.transform = 'scale(0.94)';
+        setTimeout(() => {
+          reticle.style.transform = '';
+        }, 110);
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
      ORCHESTRATION OF ALL SYSTEMS
   ───────────────────────────────────────────────────────────────────────────── */
   function initAllPhases() {
@@ -1269,6 +1414,7 @@
     initLiquidMercuryMelting();
     initGravitationalInertia();
     initHeroLightInteractive();
+    initGyroscopicReticle();
   }
 
   if (document.readyState === 'loading') {
