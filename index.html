@@ -85,27 +85,146 @@
         </div>
       </div>
 
-      <!-- Fancy & Distinct Interactive Systems Gyro-Reticle Widget -->
-      <div class="hero-interactive-reticle anim anim-4" id="hero-reticle" title="Interactive Systems Gyroscope (Move cursor to tilt gimbal, click to cycle modes)">
-        <div class="reticle-outer-ring">
-          <span class="reticle-tick t-0">0°</span>
-          <span class="reticle-tick t-90">90°</span>
-          <span class="reticle-tick t-180">180°</span>
-          <span class="reticle-tick t-270">270°</span>
-        </div>
-        <div class="reticle-gimbal" id="reticle-gimbal">
-          <div class="reticle-crosshair ch-x"></div>
-          <div class="reticle-crosshair ch-y"></div>
-          <div class="reticle-compass-needle" id="reticle-needle"></div>
-          <div class="reticle-center-core"></div>
-          <div class="reticle-pulse-ring"></div>
-        </div>
-        <div class="reticle-readout">
-          <div class="reticle-readout-line">
-            <span class="reticle-status-dot"></span>
-            <span id="reticle-mode">SYSTEMS 3D VECTOR</span>
+      <!-- Interactive Engineering Systems Showcase Deck -->
+      <div class="hero-systems-deck anim anim-4" id="hero-systems-deck">
+        <div class="deck-header">
+          <div class="deck-header-left">
+            <span class="deck-beacon"></span>
+            <span class="deck-title">CORE DISCIPLINES</span>
           </div>
-          <div class="reticle-coords" id="reticle-coords">PITCH: 0.0° · YAW: 0.0°</div>
+          <div class="deck-header-right">
+            <span class="deck-status-chip">INTERACTIVE</span>
+          </div>
+        </div>
+
+        <!-- Discipline Tabs -->
+        <div class="deck-tabs" role="tablist" aria-label="Engineering Disciplines">
+          <button class="deck-tab active" data-tab="sim" role="tab" aria-selected="true">
+            <span class="deck-tab-index">01</span>
+            <span class="deck-tab-name">Simulations</span>
+          </button>
+          <button class="deck-tab" data-tab="ai" role="tab" aria-selected="false">
+            <span class="deck-tab-index">02</span>
+            <span class="deck-tab-name">Edge AI</span>
+          </button>
+          <button class="deck-tab" data-tab="sys" role="tab" aria-selected="false">
+            <span class="deck-tab-index">03</span>
+            <span class="deck-tab-name">Full-Stack</span>
+          </button>
+        </div>
+
+        <!-- Tab 1: Monte Carlo Simulation -->
+        <div class="deck-panel active" id="deck-panel-sim" role="tabpanel">
+          <div class="deck-project-meta">
+            <span class="deck-project-badge">SIMULATION ENGINE</span>
+            <span class="deck-project-metric">&lt; 1.2s / 10k RUNS</span>
+          </div>
+          <h3 class="deck-project-title">Vectorized Monte Carlo F1 Strategy Engine</h3>
+          <p class="deck-project-desc">
+            High-throughput probabilistic modeling engine simulating pit strategies, tire degradation curves, and safety-car stochastic events across 10,000 parallel iterations.
+          </p>
+          <div class="deck-live-control">
+            <div class="deck-control-header">
+              <span class="deck-control-label">Monte Carlo Iterations</span>
+              <span class="deck-control-val" id="mc-slider-val">10,000 runs</span>
+            </div>
+            <input type="range" class="deck-slider" id="mc-iter-slider" min="1000" max="50000" step="1000" value="10000" aria-label="Monte Carlo iterations">
+            <div class="deck-control-metrics">
+              <span>Latency: <strong id="mc-calc-time">14.2ms</strong></span>
+              <span>Memory: <strong id="mc-calc-mem">4.8 MB</strong></span>
+              <span>Convergence: <strong id="mc-calc-acc">99.8%</strong></span>
+            </div>
+          </div>
+          <div class="deck-tags">
+            <span class="deck-tag">Python</span>
+            <span class="deck-tag">NumPy Vectorization</span>
+            <span class="deck-tag">SIMD / AVX2</span>
+            <span class="deck-tag">Stochastic Models</span>
+          </div>
+          <a href="#p1" class="deck-link">
+            <span>View F1 Simulation Architecture</span>
+            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Tab 2: Edge AI & Robotics -->
+        <div class="deck-panel" id="deck-panel-ai" role="tabpanel" style="display:none;">
+          <div class="deck-project-meta">
+            <span class="deck-project-badge">ROBOTICS &amp; EMBEDDED</span>
+            <span class="deck-project-metric">&lt; 20ms INFERENCE</span>
+          </div>
+          <h3 class="deck-project-title">Autonomous Search &amp; Rescue Drone</h3>
+          <p class="deck-project-desc">
+            Embedded Edge SLM navigation system built for Qualcomm RB5. Executes real-time vision-language target localization and autonomous obstacle avoidance in GPS-denied environments.
+          </p>
+          <div class="deck-spec-grid">
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">Hardware Compute</span>
+              <span class="deck-spec-val">Qualcomm RB5 + SNPE</span>
+            </div>
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">Inference Budget</span>
+              <span class="deck-spec-val">&lt; 20ms per frame</span>
+            </div>
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">Framework</span>
+              <span class="deck-spec-val">ROS 2 Humble / PyTorch</span>
+            </div>
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">Environment</span>
+              <span class="deck-spec-val">GPS-Denied SAR</span>
+            </div>
+          </div>
+          <div class="deck-tags">
+            <span class="deck-tag">Qualcomm RB5</span>
+            <span class="deck-tag">ROS 2</span>
+            <span class="deck-tag">PyTorch</span>
+            <span class="deck-tag">Edge SLM</span>
+          </div>
+          <a href="#p8" class="deck-link">
+            <span>View SAR Drone Architecture</span>
+            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+          </a>
+        </div>
+
+        <!-- Tab 3: Full-Stack Platforms -->
+        <div class="deck-panel" id="deck-panel-sys" role="tabpanel" style="display:none;">
+          <div class="deck-project-meta">
+            <span class="deck-project-badge">FULL-STACK PLATFORM</span>
+            <span class="deck-project-metric">60 FPS · 0-DRIFT</span>
+          </div>
+          <h3 class="deck-project-title">High-Concurrency Reactive Systems</h3>
+          <p class="deck-project-desc">
+            Production full-stack platforms with offline-first synchronization, resilient real-time state machines, and tactile web interfaces with micro-second event loops.
+          </p>
+          <div class="deck-spec-grid">
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">State Architecture</span>
+              <span class="deck-spec-val">Deterministic Event-Sourced</span>
+            </div>
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">Network Protocol</span>
+              <span class="deck-spec-val">WebSockets + Fallbacks</span>
+            </div>
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">Mobile Layer</span>
+              <span class="deck-spec-val">Android Room + Coroutines</span>
+            </div>
+            <div class="deck-spec-item">
+              <span class="deck-spec-key">UI Responsiveness</span>
+              <span class="deck-spec-val">Hardware-Accelerated 60fps</span>
+            </div>
+          </div>
+          <div class="deck-tags">
+            <span class="deck-tag">TypeScript</span>
+            <span class="deck-tag">Node.js</span>
+            <span class="deck-tag">Kotlin / Android</span>
+            <span class="deck-tag">WebSockets</span>
+          </div>
+          <a href="projects.html" class="deck-link">
+            <span>Browse All 8 Full-Stack Projects</span>
+            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+          </a>
         </div>
       </div>
     </div>

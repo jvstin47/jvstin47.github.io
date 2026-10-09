@@ -764,7 +764,7 @@
   /* ─────────────────────────────────────────────────────────────────────────────
      FEATURE 5: HERO LIGHT-MODE INTERACTIVE SYSTEMS
      1. Computational Topography Vector Isolines Canvas (#hero-light-contour)
-     2. Tactile 3D Gyroscopic Systems Reticle (#hero-reticle)
+     2. Interactive Engineering Systems Showcase Deck (#hero-systems-deck)
   ───────────────────────────────────────────────────────────────────────────── */
   function initHeroLightInteractive() {
     // 1. TOPOGRAPHICAL CONTOUR ISOLINES CANVAS
@@ -884,80 +884,61 @@
       renderContours();
     }
 
-    // 2. TACTILE 3D GYROSCOPIC SYSTEMS RETICLE
-    const reticle = document.getElementById('hero-reticle');
-    const gimbal = document.getElementById('reticle-gimbal');
-    const needle = document.getElementById('reticle-needle');
-    const coordsEl = document.getElementById('reticle-coords');
-    const modeEl = document.getElementById('reticle-mode');
+    // 2. INTERACTIVE ENGINEERING SYSTEMS SHOWCASE DECK
+    const deck = document.getElementById('hero-systems-deck');
+    if (deck) {
+      const tabs = deck.querySelectorAll('.deck-tab');
+      const panels = deck.querySelectorAll('.deck-panel');
 
-    if (reticle && gimbal) {
-      let curTiltX = 0, curTiltY = 0;
-      let targetTiltX = 0, targetTiltY = 0;
-      let targetNeedleAngle = 0;
-      let curNeedleAngle = 0;
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const targetId = tab.dataset.tab;
+          tabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
 
-      const modes = [
-        'SYSTEMS 3D VECTOR',
-        'AUTONOMOUS SAR GIMBAL',
-        'MONTE CARLO FIELD'
-      ];
-      let modeIdx = 0;
+          panels.forEach(p => {
+            if (p.id === `deck-panel-${targetId}`) {
+              p.classList.add('active');
+              p.style.display = 'flex';
+            } else {
+              p.classList.remove('active');
+              p.style.display = 'none';
+            }
+          });
 
-      window.addEventListener('mousemove', (e) => {
-        const rect = reticle.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const dx = e.clientX - centerX;
-        const dy = e.clientY - centerY;
-        const dist = Math.hypot(dx, dy);
-
-        // Tilt gimbal towards mouse
-        const clamp = Math.min(dist / 350, 1.0);
-        targetTiltX = (dy / 350) * -26 * clamp;
-        targetTiltY = (dx / 350) * 26 * clamp;
-
-        // Needle orientation angle
-        targetNeedleAngle = Math.atan2(dy, dx) + Math.PI / 2;
-      }, { passive: true });
-
-      reticle.addEventListener('mouseleave', () => {
-        targetTiltX = 0;
-        targetTiltY = 0;
+          // Subtle tactile pop on tab switch
+          deck.style.transform = 'scale(0.99)';
+          setTimeout(() => { deck.style.transform = ''; }, 120);
+        });
       });
 
-      reticle.addEventListener('click', () => {
-        modeIdx = (modeIdx + 1) % modes.length;
-        if (modeEl) modeEl.textContent = modes[modeIdx];
-        
-        // Haptic expansion pulse
-        reticle.style.transform = 'scale(0.96)';
-        setTimeout(() => { reticle.style.transform = ''; }, 140);
-      });
+      // Interactive Monte Carlo Simulation Iterations Scrubber
+      const slider = document.getElementById('mc-iter-slider');
+      const valEl = document.getElementById('mc-slider-val');
+      const timeEl = document.getElementById('mc-calc-time');
+      const memEl = document.getElementById('mc-calc-mem');
+      const accEl = document.getElementById('mc-calc-acc');
 
-      function updateReticlePhysics() {
-        curTiltX += (targetTiltX - curTiltX) * 0.16;
-        curTiltY += (targetTiltY - curTiltY) * 0.16;
+      if (slider && valEl) {
+        slider.addEventListener('input', (e) => {
+          const runs = parseInt(e.target.value, 10);
+          valEl.textContent = `${runs.toLocaleString()} runs`;
 
-        // Angular interpolation
-        let diff = targetNeedleAngle - curNeedleAngle;
-        while (diff < -Math.PI) diff += Math.PI * 2;
-        while (diff > Math.PI) diff -= Math.PI * 2;
-        curNeedleAngle += diff * 0.14;
+          // Realistic vectorized scaling curves
+          const latencyMs = (runs * 0.00142).toFixed(1);
+          const memoryMb = (runs * 0.00048).toFixed(1);
+          // Convergence asymptotically approaching 99.9%
+          const convergence = (99.0 + (1 - 1000 / runs) * 0.95).toFixed(2);
 
-        gimbal.style.transform = `perspective(450px) rotateX(${curTiltX.toFixed(2)}deg) rotateY(${curTiltY.toFixed(2)}deg)`;
-        if (needle) {
-          needle.style.transform = `rotate(${curNeedleAngle.toFixed(3)}rad)`;
-        }
-
-        if (coordsEl) {
-          coordsEl.textContent = `PITCH: ${curTiltX.toFixed(1)}° · YAW: ${curTiltY.toFixed(1)}°`;
-        }
-
-        requestAnimationFrame(updateReticlePhysics);
+          if (timeEl) timeEl.textContent = `${latencyMs}ms`;
+          if (memEl) memEl.textContent = `${memoryMb} MB`;
+          if (accEl) accEl.textContent = `${convergence}%`;
+        });
       }
-      updateReticlePhysics();
     }
   }
 
