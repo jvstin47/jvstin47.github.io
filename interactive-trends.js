@@ -941,22 +941,21 @@
       }
     }
 
-    // 3. INTERACTIVE LIQUID MERCURY FLUID DYNAMICS (Light Mode)
+    // 3. INTERACTIVE LIQUID MERCURY FLUID DYNAMICS (Light Mode - Full Page Tracking)
     function initHeroLiquidMercury() {
       const mercCanvas = document.getElementById('hero-mercury-canvas');
-      const heroSection = document.getElementById('hero');
-      if (!mercCanvas || !heroSection) return;
+      if (!mercCanvas) return;
 
       const ctx = mercCanvas.getContext('2d');
       if (!ctx) return;
 
-      let width = 0, height = 0;
+      let width = window.innerWidth;
+      let height = window.innerHeight;
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
       function resize() {
-        const rect = heroSection.getBoundingClientRect();
-        width = rect.width;
-        height = rect.height;
+        width = window.innerWidth;
+        height = window.innerHeight;
         mercCanvas.width = width * dpr;
         mercCanvas.height = height * dpr;
         mercCanvas.style.width = width + 'px';
@@ -967,19 +966,18 @@
       resize();
 
       let mouse = {
-        x: width * 0.48,
-        y: height * 0.38,
-        targetX: width * 0.48,
-        targetY: height * 0.38,
+        x: width * 0.5,
+        y: height * 0.4,
+        targetX: width * 0.5,
+        targetY: height * 0.4,
         isInside: false,
         vx: 0,
         vy: 0
       };
 
-      heroSection.addEventListener('mousemove', (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
+      window.addEventListener('mousemove', (e) => {
+        const mx = e.clientX;
+        const my = e.clientY;
         mouse.vx = mx - mouse.targetX;
         mouse.vy = my - mouse.targetY;
         mouse.targetX = mx;
@@ -987,10 +985,10 @@
         mouse.isInside = true;
       }, { passive: true });
 
-      heroSection.addEventListener('mouseleave', () => {
+      document.addEventListener('mouseleave', () => {
         mouse.isInside = false;
-        mouse.targetX = width * 0.48;
-        mouse.targetY = height * 0.38;
+        mouse.targetX = window.innerWidth * 0.5;
+        mouse.targetY = window.innerHeight * 0.4;
       });
 
       // Liquid Mercury Beads
@@ -1043,11 +1041,10 @@
         });
       }
 
-      // Click: Splatter & Shatter outward
-      heroSection.addEventListener('click', (e) => {
-        const rect = heroSection.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
+      // Click: Splatter & Shatter outward anywhere on the page
+      window.addEventListener('click', (e) => {
+        const clickX = e.clientX;
+        const clickY = e.clientY;
 
         beads.forEach(b => {
           const dx = b.x - clickX;
@@ -1150,7 +1147,8 @@
       }
 
       function renderMercuryLoop() {
-        if (!document.body.classList.contains('light')) {
+        const isLight = document.body.classList.contains('light') || document.documentElement.classList.contains('light');
+        if (!isLight) {
           requestAnimationFrame(renderMercuryLoop);
           return;
         }
