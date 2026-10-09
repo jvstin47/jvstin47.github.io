@@ -2877,9 +2877,10 @@ body.light .preloader-skip-hint {
   z-index: 999;
 }
 
-.floating-iso-dock .iso-card {
+.floating-iso-dock .iso-card,
+.floating-iso-dock .card {
   max-width: fit-content;
-  border-radius: 22px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -2887,26 +2888,51 @@ body.light .preloader-skip-hint {
   gap: 0.8rem;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  background: rgba(4, 14, 8, 0.76);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5),
-              inset 0 0 16px rgba(16, 185, 129, 0.08);
+  background: rgba(4, 14, 8, 0.78);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  box-shadow: 
+    inset 0 0 20px rgba(16, 185, 129, 0.12),
+    inset 0 0 5px rgba(255, 255, 255, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.5);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   padding: 8px 4px;
 }
 
-body.light .floating-iso-dock .iso-card {
-  background: rgba(244, 250, 246, 0.92);
+.floating-iso-dock .iso-card:hover,
+.floating-iso-dock .card:hover {
+  background: rgba(6, 20, 12, 0.9);
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 
+    inset 0 0 24px rgba(16, 185, 129, 0.2),
+    inset 0 0 8px rgba(255, 255, 255, 0.22),
+    0 14px 36px rgba(0, 0, 0, 0.65);
+}
+
+body.light .floating-iso-dock .iso-card,
+body.light .floating-iso-dock .card {
+  background: rgba(244, 250, 246, 0.94);
   border: 1.5px solid #8db89b;
-  box-shadow: 0 12px 30px rgba(4, 120, 87, 0.12),
-              inset 0 1px 0 #ffffff;
+  box-shadow: 
+    inset 0 0 20px rgba(4, 120, 87, 0.08),
+    inset 0 0 5px rgba(255, 255, 255, 0.9),
+    0 8px 24px rgba(4, 120, 87, 0.12);
+}
+
+body.light .floating-iso-dock .iso-card:hover,
+body.light .floating-iso-dock .card:hover {
+  background: #ffffff;
+  border-color: #047857;
+  box-shadow: 
+    inset 0 0 20px rgba(4, 120, 87, 0.14),
+    inset 0 0 5px #ffffff,
+    0 12px 28px rgba(4, 120, 87, 0.18);
 }
 
 .floating-iso-dock ul {
-  padding: 0.4rem 0.5rem;
+  padding: 0.5rem 0.6rem;
   display: flex;
   list-style: none;
-  gap: 1.1rem;
+  gap: 1.15rem;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -2924,14 +2950,17 @@ body.light .floating-iso-dock .iso-card {
 .floating-iso-dock .svg {
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   padding: 10px;
-  height: 44px;
-  width: 44px;
+  height: 46px;
+  width: 46px;
   border-radius: 50%;
   color: #34d399;
   fill: currentColor;
-  background: rgba(6, 20, 12, 0.88);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.22), 0 4px 10px rgba(0, 0, 0, 0.4);
+  background: rgba(6, 20, 12, 0.92);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 
+    inset 0 0 16px rgba(16, 185, 129, 0.25),
+    inset 0 0 5px rgba(255, 255, 255, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2942,72 +2971,94 @@ body.light .floating-iso-dock .svg {
   color: #047857;
   background: #ffffff;
   border: 1px solid #8db89b;
-  box-shadow: inset 0 0 8px rgba(4, 120, 87, 0.1), 0 3px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    inset 0 0 12px rgba(4, 120, 87, 0.1),
+    inset 0 0 5px rgba(255, 255, 255, 0.9),
+    0 3px 8px rgba(0, 0, 0, 0.08);
 }
 
 .floating-iso-dock .text {
   opacity: 0;
   pointer-events: none;
   border-radius: 6px;
-  padding: 5px 10px;
+  padding: 5px 11px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   color: #f4fbf6;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.05em;
-  background: rgba(4, 16, 9, 0.94);
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: rgba(4, 16, 9, 0.95);
+  border: 1px solid rgba(16, 185, 129, 0.4);
   position: absolute;
   right: calc(100% + 14px);
   white-space: nowrap;
   z-index: 9999;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(16, 185, 129, 0.15);
-  transform: translateX(10px) skew(4deg);
+  box-shadow: 
+    -4px 0 12px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(16, 185, 129, 0.18);
+  transform: translateX(12px) skew(4deg);
 }
 
 body.light .floating-iso-dock .text {
   color: #041209;
   background: #ffffff;
   border: 1.5px solid #047857;
-  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.15);
+  box-shadow: 
+    -4px 0 12px rgba(4, 120, 87, 0.12),
+    inset 0 0 8px rgba(4, 120, 87, 0.08);
 }
 
-/* Isometric projection hover */
+/* Isometric projection hover physics (Uiverse MijailVillegas) */
 .iso-pro {
-  transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
 }
 
 .iso-pro:hover a > .svg {
-  transform: translate(-6px, -6px);
+  transform: translate(-10px, -10px);
   color: #00ffff;
   border-color: #00ffff;
-  box-shadow: inset 0 0 16px rgba(0, 255, 255, 0.4), 0 8px 18px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    inset 0 0 20px rgba(0, 255, 255, 0.45),
+    inset 0 0 6px rgba(255, 255, 255, 0.6),
+    0 10px 22px rgba(0, 0, 0, 0.55);
 }
 
 body.light .iso-pro:hover a > .svg {
   color: #047857;
   border-color: #047857;
-  box-shadow: inset 0 0 12px rgba(4, 120, 87, 0.2), 0 6px 14px rgba(4, 120, 87, 0.15);
+  box-shadow: 
+    inset 0 0 16px rgba(4, 120, 87, 0.25),
+    inset 0 0 6px #ffffff,
+    0 8px 18px rgba(4, 120, 87, 0.18);
 }
 
 .iso-pro:hover .text {
   opacity: 1;
-  transform: translateX(0) skew(0deg);
+  transform: translateX(0) skew(-4deg);
 }
 
 .iso-pro span {
   opacity: 0;
   position: absolute;
   border-radius: 50%;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  height: 44px;
-  width: 44px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 46px;
+  width: 46px;
   pointer-events: none;
   border: 1px solid #10b981;
+  box-shadow: 
+    inset 0 0 16px rgba(16, 185, 129, 0.35),
+    inset 0 0 5px rgba(255, 255, 255, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.25);
 }
 
 body.light .iso-pro span {
   border-color: #047857;
+  box-shadow: 
+    inset 0 0 12px rgba(4, 120, 87, 0.2),
+    inset 0 0 4px rgba(255, 255, 255, 0.7),
+    0 3px 6px rgba(4, 120, 87, 0.1);
 }
 
 .iso-pro:hover span {
@@ -3016,17 +3067,17 @@ body.light .iso-pro span {
 
 .iso-pro:hover span:nth-child(1) {
   opacity: 0.25;
-  transform: translate(-2px, -2px);
+  transform: translate(-3px, -3px);
 }
 
 .iso-pro:hover span:nth-child(2) {
   opacity: 0.5;
-  transform: translate(-4px, -4px);
+  transform: translate(-6px, -6px);
 }
 
 .iso-pro:hover span:nth-child(3) {
   opacity: 0.75;
-  transform: translate(-6px, -6px);
+  transform: translate(-9px, -9px);
 }
 
 @media (max-width: 900px) {
