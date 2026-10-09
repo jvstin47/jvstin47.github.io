@@ -1401,9 +1401,125 @@
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
+     FUTURISTIC 3D GYROSCOPE PRELOADER (Uiverse.io by Nawsome)
+  ───────────────────────────────────────────────────────────────────────────── */
+  function initSitePreloader() {
+    const preloader = document.getElementById('site-preloader');
+    if (!preloader) return;
+
+    const bar = document.getElementById('preloader-bar');
+    const pct = document.getElementById('preloader-pct');
+    const statusText = document.getElementById('preloader-status-text');
+    const gyro = document.getElementById('preloader-gyro');
+
+    // Interactive 3D tilt tracking for the gyro on pointer move
+    if (gyro) {
+      gyro.addEventListener('mousemove', (e) => {
+        const rect = gyro.getBoundingClientRect();
+        const nx = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+        const ny = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+        gyro.style.transform = `perspective(1000px) rotateX(${-ny * 25}deg) rotateY(${nx * 25}deg) scale(1.05)`;
+      });
+      gyro.addEventListener('mouseleave', () => {
+        gyro.style.transform = '';
+      });
+    }
+
+    let progress = 0;
+    let isDismissed = false;
+
+    function dismissPreloader() {
+      if (isDismissed) return;
+      isDismissed = true;
+      if (bar) bar.style.width = '100%';
+      if (pct) pct.textContent = '100%';
+      if (statusText) statusText.textContent = 'SUBSYSTEMS ONLINE // READY';
+
+      setTimeout(() => {
+        preloader.classList.add('preloader-exit');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 500);
+      }, 150);
+    }
+
+    // Dismiss on click or Escape
+    preloader.addEventListener('click', dismissPreloader);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && preloader.style.display !== 'none') {
+        dismissPreloader();
+      }
+    });
+
+    function runSimulation() {
+      progress = 0;
+      if (bar) bar.style.width = '0%';
+      if (pct) pct.textContent = '0%';
+      const statusSteps = [
+        { at: 15, text: 'QUANTUM BUS ENERGIZED' },
+        { at: 42, text: 'FETCHING AVIONICS TELEMETRY' },
+        { at: 75, text: 'CALIBRATING GYRO SENSORS' },
+        { at: 95, text: 'STABILIZING VECTOR MATRIX' }
+      ];
+
+      const interval = setInterval(() => {
+        if (isDismissed) {
+          clearInterval(interval);
+          return;
+        }
+
+        const increment = Math.random() * 14 + 8;
+        progress = Math.min(progress + increment, 98);
+
+        if (bar) bar.style.width = `${progress.toFixed(0)}%`;
+        if (pct) pct.textContent = `${progress.toFixed(0)}%`;
+
+        for (const step of statusSteps) {
+          if (progress >= step.at && statusText) {
+            statusText.textContent = step.text;
+          }
+        }
+
+        if (progress >= 98) {
+          clearInterval(interval);
+          dismissPreloader();
+        }
+      }, 55);
+    }
+
+    // Check if user already visited this session (avoid repetitive blocking)
+    const hasLoaded = sessionStorage.getItem('preloader_seen');
+    if (hasLoaded) {
+      dismissPreloader();
+      window.triggerCyberneticPreloader = function() {
+        preloader.style.display = 'flex';
+        preloader.classList.remove('preloader-exit');
+        isDismissed = false;
+        runSimulation();
+      };
+      return;
+    }
+
+    sessionStorage.setItem('preloader_seen', 'true');
+    runSimulation();
+
+    window.addEventListener('load', () => {
+      setTimeout(dismissPreloader, 400);
+    });
+
+    window.triggerCyberneticPreloader = function() {
+      preloader.style.display = 'flex';
+      preloader.classList.remove('preloader-exit');
+      isDismissed = false;
+      runSimulation();
+    };
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
      ORCHESTRATION OF ALL SYSTEMS
   ───────────────────────────────────────────────────────────────────────────── */
   function initAllPhases() {
+    initSitePreloader();
     initPhase1MagneticCursor();
     initPhase2Bento3DParallax();
     initPhase3IridescentNatureMesh();

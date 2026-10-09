@@ -2645,3 +2645,392 @@ body.light .deck-link:hover {
     margin-bottom: 24px;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   1. CYBERNETIC SYSTEM PRELOADER & HOLOGRAPHIC GYRO
+   From Uiverse.io by Nawsome
+   ────────────────────────────────────────────────────────────── */
+.site-preloader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #0a1811 0%, #040906 70%, #020503 100%);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+body.light .site-preloader {
+  background: radial-gradient(circle at center, #edf8f2 0%, #e1f0e7 70%, #d4e8dc 100%);
+}
+
+.site-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+/* From Uiverse.io by Nawsome */
+.svg-frame {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.4s ease;
+}
+
+.svg-frame svg {
+  position: absolute;
+  transition: .5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: calc(1 - (0.2 * var(--j)));
+  transform-origin: center;
+  width: 260px;
+  height: 260px;
+  fill: none;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.45));
+}
+
+body.light .svg-frame svg {
+  filter: drop-shadow(0 0 8px rgba(4, 120, 87, 0.35));
+}
+
+.svg-frame:hover svg,
+.svg-frame.active-tilt svg {
+  transform: rotate(-80deg) skew(30deg) translateX(calc(45px * var(--i))) translateY(calc(-35px * var(--i)));
+}
+
+.svg-frame svg #center {
+  transition: .5s;
+  transform-origin: center;
+}
+
+.svg-frame:hover svg #center,
+.svg-frame.active-tilt svg #center {
+  transform: rotate(-30deg) translateX(45px) translateY(-3px);
+}
+
+#out2 {
+  animation: rotate16 7s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+#out3 {
+  animation: rotate16 3s ease-in-out infinite alternate;
+  transform-origin: center;
+  stroke: #ff0;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.6));
+}
+
+body.light #out3 {
+  stroke: #047857;
+  filter: drop-shadow(0 0 6px rgba(4, 120, 87, 0.5));
+}
+
+#inner3,
+#inner1 {
+  animation: rotate16 4s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+#center1 {
+  fill: #ff0;
+  animation: rotate16 2s ease-in-out infinite alternate;
+  transform-origin: center;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 0, 0.8));
+}
+
+body.light #center1 {
+  fill: #047857;
+  filter: drop-shadow(0 0 8px rgba(4, 120, 87, 0.6));
+}
+
+body.light .svg-frame svg [fill="#00FFFF"] {
+  fill: #047857 !important;
+}
+
+body.light .svg-frame svg [stroke="#00FFFF"] {
+  stroke: #047857 !important;
+}
+
+@keyframes rotate16 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.preloader-telemetry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 320px;
+  max-width: 90vw;
+  font-family: var(--font-mono);
+}
+
+.preloader-status-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: #34d399;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+body.light .preloader-status-line {
+  color: #047857;
+}
+
+.preloader-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ffff;
+  box-shadow: 0 0 10px #00ffff;
+  animation: pulse 1.4s infinite;
+}
+
+body.light .preloader-pulse-dot {
+  background: #047857;
+  box-shadow: 0 0 8px #047857;
+}
+
+.preloader-progress-wrap {
+  width: 100%;
+  height: 3px;
+  background: rgba(16, 185, 129, 0.18);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+body.light .preloader-progress-wrap {
+  background: rgba(4, 120, 87, 0.18);
+}
+
+.preloader-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #10b981, #00ffff, #ff0);
+  box-shadow: 0 0 12px #00ffff;
+  transition: width 0.12s ease-out;
+}
+
+body.light .preloader-bar {
+  background: linear-gradient(90deg, #10b981, #047857);
+  box-shadow: 0 0 8px #047857;
+}
+
+.preloader-meta {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+}
+
+body.light .preloader-meta {
+  color: #24442e;
+}
+
+.preloader-skip-hint {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: #64748b;
+  margin-top: 2px;
+  animation: pulse 2s infinite;
+}
+
+body.light .preloader-skip-hint {
+  color: #4b6b55;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   2. FLOATING ISOMETRIC SOCIAL & QUICK LINKS DOCK
+   From Uiverse.io by MijailVillegas
+   ────────────────────────────────────────────────────────────── */
+.floating-iso-dock {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+}
+
+.floating-iso-dock .iso-card {
+  max-width: fit-content;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 0.8rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(4, 14, 8, 0.76);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5),
+              inset 0 0 16px rgba(16, 185, 129, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 8px 4px;
+}
+
+body.light .floating-iso-dock .iso-card {
+  background: rgba(244, 250, 246, 0.92);
+  border: 1.5px solid #8db89b;
+  box-shadow: 0 12px 30px rgba(4, 120, 87, 0.12),
+              inset 0 1px 0 #ffffff;
+}
+
+.floating-iso-dock ul {
+  padding: 0.4rem 0.5rem;
+  display: flex;
+  list-style: none;
+  gap: 1.1rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+}
+
+.floating-iso-dock ul li {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-iso-dock .svg {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 10px;
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  color: #34d399;
+  fill: currentColor;
+  background: rgba(6, 20, 12, 0.88);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.22), 0 4px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+body.light .floating-iso-dock .svg {
+  color: #047857;
+  background: #ffffff;
+  border: 1px solid #8db89b;
+  box-shadow: inset 0 0 8px rgba(4, 120, 87, 0.1), 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.floating-iso-dock .text {
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #f4fbf6;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  background: rgba(4, 16, 9, 0.94);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  position: absolute;
+  right: calc(100% + 14px);
+  white-space: nowrap;
+  z-index: 9999;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 0 8px rgba(16, 185, 129, 0.15);
+  transform: translateX(10px) skew(4deg);
+}
+
+body.light .floating-iso-dock .text {
+  color: #041209;
+  background: #ffffff;
+  border: 1.5px solid #047857;
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.15);
+}
+
+/* Isometric projection hover */
+.iso-pro {
+  transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.iso-pro:hover a > .svg {
+  transform: translate(-6px, -6px);
+  color: #00ffff;
+  border-color: #00ffff;
+  box-shadow: inset 0 0 16px rgba(0, 255, 255, 0.4), 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+
+body.light .iso-pro:hover a > .svg {
+  color: #047857;
+  border-color: #047857;
+  box-shadow: inset 0 0 12px rgba(4, 120, 87, 0.2), 0 6px 14px rgba(4, 120, 87, 0.15);
+}
+
+.iso-pro:hover .text {
+  opacity: 1;
+  transform: translateX(0) skew(0deg);
+}
+
+.iso-pro span {
+  opacity: 0;
+  position: absolute;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 44px;
+  width: 44px;
+  pointer-events: none;
+  border: 1px solid #10b981;
+}
+
+body.light .iso-pro span {
+  border-color: #047857;
+}
+
+.iso-pro:hover span {
+  opacity: 1;
+}
+
+.iso-pro:hover span:nth-child(1) {
+  opacity: 0.25;
+  transform: translate(-2px, -2px);
+}
+
+.iso-pro:hover span:nth-child(2) {
+  opacity: 0.5;
+  transform: translate(-4px, -4px);
+}
+
+.iso-pro:hover span:nth-child(3) {
+  opacity: 0.75;
+  transform: translate(-6px, -6px);
+}
+
+@media (max-width: 900px) {
+  .floating-iso-dock {
+    display: none;
+  }
+}
