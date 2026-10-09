@@ -9,6 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="ideas-lab.css" />
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (saved === 'light' || (!saved && prefersLight)) {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -221,21 +230,40 @@
     observer.observe(card);
   });
 
-  // Theme
+  // Theme management: defaults to browser settings if not explicitly toggled
+  function getPreferredTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+  }
+
+  function applyTheme(theme) {
+    const isLight = theme === 'light';
+    document.body.classList.toggle('light', isLight);
+    document.documentElement.classList.toggle('light', isLight);
+    const b = document.getElementById('theme-btn');
+    if (b) b.textContent = isLight ? '☀' : '☾';
+  }
+
   function toggleTheme() {
-    const light = document.body.classList.toggle('light');
-    document.getElementById('theme-btn').textContent = light ? '☀' : '☾';
-    localStorage.setItem('theme', light ? 'light' : 'dark');
+    const isLight = !document.body.classList.contains('light');
+    const newTheme = isLight ? 'light' : 'dark';
+    localStorage.setItem('theme', newTheme);
+    applyTheme(newTheme);
   }
   function toggleMobileNav() {
     const links = document.getElementById('nav-links');
     if (links) links.classList.toggle('open');
   }
   (function () {
-    if (localStorage.getItem('theme') === 'light') {
-      document.body.classList.add('light');
-      const b = document.getElementById('theme-btn');
-      if (b) b.textContent = '☀';
+    const theme = getPreferredTheme();
+    applyTheme(theme);
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          applyTheme(e.matches ? 'light' : 'dark');
+        }
+      });
     }
   })();
 </script>

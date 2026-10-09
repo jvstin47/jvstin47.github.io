@@ -691,8 +691,8 @@
     const turbNode = document.getElementById('mercury-turb');
     if (!turbNode) return;
 
-    // Attach to interactive pills & buttons in Toolkit, Projects, and Ideas
-    const targets = document.querySelectorAll('.toolkit-btn, .filter-btn, .ptag, .status-pill');
+    // Attach to interactive pills, buttons in Toolkit, Projects, and Hero actions
+    const targets = document.querySelectorAll('.toolkit-btn, .filter-btn, .ptag, .status-pill, .hero-actions .btn, .hero-name .line-2');
     targets.forEach(t => t.classList.add('liquid-melt-target'));
 
     let isMelting = false;
@@ -940,6 +940,319 @@
         });
       }
     }
+
+    // 3. INTERACTIVE LIQUID MERCURY FLUID DYNAMICS (Light Mode)
+    function initHeroLiquidMercury() {
+      const mercCanvas = document.getElementById('hero-mercury-canvas');
+      const heroSection = document.getElementById('hero');
+      if (!mercCanvas || !heroSection) return;
+
+      const ctx = mercCanvas.getContext('2d');
+      if (!ctx) return;
+
+      let width = 0, height = 0;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      function resize() {
+        const rect = heroSection.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        mercCanvas.width = width * dpr;
+        mercCanvas.height = height * dpr;
+        mercCanvas.style.width = width + 'px';
+        mercCanvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      let mouse = {
+        x: width * 0.48,
+        y: height * 0.38,
+        targetX: width * 0.48,
+        targetY: height * 0.38,
+        isInside: false,
+        vx: 0,
+        vy: 0
+      };
+
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        mouse.vx = mx - mouse.targetX;
+        mouse.vy = my - mouse.targetY;
+        mouse.targetX = mx;
+        mouse.targetY = my;
+        mouse.isInside = true;
+      }, { passive: true });
+
+      heroSection.addEventListener('mouseleave', () => {
+        mouse.isInside = false;
+        mouse.targetX = width * 0.48;
+        mouse.targetY = height * 0.38;
+      });
+
+      // Liquid Mercury Beads
+      const numSatellites = 10;
+      const numAmbient = 8;
+      const beads = [];
+
+      // 0: Master core bead
+      beads.push({
+        x: mouse.targetX,
+        y: mouse.targetY,
+        vx: 0,
+        vy: 0,
+        r: 34,
+        baseR: 34,
+        isMaster: true,
+        phase: 0
+      });
+
+      // Satellite beads that cluster cohesively
+      for (let i = 0; i < numSatellites; i++) {
+        const angle = (i / numSatellites) * Math.PI * 2;
+        const dist = 32 + Math.random() * 40;
+        beads.push({
+          x: mouse.targetX + Math.cos(angle) * dist,
+          y: mouse.targetY + Math.sin(angle) * dist,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          r: 14 + Math.random() * 14,
+          baseR: 14 + Math.random() * 14,
+          isMaster: false,
+          isAmbient: false,
+          orbitDist: dist,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+
+      // Ambient roving quicksilver beads
+      for (let i = 0; i < numAmbient; i++) {
+        beads.push({
+          x: Math.random() * (width || 800),
+          y: Math.random() * (height || 500),
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          r: 8 + Math.random() * 8,
+          baseR: 8 + Math.random() * 8,
+          isMaster: false,
+          isAmbient: true,
+          wanderPhase: Math.random() * Math.PI * 2
+        });
+      }
+
+      // Click: Splatter & Shatter outward
+      heroSection.addEventListener('click', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        beads.forEach(b => {
+          const dx = b.x - clickX;
+          const dy = b.y - clickY;
+          const dist = Math.hypot(dx, dy) || 1;
+          const impulse = Math.min(260 / dist, 18);
+          const angle = Math.atan2(dy, dx) + (Math.random() - 0.5) * 0.5;
+          b.vx += Math.cos(angle) * impulse * 1.8;
+          b.vy += Math.sin(angle) * impulse * 1.8;
+          b.r = Math.max(7, b.baseR * 0.7);
+        });
+      });
+
+      let time = 0;
+
+      // Draw liquid meniscus necks between close beads
+      function drawLiquidBridge(b1, b2) {
+        const dx = b2.x - b1.x;
+        const dy = b2.y - b1.y;
+        const dist = Math.hypot(dx, dy);
+        const maxDist = (b1.r + b2.r) * 1.6;
+
+        if (dist >= maxDist || dist <= Math.abs(b1.r - b2.r)) return;
+
+        const angle = Math.atan2(dy, dx);
+        const u = Math.max(0, Math.min(1, (dist - (b1.r + b2.r)) / (maxDist - (b1.r + b2.r))));
+        const neckRadius = (1 - u) * Math.min(b1.r, b2.r) * 0.65;
+        if (neckRadius < 1.5) return;
+
+        const spread1 = Math.PI * 0.42 * (1 - u);
+        const spread2 = Math.PI * 0.42 * (1 - u);
+
+        const p1a = { x: b1.x + Math.cos(angle + spread1) * b1.r, y: b1.y + Math.sin(angle + spread1) * b1.r };
+        const p1b = { x: b1.x + Math.cos(angle - spread1) * b1.r, y: b1.y + Math.sin(angle - spread1) * b1.r };
+        const p2a = { x: b2.x + Math.cos(angle + Math.PI - spread2) * b2.r, y: b2.y + Math.sin(angle + Math.PI - spread2) * b2.r };
+        const p2b = { x: b2.x + Math.cos(angle + Math.PI + spread2) * b2.r, y: b2.y + Math.sin(angle + Math.PI + spread2) * b2.r };
+
+        const midX = (b1.x + b2.x) * 0.5;
+        const midY = (b1.y + b2.y) * 0.5;
+        const normAngle = angle + Math.PI * 0.5;
+
+        const c1 = { x: midX + Math.cos(normAngle) * neckRadius, y: midY + Math.sin(normAngle) * neckRadius };
+        const c2 = { x: midX - Math.cos(normAngle) * neckRadius, y: midY - Math.sin(normAngle) * neckRadius };
+
+        ctx.beginPath();
+        ctx.moveTo(p1a.x, p1a.y);
+        ctx.quadraticCurveTo(c1.x, c1.y, p2a.x, p2a.y);
+        ctx.lineTo(p2b.y ? p2b.x : p2a.x, p2b.y);
+        ctx.quadraticCurveTo(c2.x, c2.y, p1b.x, p1b.y);
+        ctx.closePath();
+
+        const grad = ctx.createLinearGradient(b1.x, b1.y, b2.x, b2.y);
+        grad.addColorStop(0, 'rgba(203, 213, 225, 0.95)');
+        grad.addColorStop(0.5, 'rgba(241, 245, 249, 0.98)');
+        grad.addColorStop(1, 'rgba(203, 213, 225, 0.95)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      function drawMercuryDroplet(b) {
+        ctx.save();
+        ctx.shadowColor = 'rgba(15, 23, 42, 0.16)';
+        ctx.shadowBlur = Math.max(6, b.r * 0.45);
+        ctx.shadowOffsetY = Math.max(3, b.r * 0.18);
+
+        // Core Circle
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+
+        // Liquid Mercury Specular Chrome Gradient
+        const hx = b.x - b.r * 0.32;
+        const hy = b.y - b.r * 0.32;
+        const grad = ctx.createRadialGradient(hx, hy, 1, b.x, b.y, b.r);
+        grad.addColorStop(0.00, 'rgba(255, 255, 255, 1.0)');
+        grad.addColorStop(0.20, 'rgba(241, 245, 249, 0.98)');
+        grad.addColorStop(0.52, 'rgba(203, 213, 225, 0.95)');
+        grad.addColorStop(0.78, 'rgba(148, 163, 184, 0.92)');
+        grad.addColorStop(0.92, 'rgba(71, 85, 105, 0.88)');
+        grad.addColorStop(1.00, 'rgba(30, 41, 59, 0.65)');
+
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.restore();
+
+        // Top-crescent mirror highlight
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(b.x, b.y - b.r * 0.08, b.r * 0.72, Math.PI * 1.15, Math.PI * 1.85);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
+        ctx.lineWidth = Math.max(1.2, b.r * 0.11);
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        // Subtle ambient underside bounce
+        ctx.beginPath();
+        ctx.arc(b.x, b.y + b.r * 0.55, b.r * 0.35, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.30)';
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function renderMercuryLoop() {
+        if (!document.body.classList.contains('light')) {
+          requestAnimationFrame(renderMercuryLoop);
+          return;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+        time += 0.018;
+
+        const master = beads[0];
+        // Spring follow cursor
+        mouse.x += (mouse.targetX - mouse.x) * 0.085;
+        mouse.y += (mouse.targetY - mouse.y) * 0.085;
+
+        master.x = mouse.x;
+        master.y = mouse.y;
+        master.r += (master.baseR + Math.sin(time * 3) * 1.6 - master.r) * 0.1;
+
+        // Update satellites & ambient beads
+        for (let i = 1; i < beads.length; i++) {
+          const b = beads[i];
+          b.phase = (b.phase || 0) + 0.02;
+
+          if (!b.isAmbient) {
+            // Satellite cohesive pull towards master
+            const dx = master.x - b.x;
+            const dy = master.y - b.y;
+            const dist = Math.hypot(dx, dy) || 1;
+
+            const targetD = b.orbitDist || 36;
+            const force = (dist - targetD) * 0.038;
+            b.vx += (dx / dist) * force;
+            b.vy += (dy / dist) * force;
+
+            // Swirl orbit force
+            b.vx += (-dy / dist) * 0.32;
+            b.vy += (dx / dist) * 0.32;
+          } else {
+            // Ambient wander
+            b.wanderPhase += 0.02;
+            b.vx += Math.cos(b.wanderPhase) * 0.12;
+            b.vy += Math.sin(b.wanderPhase * 0.8) * 0.12;
+
+            // Magnetic attraction if master gets close
+            const dx = master.x - b.x;
+            const dy = master.y - b.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 280) {
+              const pull = (1 - dist / 280) * 0.55;
+              b.vx += (dx / dist) * pull;
+              b.vy += (dy / dist) * pull;
+            }
+          }
+
+          // Inter-particle repulsion/surface tension
+          for (let j = i + 1; j < beads.length; j++) {
+            const b2 = beads[j];
+            const px = b2.x - b.x;
+            const py = b2.y - b.y;
+            const pdist = Math.hypot(px, py) || 1;
+            const minDist = (b.r + b2.r) * 0.85;
+            if (pdist < minDist) {
+              const push = (minDist - pdist) * 0.06;
+              b.vx -= (px / pdist) * push;
+              b.vy -= (py / pdist) * push;
+              b2.vx += (px / pdist) * push;
+              b2.vy += (py / pdist) * push;
+            }
+          }
+
+          // Damping & integration
+          b.vx *= 0.90;
+          b.vy *= 0.90;
+          b.x += b.vx;
+          b.y += b.vy;
+
+          // Bounds bounce
+          if (b.x < b.r) { b.x = b.r; b.vx *= -0.5; }
+          if (b.x > width - b.r) { b.x = width - b.r; b.vx *= -0.5; }
+          if (b.y < b.r) { b.y = b.r; b.vy *= -0.5; }
+          if (b.y > height - b.r) { b.y = height - b.r; b.vy *= -0.5; }
+
+          // Restore radius
+          b.r += (b.baseR + Math.sin(b.phase) * 1.2 - b.r) * 0.08;
+        }
+
+        // Draw Liquid Bridges between nearby beads
+        for (let i = 0; i < beads.length; i++) {
+          for (let j = i + 1; j < beads.length; j++) {
+            drawLiquidBridge(beads[i], beads[j]);
+          }
+        }
+
+        // Draw all beads
+        for (let i = 0; i < beads.length; i++) {
+          drawMercuryDroplet(beads[i]);
+        }
+
+        requestAnimationFrame(renderMercuryLoop);
+      }
+      renderMercuryLoop();
+    }
+
+    initHeroLiquidMercury();
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
