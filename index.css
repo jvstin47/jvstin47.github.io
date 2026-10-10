@@ -158,53 +158,288 @@ body.light .hero-desc strong {
   margin-top: 48px;
 }
 
-.about-avatar {
+.about-avatar-deck {
   width: 100%;
   max-width: 280px;
-  aspect-ratio: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 24px;
   position: relative;
-  overflow: hidden;
-  margin-bottom: 24px;
-  border-radius: var(--radius);
 }
 
-.about-avatar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 12px,
-    rgba(16, 185, 129, 0.05) 12px,
-    rgba(16, 185, 129, 0.05) 13px
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-.avatar-initials {
-  position: absolute;
-  inset: 0;
+.photo-deck-wrap {
+  position: relative;
+  width: 280px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 0;
+  --w-card: 165px;
+  --h-card: 220px;
+  --rotate-card: 14deg;
+  --insetX-card: 24px;
+  --t-card: 18px;
+  --w-wrap-card: 280px;
+  user-select: none;
 }
 
-.profile-img {
+.photo-deck-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute !important;
+  overflow: hidden;
+  animation: photoRotating 9s cubic-bezier(0.75, 0, 0, 1.01) infinite 0s;
+  border-radius: 16px;
+  background: #0d1a10;
+  width: var(--w-card);
+  height: var(--h-card);
+  border: 1.5px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --pd: 3px;
+  --round: 16px;
+  --x1: var(--insetX-card);
+  --x2: calc(var(--w-wrap-card) - calc(var(--w-card) + var(--insetX-card)));
+  --to-left: rotate(calc(var(--rotate-card) * -1));
+  --to-center: calc(calc(var(--w-wrap-card) - var(--w-card)) / 2);
+  --to-right: rotate(calc(var(--rotate-card) * 1));
+}
+
+body.light .photo-deck-card {
+  background: #f0fdf4;
+  border-color: rgba(5, 150, 105, 0.45);
+  box-shadow: 0 10px 24px rgba(4, 120, 87, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.photo-deck-wrap:hover .photo-deck-card {
+  animation-play-state: paused;
+}
+
+.photo-deck-card:hover {
+  border-color: #34d399;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 20px rgba(16, 185, 129, 0.35);
+}
+
+body.light .photo-deck-card:hover {
+  border-color: #059669;
+  box-shadow: 0 14px 30px rgba(4, 120, 87, 0.25);
+}
+
+.photo-deck-card:nth-child(1) {
+  --z1: 3; --t1: 0; --l1: var(--to-center); --trans1: rotate(0deg);
+  --z2: 1; --t2: var(--t-card); --l2: var(--x1); --trans2: var(--to-left);
+  --z3: 1; --t3: var(--t-card); --l3: var(--x2); --trans3: var(--to-right);
+}
+.photo-deck-card:nth-child(2) {
+  --z1: 1; --t1: var(--t-card); --l1: var(--x2); --trans1: var(--to-right);
+  --z2: 3; --t2: 0; --l2: var(--to-center); --trans2: rotate(0deg);
+  --z3: 1; --t3: var(--t-card); --l3: var(--x1); --trans3: var(--to-left);
+}
+.photo-deck-card:nth-child(3) {
+  --z1: 1; --t1: var(--t-card); --l1: var(--x1); --trans1: var(--to-left);
+  --z2: 1; --t2: var(--t-card); --l2: var(--x2); --trans2: var(--to-right);
+  --z3: 3; --t3: 0; --l3: var(--to-center); --trans3: rotate(0deg);
+}
+
+@keyframes photoRotating {
+  0%, 99.99% {
+    z-index: var(--z1);
+    top: var(--t1);
+    left: var(--l1);
+    transform: var(--trans1);
+  }
+  33.33% {
+    z-index: var(--z2);
+    top: var(--t2);
+    left: var(--l2);
+    transform: var(--trans2);
+  }
+  66.66% {
+    z-index: var(--z3);
+    top: var(--t3);
+    left: var(--l3);
+    transform: var(--trans3);
+  }
+}
+
+.photo-deck-wrap.manual-0 .photo-deck-card,
+.photo-deck-wrap.manual-1 .photo-deck-card,
+.photo-deck-wrap.manual-2 .photo-deck-card {
+  animation: none !important;
+}
+
+.photo-deck-wrap.manual-0 .photo-card-1 {
+  z-index: 3 !important; top: 0 !important; left: var(--to-center) !important; transform: rotate(0deg) !important;
+}
+.photo-deck-wrap.manual-0 .photo-card-2 {
+  z-index: 1 !important; top: var(--t-card) !important; left: var(--x2) !important; transform: var(--to-right) !important;
+}
+.photo-deck-wrap.manual-0 .photo-card-3 {
+  z-index: 1 !important; top: var(--t-card) !important; left: var(--x1) !important; transform: var(--to-left) !important;
+}
+
+.photo-deck-wrap.manual-1 .photo-card-1 {
+  z-index: 1 !important; top: var(--t-card) !important; left: var(--x1) !important; transform: var(--to-left) !important;
+}
+.photo-deck-wrap.manual-1 .photo-card-2 {
+  z-index: 3 !important; top: 0 !important; left: var(--to-center) !important; transform: rotate(0deg) !important;
+}
+.photo-deck-wrap.manual-1 .photo-card-3 {
+  z-index: 1 !important; top: var(--t-card) !important; left: var(--x2) !important; transform: var(--to-right) !important;
+}
+
+.photo-deck-wrap.manual-2 .photo-card-1 {
+  z-index: 1 !important; top: var(--t-card) !important; left: var(--x2) !important; transform: var(--to-right) !important;
+}
+.photo-deck-wrap.manual-2 .photo-card-2 {
+  z-index: 1 !important; top: var(--t-card) !important; left: var(--x1) !important; transform: var(--to-left) !important;
+}
+.photo-deck-wrap.manual-2 .photo-card-3 {
+  z-index: 3 !important; top: 0 !important; left: var(--to-center) !important; transform: rotate(0deg) !important;
+}
+
+.photo-deck-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--round) - var(--pd));
+}
+
+.photo-deck-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
   display: block;
-  transition: transform 0.35s ease;
+  transition: transform 0.4s ease;
 }
 
-.about-avatar:hover .profile-img {
-  transform: scale(1.03);
+.photo-deck-card:hover .photo-deck-img {
+  transform: scale(1.05);
+}
+
+.photo-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(7, 19, 11, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+body.light .photo-badge {
+  background: rgba(240, 253, 244, 0.9);
+  border-color: #a7f3d0;
+  color: #047857;
+}
+
+.photo-deck-lines {
+  position: absolute;
+  inset: auto 0 -4px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.photo-deck-line {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-deck-line:nth-child(1)::before {
+  content: "";
+  position: absolute;
+  filter: blur(4px);
+  width: 75%;
+  height: 4px;
+  background: linear-gradient(to right, transparent, #10b981, transparent);
+}
+
+.photo-deck-line:nth-child(1)::after {
+  content: "";
+  position: absolute;
+  width: 55%;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, #34d399, transparent);
+}
+
+body.light .photo-deck-line:nth-child(1)::before {
+  background: linear-gradient(to right, transparent, #059669, transparent);
+}
+
+body.light .photo-deck-line:nth-child(1)::after {
+  background: linear-gradient(to right, transparent, #10b981, transparent);
+}
+
+.photo-deck-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.photo-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.photo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+}
+
+.photo-dot.active {
+  background: var(--nature);
+  box-shadow: 0 0 8px var(--nature);
+  transform: scale(1.2);
+}
+
+body.light .photo-dot {
+  border-color: #059669;
+}
+
+body.light .photo-dot.active {
+  background: #047857;
+  box-shadow: 0 0 6px #047857;
+}
+
+.photo-deck-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--sub);
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+body.light .photo-deck-hint {
+  color: #047857;
 }
 
 .about-meta {
