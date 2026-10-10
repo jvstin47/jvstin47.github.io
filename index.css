@@ -322,29 +322,6 @@ body.light .photo-deck-card:hover {
   transform: scale(1.05);
 }
 
-.photo-badge {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  background: rgba(7, 19, 11, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
-  font-size: 9.5px;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 6px;
-  z-index: 2;
-}
-
-body.light .photo-badge {
-  background: rgba(240, 253, 244, 0.9);
-  border-color: #a7f3d0;
-  color: #047857;
-}
 
 .photo-deck-lines {
   position: absolute;
