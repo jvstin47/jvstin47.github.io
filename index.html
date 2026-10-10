@@ -332,28 +332,25 @@
       <div class="about-left reveal reveal-d2">
         <!-- 3D CYCLIC PHOTO DECK (From Uiverse.io by ilkhoeri, customized for Justin Mathew) -->
         <div class="about-avatar-deck" style="max-width:280px;margin:0 auto 24px;position:relative;">
-          <div class="photo-deck-wrap" id="photoDeck" title="Click any photo to cycle" style="position:relative;width:280px;height:250px;">
+          <div class="photo-deck-wrap" id="photoDeck" style="position:relative;width:280px;height:250px;">
             <!-- Card 1: Primary Photo -->
-            <div class="photo-deck-card photo-card-1" onclick="cyclePhotoDeck(0)" title="Justin Mathew · Profile">
+            <div class="photo-deck-card photo-card-1" onclick="cyclePhotoDeck(0)">
               <div class="photo-deck-content">
-                <img src="images/profile.jpeg" class="photo-deck-img" alt="Justin Mathew — Systems Builder">
-                <span class="photo-badge">Justin · 01</span>
+                <img src="images/profile.jpeg" class="photo-deck-img" alt="Justin Mathew">
               </div>
             </div>
 
             <!-- Card 2: Second Photo -->
-            <div class="photo-deck-card photo-card-2" onclick="cyclePhotoDeck(1)" title="Hardware & Engineering">
+            <div class="photo-deck-card photo-card-2" onclick="cyclePhotoDeck(1)">
               <div class="photo-deck-content">
-                <img src="images/profile-2.png" onerror="this.onerror=null; this.src='images/profile-2.jpg';" class="photo-deck-img" alt="Justin Mathew — Robotics & Embedded Systems">
-                <span class="photo-badge">Systems · 02</span>
+                <img src="images/profile-2.png" onerror="this.onerror=null; this.src='images/profile-2.jpg';" class="photo-deck-img" alt="Justin Mathew">
               </div>
             </div>
 
             <!-- Card 3: Third Photo -->
-            <div class="photo-deck-card photo-card-3" onclick="cyclePhotoDeck(2)" title="Podiums & Competitions">
+            <div class="photo-deck-card photo-card-3" onclick="cyclePhotoDeck(2)">
               <div class="photo-deck-content">
-                <img src="images/profile-3.jpg" onerror="this.src='images/profile.jpeg'" class="photo-deck-img" alt="Justin Mathew — Hackathons">
-                <span class="photo-badge">Podiums · 03</span>
+                <img src="images/profile-3.jpg" onerror="this.src='images/profile.jpeg'" class="photo-deck-img" alt="Justin Mathew">
               </div>
             </div>
 
@@ -366,9 +363,9 @@
           <!-- Interactive controls & hints -->
           <div class="photo-deck-controls">
             <div class="photo-dots">
-              <button class="photo-dot active" onclick="cyclePhotoDeck(0)" aria-label="View photo 1" title="Photo 1"></button>
-              <button class="photo-dot" onclick="cyclePhotoDeck(1)" aria-label="View photo 2" title="Photo 2"></button>
-              <button class="photo-dot" onclick="cyclePhotoDeck(2)" aria-label="View photo 3" title="Photo 3"></button>
+              <button class="photo-dot active" onclick="cyclePhotoDeck(0)" aria-label="View photo 1"></button>
+              <button class="photo-dot" onclick="cyclePhotoDeck(1)" aria-label="View photo 2"></button>
+              <button class="photo-dot" onclick="cyclePhotoDeck(2)" aria-label="View photo 3"></button>
             </div>
             <span class="photo-deck-hint">Hover to pause · Click to cycle</span>
           </div>
